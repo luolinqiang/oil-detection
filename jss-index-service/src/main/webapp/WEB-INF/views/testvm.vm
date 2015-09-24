@@ -2,6 +2,9 @@
 <head>
 </head>
 <body>
+<hr>
 aaa
+<br>
+    $company.address
 </body>
 </html>
