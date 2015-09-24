@@ -2,5 +2,6 @@
 <html>
     #parse("layout/web_header.vm")
 	${screen_content}
+
 	#parse("layout/web_footer.vm")
 </html>

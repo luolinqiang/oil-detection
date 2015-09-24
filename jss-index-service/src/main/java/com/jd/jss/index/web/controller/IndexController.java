@@ -13,18 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class IndexController extends BaseControllor {
 
-    @RequestMapping(value = "/index.html", method = {RequestMethod.GET, RequestMethod.POST})
-    public String put(String str) {
+    @RequestMapping(value = "/index", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=utf-8")
+    public String index(Model model) {
+
 
         return "index";
-    }
-
-    @RequestMapping(value = "/vm", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=utf-8")
-    public String vm(Model model) {
-        Company company = new Company();
-        company.setAddress("hhhhhhhhhhhh");
-        model.addAttribute("company", company);
-        return "testvm";
     }
 
 }
