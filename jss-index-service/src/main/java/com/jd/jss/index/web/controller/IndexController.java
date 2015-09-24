@@ -19,4 +19,9 @@ public class IndexController extends BaseControllor {
         return "put";
     }
 
+    @RequestMapping(value = "/vm", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=utf-8")
+    public String vm() {
+        return "testvm";
+    }
+
 }
