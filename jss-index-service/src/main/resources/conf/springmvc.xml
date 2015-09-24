@@ -14,6 +14,48 @@
     <context:component-scan base-package="com.jd.jss.index.web,com.jd.jss.index.common"/>
     <mvc:annotation-driven/>
 
+    <!-- template view -->
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/views/"/>
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <prop key="output.encoding">UTF-8</prop>
+                <prop key="contentType">text/html;charset=UTF-8</prop>
+                <prop key="directive.foreach.counter.name">velocityCount</prop>
+                <prop key="directive.foreach.counter.initial.value">1</prop>
+
+            </props>
+        </property>
+    </bean>
+
+    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="layoutUrl" value="layout/default.vm"/>
+        <property name="cache" value="false"/>
+        <property name="suffix" value=".vm"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="dateToolAttribute" value="dateTool"/>
+        <property name="numberToolAttribute" value="numberTool"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="toolboxConfigLocation" value="/WEB-INF/velocity/tools.xml" /> <!--配置工具类-->
+    </bean>
+    <!--返回json配置 begin -->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="contentNegotiationManager">
+            <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+                <property name="mediaTypes">
+                    <props>
+                        <prop key="json">application/json</prop>
+                        <prop key="json">image/jpeg</prop>
+                    </props>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    <!--返回json配置 end -->
+
+
     <mvc:interceptors>
         <bean class="com.jd.jss.index.web.interceptor.RequestHandleInterceptor"/>
     </mvc:interceptors>

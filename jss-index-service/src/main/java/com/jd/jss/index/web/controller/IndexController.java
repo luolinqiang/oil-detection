@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class IndexController extends BaseControllor {
 
-    @RequestMapping(value = "/indexes", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=utf-8")
-    @ResponseBody
+    @RequestMapping(value = "/index.html", method = {RequestMethod.GET, RequestMethod.POST})
     public String put(String str) {
-        System.out.println(str);
-        return "put";
+
+        return "index";
     }
 
 }
