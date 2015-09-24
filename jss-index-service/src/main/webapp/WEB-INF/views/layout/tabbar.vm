@@ -1,3 +1,21 @@
+<div class="am-modal"  tabindex="-1" id="modal-xhzy" >
+    <div class="am-modal-dialog" style="padding:20px 0px 20px 0px;">
+        <div class="am-g">
+            <div class="am-u-sm-6 " data-href="/weisite/items-diesel.html">
+                <img src="res/v4/images/index-i-xhzy-cy.png"/>
+            </div>
+            <div class="am-u-sm-6 " data-href="/weisite/items-petrol.html">
+                <img src="res/v4/images/index-i-xhzy-qy.png"/>
+            </div>
+            <div class="am-u-sm-6 " data-href="/weisite/items-diesel.html">
+                <img src="res/v4/images/index-t-cgxx-cy.png"/>
+            </div>
+            <div class="am-u-sm-6 " data-href="/weisite/items-petrol.html">
+                <img src="res/v4/images/index-t-cgxx-qy.png"/>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="am-modal"  tabindex="-1" id="modal-cgxx" >
     <div class="am-modal-dialog" style="padding:20px 0px 20px 0px;">
         <div class="am-g">
@@ -22,7 +40,7 @@
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="">
     <ul class="am-navbar-nav am-cf am-avg-sm-4" style="background-color:#000;">
         <li>
-            <a href="/weisite/index.html" class="">
+            <a href="/index" class="">
                 <span class="am-icon-home am-icon-lg"></span><span class="am-navbar-label">首页</span>
             </a>
         </li>
@@ -39,7 +57,7 @@
             </a>
         </li>
         <li>
-            <a href="/weisite/more.html" class="">
+            <a href="/more" class="">
                 <span class="am-icon-ellipsis-h am-icon-lg"></span><span class="am-navbar-label">更多</span>
             </a>
         </li>
@@ -76,6 +94,12 @@
 </script>
 <script type='text/javascript'>
     $(function(){
+        $("[data-href]").each(function (i) {
+            var href = $(this).data('href');
+            $(this).on('click',function(){
+                window.location.href = href;
+            })
+        });
         $("[data-modal]").each(function (i) {
             var node = $(this);
             node.on('click',function(){
@@ -85,5 +109,15 @@
                 });
             });
         });
+        /*
+        wx.config({
+            debug: true,
+            appId: 'wx20b1331c86ab87a9', // 必填，公众号的唯一标识
+            timestamp: '', // 必填，生成签名的时间戳
+            nonceStr: '', // 必填，生成签名的随机串
+            signature: '',// 必填，签名，见附录1
+            jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+        */
     });
 </script>
