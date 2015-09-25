@@ -1,0 +1,167 @@
+#set($title="忘记密码")
+<body>
+    <div class="am-g">
+        <div class="am-u-sm-centered">
+            <h1>忘记密码</h1>
+            <hr>
+            <form method="post" class="am-form">
+                <label for="mobile">手机号（必填）:</label>
+                <input type="tel" name="mobile" id="mobile" value="">
+                <label for="mobile">短信验证码（必填）:</label>
+                <div class="am-input-group">
+                    <input type="tel" name="code" id="code" class="am-form-field">
+                    <span class="am-input-group-btn">
+                        <button class="am-btn am-btn-default" type="button" id="send-btn">获得验证码</button>
+                    </span>
+                </div>
+                <label for="password">新密码（必填）:</label>
+                <input type="password" name="" id="password" value="">
+                <label for="newpassword">确认新密码（必填）:</label>
+                <input type="password" name="" id="newpassword" value=""><br>
+                <div class="am-cf">
+                    <input type="button" id="ok-btn" name="" value="确定" disabled="true" style="width:30%;" class="am-btn am-btn-warning am-btn-sm am-fl">
+                </div>
+                <div class="am-cf">
+                    <div class="am-fr">
+                        如果您已经有帐号了，请点击
+                        <input type="button" id="login-btn" name="" value="返回登录" class="am-btn am-btn-default am-btn-sm">
+                    </div>
+                </div>
+            </form>
+            <hr>
+        </div>
+    </div>
+    #parse("/layout/tabbar.vm")
+    #parse("/layout/alert.vm")
+    #parse("/layout/loading.vm")
+    <script type="text/javascript">
+        var contextPath = ''
+        $('#ok-btn').on('click',function(){
+            var mobile = $('#mobile').val();
+            var password = $('#password').val();
+            var newpassword = $('#newpassword').val();
+            var code = $('#code').val();
+            if(mobile == null || mobile == ''){
+                messageAlert('请填写手机号码！');
+                return;
+            }
+            if(password == null || password == ''){
+                messageAlert('请填写密码！');
+                return;
+            }
+            if(newpassword == null || newpassword == ''){
+                messageAlert('请填写密码！');
+                return;
+            }
+            if(password != newpassword){
+                messageAlert('两次输入密码不一致！');
+                return;
+            }
+            if(code == null || code == ''){
+                messageAlert('请填写验证码！');
+                return;
+            }
+            if(code.length != 4){
+                messageAlert('验证码输入不正确！');
+                return;
+            }
+            showLoading();
+            $.ajax({
+                url : contextPath + '/weisite/forget/submit',
+                type : 'POST',
+                data : {
+                    password : password,
+                    mobile : mobile,
+                    code : code
+                },
+                dataType : 'json',
+                success : function(data){
+                    if(data.success){
+                        alert("修改成功!");
+                        window.location.href = Wei.up + "/login" + Wei.us + "?redirectUrl=2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22";
+
+                    }else{
+                        messageAlert(data.msg);
+                    }
+                },
+                error : function(){
+                    messageAlert('系统出错，请稍后再试！^_^');
+                },
+                complete : function(){
+                    hideLoading();
+                }
+            });
+        });
+        $('#login-btn').on('click',function(){
+            window.location.href = Wei.up + "/login" + Wei.us + "?redirectUrl=2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22";
+        });
+        var smsErrorCode = {
+            'wrongNumber' : function(){
+                messageAlert('手机号码格式错误！');
+            },
+            'exists' : function(){
+                messageAlert('手机号码不存在！');
+            }
+        };
+        $('#send-btn').on('click',function(){
+            var mobile = $('#mobile').val();
+            if(mobile == null || mobile == ''){
+                messageAlert('请填写手机号码！');
+                return;
+            }
+
+            showLoading();
+            $.ajax({
+                url : Wei.up + '/forget/sms-code' + Wei.us,
+                type : 'POST',
+                data : {
+                    mobile : mobile
+                },
+                dataType : 'json',
+                success : function(data){
+                    if(data.success){
+                        countdown = 60;
+                        countdownTask = window.setInterval(reSendCountDown,1000);
+                    }else{
+                        var errorHandler = smsErrorCode[data.msg];
+                        if(errorHandler == null){
+                            messageAlert('发送失败!');
+                        }else{
+                            errorHandler();
+                        }
+                    }
+                },
+                error : function(){
+                    messageAlert('系统出错，请稍后再试！^_^');
+                },
+                complete : function(){
+                    hideLoading();
+                }
+            });
+        });
+        $('#code').on('input',function(){
+            var val = $('#code').val();
+            if(val.length == 4){
+                $('#ok-btn').attr("disabled",false);
+            }else{
+                $('#ok-btn').attr("disabled",true);
+            }
+        });
+
+        var countdown = 60;
+        var countdownTask;
+
+        function reSendCountDown(){
+            console.log();
+            if(--countdown <= 0){
+                $('#send-btn').html('重新发送');
+                $('#send-btn').attr("disabled",false);
+                window.clearInterval(countdownTask);
+            }else{
+                $('#send-btn').html('重新发送(' + countdown +')');
+                $('#send-btn').attr("disabled",true);
+            }
+        }
+    </script>
+</body>
+

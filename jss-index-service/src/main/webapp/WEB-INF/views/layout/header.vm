@@ -89,7 +89,7 @@
     <script type="text/javascript">
         var Wei = {
             ctx : '',
-            up : '/',
+            up : '',
             us : '.html',
             img : {
                 noPic : '/res/v4/images/no-pic.jpg'

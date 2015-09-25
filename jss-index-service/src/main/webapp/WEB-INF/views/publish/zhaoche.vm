@@ -1,0 +1,106 @@
+#set($title="一键找车")
+<body>
+    <div class="am-g">
+        <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+            <h3>发布找车信息</h3>
+            <hr>
+            <form method="post" action="" class="am-form" id="form">
+                <label>货物:</label>
+                <input type="text" name="name" value="">
+                <select name="glevel" style="display:none">
+                    <!--<option value="0">请选择..</option><option value="1">一类</option><option value="2">二类</option>-->
+                    <option value="3">三类</option>
+                    <!--<option value="4">四类</option><option value="5">五类</option><option value="6">六类</option><option value="7">七类</option><option value="8">八类</option><option value="9">九类</option>-->
+                </select>
+                <label>重量（吨）:</label>
+                <input type="tel" name="zdun" value="">
+                <label>价格:</label>
+                <input type="text" name="price" value="" placeHolder="商谈">
+                <label>所需罐体:</label>
+                <select name="tankid">
+                    <!--<option value="1000">请选择..</option>
+                    <option value="1">不锈钢保温</option><option value="2">不锈钢</option>-->
+                    <option value="3">铁罐保温</option><option value="4">铁罐</option>
+                    <!--<option value="5">衬塑</option><option value="6">玻璃钢</option><option value="7">铝合金</option><option value="8">镀铝</option><option value="9">压力罐</option><option value="10">铝镁合金</option><option value="11">铝罐</option><option value="12">铝罐保温</option><option value="13">钛镁合金</option><option value="20">集装箱</option><option value="21">高栏</option><option value="22">平板</option><option value="23">厢式</option><option value="99">其他</option>-->
+                </select>
+                <label>发货时间:</label>
+                <select name="subday">
+
+
+                    <option value="2015-09-25">2015-09-25</option>
+                    <option value="2015-09-26">2015-09-26</option>
+                    <option value="2015-09-27">2015-09-27</option>
+                    <option value="2015-09-28">2015-09-28</option>
+                    <option value="2015-09-29">2015-09-29</option>
+                    <option value="2015-09-30">2015-09-30</option>
+                    <option value="2015-10-01">2015-10-01</option>
+                </select>
+                <label>备注:</label>
+                <input type="text" name="beizhu" value="">
+                <label>发货人姓名:</label>
+                <input type="text" name="apiuname" value="">
+                <label>发货人手机:</label>
+                <input type="text" name="apimobile" value="">
+                <input type="hidden" name="apicompany" value="个人">
+                <label>始发地:</label>
+                <select id='area_p_1' name='area_p_1' onchange='Area_select_p(1)'>
+                    <option value="0">-*选择省-</option>
+                    <option value="1" selected="selected">北京市</option>
+                    <option value="2">天津市</option>
+                    <option value="3">河北省</option>
+                    <option value="4">山西省</option><option value="5">内蒙古自治区</option><option value="6">辽宁省</option><option value="7">吉林省</option><option value="8">黑龙江省</option><option value="9">上海市</option><option value="10">江苏省</option><option value="11">浙江省</option><option value="12">安徽省</option><option value="13">福建省</option><option value="14">江西省</option><option value="15">山东省</option><option value="16">河南省</option><option value="17">湖北省</option><option value="18">湖南省</option><option value="19">广东省</option><option value="20">广西壮族自治区</option><option value="21">海南省</option><option value="22">重庆市</option><option value="23">四川省</option><option value="24">贵州省</option><option value="25">云南省</option><option value="26">西藏自治区</option><option value="27">陕西省</option><option value="28">甘肃省</option><option value="29">青海省</option><option value="30">宁夏回族自治区</option><option value="31">新疆维吾尔自治区</option><option value="32">台湾省</option><option value="33">香港特别行政区</option><option value="34">澳门特别行政区</option></select>
+                <select id='area_c_1' name='area_c_1' onchange='Area_select_c(1)' style='display:none' title='-*选择市-'></select>
+                <select id='area_d_1' name='area_d_1' style='display:none' title='-全市范围-'></select>
+                <script>Area_select_p(1,1,38,0)</script>
+                <label>目的地:</label>
+                <select id='area_p_2' name='area_p_2' onchange='Area_select_p(2)'>
+                    <option value="0">-*选择省-</option><option value="1">北京市</option><option value="2">天津市</option><option value="3">河北省</option><option value="4">山西省</option><option value="5">内蒙古自治区</option><option value="6">辽宁省</option><option value="7" selected="selected">吉林省</option><option value="8">黑龙江省</option><option value="9">上海市</option><option value="10">江苏省</option><option value="11">浙江省</option><option value="12">安徽省</option><option value="13">福建省</option><option value="14">江西省</option><option value="15">山东省</option><option value="16">河南省</option><option value="17">湖北省</option><option value="18">湖南省</option><option value="19">广东省</option><option value="20">广西壮族自治区</option><option value="21">海南省</option><option value="22">重庆市</option><option value="23">四川省</option><option value="24">贵州省</option><option value="25">云南省</option><option value="26">西藏自治区</option><option value="27">陕西省</option><option value="28">甘肃省</option><option value="29">青海省</option><option value="30">宁夏回族自治区</option><option value="31">新疆维吾尔自治区</option><option value="32">台湾省</option><option value="33">香港特别行政区</option><option value="34">澳门特别行政区</option></select>
+                <select id='area_c_2' name='area_c_2' onchange='Area_select_c(2)' style='display:none' title='-*选择市-'></select>
+                <select id='area_d_2' name='area_d_2' style='display:none' title='-全市范围-'></select>
+                <script>Area_select_p(2)</script>
+                <br />
+                是否需要下载合同范本
+                <input type="checkbox" name="search_check" id="search_check"/>
+                <input type="text" id="down_email" name="down_email" value="" placeHolder="请输入您的邮箱地址" style="display: none"s>
+                <div class="am-g" style="margin-bottom:50px;margin-top:1rem;">
+                    <div class="am-u-sm-12">
+                        <a class="am-btn am-btn-warning am-btn-block" href="javascript:void(0)" onclick="submitForm()">提交</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    #parse("/layout/tabbar.vm")
+    <script language="javascript" src="http://www.yyb56.com/static/js/area/select.js"></script>
+    <script type='text/javascript'>
+        var WEB_API = 'http://user.yyb56.com/api/';
+        $('#search_check').on('click',function(){
+            if($('#search_check').is(':checked')){
+                $('#search_check').attr('checked',true);
+                $('#down_email').show();
+                $('#down_email').val("");
+            }else{
+                $('#search_check').attr('checked',false);
+                $('#down_email').hide();
+            }
+        });
+
+        function submitForm(){
+            $('#form').submit();
+            /*
+            var str = new Date().getTime();
+            $.ajax({
+                url : Wei.up + '/zhaoche/search' + Wei.us + '?t=' + str + '&' + $("#form").serialize(),
+                type : 'get',
+                dataType : 'json',
+                success : function(){
+
+                },
+                error : function(){
+
+                }
+            });
+            */
+        }
+    </script>
+</body>

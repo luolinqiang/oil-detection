@@ -1,0 +1,85 @@
+#set($title="登陆")
+<body style="background-color:#1c1c1c;">
+    <div style="width:100%;text-align:center;padding-top:50px;padding-bottom:20px;">
+        <img src="res/v4/images/logo.png" style="width:40%;" />
+    </div>
+    <div class="am-g">
+        <div class="am-u-sm-centered" style="padding-left:10px;padding-right:10px;">
+            <form method="post" class="am-form am-form-inline">
+                <div class="am-form-group am-form-icon" style="position:relative;background-color:#fff;width:100%;" >
+                    <img src="res/v4/images/icon-user.png" style="height:100%;margin-top:auto;margin-bottom:auto;position:absolute;z-index:1000;" />
+                    <input type="tel" name="mobile" id="mobile" class="am-form-field" placeholder="手机号" style="width:70%;text-align:center;margin-left:64px;border:0;">
+                </div>
+                <div class="am-form-group am-form-icon" style="position:relative;background-color:#fff;width:100%;" >
+                    <img src="res/v4/images/icon-lock.png" style="height:100%;margin-top:auto;margin-bottom:auto;position:absolute;z-index:1000;" />
+                    <input type="password" name="password" id="password" class="am-form-field" placeholder="密码" style="width:70%;text-align:center;margin-left:64px;border:0;">
+                </div>
+                <label for="remember-me">
+                    <input id="remember-me" name="_spring_security_remember_me" type="checkbox" checked="true">记住密码
+                </label>
+                <!--<img src="/res/v4/images/btn-login.png" id="login-btn" style="height:10;width:100%;"/>-->
+                <button id="login-btn" type="button" class="am-btn am-btn-warning" style="height:10;width:100%;" id="btn-submit">登陆</button>
+                <div class="am-cf" style="color:#fff;margin-top:10px;">
+                    <div class="am-fl" id="register-btn">注　　册</div>
+                    <div class="am-fr" id="forgetpwd-btn">忘记密码</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    #parse("/layout/javascript.vm")
+    #parse("/layout/alert.vm")
+    #parse("/layout/loading.vm")
+    <script type="text/javascript">
+        $('#login-btn').on('click',function(){
+            var mobile = $('#mobile').val();
+            var password = $('#password').val();
+            var remember = $('#remember-me').is(':checked');
+            if(mobile == null || mobile == '' || password == null || password == ''){
+                messageAlert('请填写手机号码和密码！');
+                return;
+            }
+            showLoading();
+            $.ajax({
+                url : Wei.ctx + '/j_spring_security_check',
+                type : 'POST',
+                data : {
+                    username : mobile,
+                    password : password,
+                    _spring_security_remember_me : remember
+                },
+                dataType : 'json',
+                success : function(data){
+                    if(data.success){
+                        var redirectUrl = '2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22';
+                        if(redirectUrl == ''){
+                            window.location.href = Wei.up + '/index' + Wei.us;
+                        }else{
+                            window.location.href = Wei.up + '/redirect' + Wei.us + '?url=' + redirectUrl;
+                        }
+                    }else{
+                        messageAlert('登陆失败，请核对手机号和密码！^_^');
+                    }
+                },
+                error : function(){
+                    //	messageAlert('系统出错，请稍后再试！^_^');
+                    var redirectUrl = '2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22';
+                    if(redirectUrl == ''){
+                        window.location.href = Wei.up + '/index' + Wei.us;
+                    }else{
+                        window.location.href = Wei.up + '/redirect' + Wei.us + '?url=' + redirectUrl;
+                    }
+                },
+                complete : function(){
+                    hideLoading();
+                }
+            });
+        });
+        $('#register-btn').on('click',function(){
+            window.location.href = Wei.up + '/register' + Wei.us + '?redirectUrl=2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22';
+        });
+        $('#forgetpwd-btn').on('click',function(){
+            window.location.href = Wei.up + '/forget' + Wei.us + '?redirectUrl=2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22';
+        });
+    </script>
+</body>
+

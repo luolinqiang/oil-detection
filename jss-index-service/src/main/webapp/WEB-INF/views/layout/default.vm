@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html class="no-js">
     #parse("/layout/header.vm")
-<body>
+
     $screen_content
 <!-- footer begin -->
 <!-- footer end -->
-</body>
+
 </html>

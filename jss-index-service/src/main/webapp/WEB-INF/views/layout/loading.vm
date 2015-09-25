@@ -1,0 +1,22 @@
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="___modal-loading">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd" id="___modal-loading-msg">正在载入...</div>
+        <div class="am-modal-bd" >
+            <span class="am-icon-spinner am-icon-spin"></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function showLoading(msg){
+        if(!msg){
+            msg = '加载中...'
+        }
+        $('#___modal-loading').modal({
+            relatedTarget: this
+        });
+        $('#___modal-loading-msg').html(msg);
+    }
+    function hideLoading(){
+        $('#___modal-loading').modal('close');
+    }
+</script>
