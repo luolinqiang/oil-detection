@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oil.detection.dao.AreaMapper">
+
+    <!-- mysql分页查询 -->
+    <sql id="pagingFooter"> limit #{pageRows} offset #{offset}</sql>
+    <sql id="countingHeader">select count(*) from(</sql>
+    <sql id="countingFooter">) a</sql>
+
+    <!-- 结果映射  -->
+    <resultMap id="AreaMapper" type="Area">
+            <id column="id" property="id" jdbcType="BIGINT"/>
+            <id column="pid" property="pid" jdbcType="BIGINT"/>
+            <id column="area_level" property="areaLevel" jdbcType="TINYINT"/>
+            <id column="area_code" property="areaCode" jdbcType="VARCHAR"/>
+            <id column="area_name" property="areaName" jdbcType="VARCHAR"/>
+            <id column="area_sort" property="areaSort" jdbcType="TINYINT"/>
+            <id column="longitude" property="longitude" jdbcType="VARCHAR"/>
+            <id column="latitude" property="latitude" jdbcType="VARCHAR"/>
+            <id column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <id column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+            <id column="state" property="state" jdbcType="BIGINT"/>
+            <id column="remark" property="remark" jdbcType="VARCHAR"/>
+            </resultMap>
+    <!-- 所有列信息  -->
+    <sql id="All_Column">
+        id,
+            pid,
+            area_level,
+            area_code,
+            area_name,
+            area_sort,
+            longitude,
+            latitude,
+            create_time,
+            update_time,
+            state,
+                remark
+        </sql>
+    <!-- 动态列信息  -->
+    <sql id="Dynamic_Column">
+                                <if test="pid!= null">pid,</if>
+                            <if test="areaLevel!= null">area_level,</if>
+                            <if test="areaCode!= null">area_code,</if>
+                            <if test="areaName!= null">area_name,</if>
+                            <if test="areaSort!= null">area_sort,</if>
+                            <if test="longitude!= null">longitude,</if>
+                            <if test="latitude!= null">latitude,</if>
+                            <if test="createTime!= null">create_time,</if>
+                            <if test="updateTime!= null">update_time,</if>
+                            <if test="state!= null">state,</if>
+                            <if test="remark!= null">remark,</if>
+                </sql>
+    <!-- 动态值信息  -->
+    <sql id="Dynamic_Value">
+                                <if test="pid!= null">#{pid,jdbcType=BIGINT},</if>
+                            <if test="areaLevel!= null">#{areaLevel,jdbcType=TINYINT},</if>
+                            <if test="areaCode!= null">#{areaCode,jdbcType=VARCHAR},</if>
+                            <if test="areaName!= null">#{areaName,jdbcType=VARCHAR},</if>
+                            <if test="areaSort!= null">#{areaSort,jdbcType=TINYINT},</if>
+                            <if test="longitude!= null">#{longitude,jdbcType=VARCHAR},</if>
+                            <if test="latitude!= null">#{latitude,jdbcType=VARCHAR},</if>
+                            <if test="createTime!= null">#{createTime,jdbcType=TIMESTAMP},</if>
+                            <if test="updateTime!= null">#{updateTime,jdbcType=TIMESTAMP},</if>
+                            <if test="state!= null">#{state,jdbcType=BIGINT},</if>
+                            <if test="remark!= null">#{remark,jdbcType=VARCHAR},</if>
+                </sql>
+
+    <!-- 动态设置值信息  -->
+    <sql id="Dynamic_SetValue">
+                                <if test="pid!= null">pid = #{pid,jdbcType=BIGINT},</if>
+                            <if test="areaLevel!= null">area_level = #{areaLevel,jdbcType=TINYINT},</if>
+                            <if test="areaCode!= null">area_code = #{areaCode,jdbcType=VARCHAR},</if>
+                            <if test="areaName!= null">area_name = #{areaName,jdbcType=VARCHAR},</if>
+                            <if test="areaSort!= null">area_sort = #{areaSort,jdbcType=TINYINT},</if>
+                            <if test="longitude!= null">longitude = #{longitude,jdbcType=VARCHAR},</if>
+                            <if test="latitude!= null">latitude = #{latitude,jdbcType=VARCHAR},</if>
+                            <if test="createTime!= null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+                            <if test="updateTime!= null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
+                            <if test="state!= null">state = #{state,jdbcType=BIGINT},</if>
+                            <if test="remark!= null">remark = #{remark,jdbcType=VARCHAR},</if>
+                </sql>
+
+    <!-- 动态where值信息  -->
+    <sql id="Dynamic_Where">
+            <if test="id != null">AND id = #{id, jdbcType=BIGINT}</if>
+            <if test="pid != null">AND pid = #{pid, jdbcType=BIGINT}</if>
+            <if test="areaLevel != null">AND area_level = #{areaLevel, jdbcType=TINYINT}</if>
+            <if test="areaCode != null">AND area_code = #{areaCode, jdbcType=VARCHAR}</if>
+            <if test="areaName != null">AND area_name = #{areaName, jdbcType=VARCHAR}</if>
+            <if test="areaSort != null">AND area_sort = #{areaSort, jdbcType=TINYINT}</if>
+            <if test="longitude != null">AND longitude = #{longitude, jdbcType=VARCHAR}</if>
+            <if test="latitude != null">AND latitude = #{latitude, jdbcType=VARCHAR}</if>
+            <if test="createTime != null">AND create_time = #{createTime, jdbcType=TIMESTAMP}</if>
+            <if test="updateTime != null">AND update_time = #{updateTime, jdbcType=TIMESTAMP}</if>
+            <if test="state != null">AND state = #{state, jdbcType=BIGINT}</if>
+            <if test="remark != null">AND remark = #{remark, jdbcType=VARCHAR}</if>
+        </sql>
+
+    <!-- 查询列表  -->
+    <select id="listArea" resultMap="AreaMapper" parameterType="Area">
+        select
+        <include refid="All_Column"/>
+        from area
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 查询总数  -->
+    <select id="countArea" resultType="Integer" parameterType="Area">
+        <include refid="countingHeader"/>
+            select
+            <include refid="All_Column"/>
+            from area
+            <where>
+                <include refid="Dynamic_Where"/>
+            </where>
+        <include refid="countingFooter"/>
+    </select>
+
+    <!-- 分页列表  -->
+        <select id="pageListArea" resultMap="AreaMapper" parameterType="QueryArea">
+        select
+        <include refid="All_Column"/>
+        from area
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+        <include refid="pagingFooter"/>
+    </select>
+    
+    <!-- 查询  -->
+    <select id="getArea" resultMap="AreaMapper" parameterType="Area">
+        select
+        <include refid="All_Column"/>
+        from area
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 新增  -->
+    <insert id="saveArea" useGeneratedKeys="true" keyProperty="id" parameterType="Area">
+        insert into area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Column"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Value"/>
+        </trim>
+    </insert>
+
+    <!-- 根据id修改  -->
+    <update id="modifyArea" parameterType="Area">
+        update area
+        <set>
+            <include refid="Dynamic_SetValue"/>
+        </set>
+        <where>
+            <if test="id != null">AND ID = #{id, jdbcType=NUMERIC}</if>
+        </where>
+    </update>
+
+    <!-- 删除  -->
+    <delete id="removeArea" parameterType="Area">
+        delete from area
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </delete>
+
+</mapper>

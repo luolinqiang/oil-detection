@@ -2,19 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.jd.jss.index</groupId>
-    <artifactId>jss-index</artifactId>
+    <groupId>oil.detection</groupId>
+    <artifactId>oil-detection</artifactId>
     <version>${project.version}</version>
     <packaging>pom</packaging>
-    <name>jss-index</name>
-    <description>jss-index</description>
+    <name>oil-detection</name>
+    <description>oil-detection</description>
     <properties>
         <project.version>1.0</project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules>
-        <module>jss-index-sdk</module>
-        <module>jss-index-service</module>
+        <module>oil-detection-sdk</module>
+        <module>oil-detection-service</module>
     </modules>
 
     <dependencyManagement>
@@ -86,7 +86,7 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
-                    <encoding>utf-8 </encoding>
+                    <encoding>utf-8</encoding>
                 </configuration>
             </plugin>
         </plugins>

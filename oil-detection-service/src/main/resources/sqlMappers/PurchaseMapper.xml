@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oil.detection.dao.PurchaseMapper">
+
+    <!-- mysql分页查询 -->
+    <sql id="pagingFooter"> limit #{pageRows} offset #{offset}</sql>
+    <sql id="countingHeader">select count(*) from(</sql>
+    <sql id="countingFooter">) a</sql>
+
+    <!-- 结果映射  -->
+    <resultMap id="PurchaseMapper" type="Purchase">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="oil_type" property="oilType" jdbcType="TINYINT"/>
+        <id column="purchase_type" property="purchaseType" jdbcType="TINYINT"/>
+        <id column="quality_standard" property="qualityStandard" jdbcType="BIGINT"/>
+        <id column="product_model" property="productModel" jdbcType="BIGINT"/>
+        <id column="number" property="number" jdbcType="BIGINT"/>
+        <id column="pay_type" property="payType" jdbcType="BIGINT"/>
+        <id column="delivery_type" property="deliveryType" jdbcType="BIGINT"/>
+        <id column="delivery_addr" property="deliveryAddr" jdbcType="VARCHAR"/>
+        <id column="conditions" property="conditions" jdbcType="VARCHAR"/>
+        <id column="other_require" property="otherRequire" jdbcType="VARCHAR"/>
+        <id column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <id column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <id column="state" property="state" jdbcType="TINYINT"/>
+        <id column="remark" property="remark" jdbcType="VARCHAR"/>
+        <id column="user_id" property="userId" jdbcType="BIGINT"/>
+    </resultMap>
+    <!-- 所有列信息  -->
+    <sql id="All_Column">
+        id,
+            oil_type,
+            purchase_type,
+            quality_standard,
+            product_model,
+            number,
+            pay_type,
+            delivery_type,
+            delivery_addr,
+            conditions,
+            other_require,
+            create_time,
+            update_time,
+            state,
+            remark,
+                user_id
+        </sql>
+    <!-- 动态列信息  -->
+    <sql id="Dynamic_Column">
+        <if test="oilType!= null">oil_type,</if>
+        <if test="purchaseType!= null">purchase_type,</if>
+        <if test="qualityStandard!= null">quality_standard,</if>
+        <if test="productModel!= null">product_model,</if>
+        <if test="number!= null">number,</if>
+        <if test="payType!= null">pay_type,</if>
+        <if test="deliveryType!= null">delivery_type,</if>
+        <if test="deliveryAddr!= null">delivery_addr,</if>
+        <if test="conditions!= null">conditions,</if>
+        <if test="otherRequire!= null">other_require,</if>
+        <if test="createTime!= null">create_time,</if>
+        <if test="updateTime!= null">update_time,</if>
+        <if test="state!= null">state,</if>
+        <if test="remark!= null">remark,</if>
+        <if test="userId!= null">user_id,</if>
+    </sql>
+    <!-- 动态值信息  -->
+    <sql id="Dynamic_Value">
+        <if test="oilType!= null">#{oilType,jdbcType=TINYINT},</if>
+        <if test="purchaseType!= null">#{purchaseType,jdbcType=TINYINT},</if>
+        <if test="qualityStandard!= null">#{qualityStandard,jdbcType=BIGINT},</if>
+        <if test="productModel!= null">#{productModel,jdbcType=BIGINT},</if>
+        <if test="number!= null">#{number,jdbcType=NUMBER},</if>
+        <if test="payType!= null">#{payType,jdbcType=BIGINT},</if>
+        <if test="deliveryType!= null">#{deliveryType,jdbcType=BIGINT},</if>
+        <if test="deliveryAddr!= null">#{deliveryAddr,jdbcType=VARCHAR},</if>
+        <if test="conditions!= null">#{conditions,jdbcType=VARCHAR},</if>
+        <if test="otherRequire!= null">#{otherRequire,jdbcType=VARCHAR},</if>
+        <if test="createTime!= null">#{createTime,jdbcType=TIMESTAMP},</if>
+        <if test="updateTime!= null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        <if test="state!= null">#{state,jdbcType=TINYINT},</if>
+        <if test="remark!= null">#{remark,jdbcType=VARCHAR},</if>
+        <if test="userId!= null">#{userId,jdbcType=BIGINT},</if>
+    </sql>
+
+    <!-- 动态设置值信息  -->
+    <sql id="Dynamic_SetValue">
+        <if test="oilType!= null">oil_type = #{oilType,jdbcType=TINYINT},</if>
+        <if test="purchaseType!= null">purchase_type = #{purchaseType,jdbcType=TINYINT},</if>
+        <if test="qualityStandard!= null">quality_standard = #{qualityStandard,jdbcType=BIGINT},</if>
+        <if test="productModel!= null">product_model = #{productModel,jdbcType=BIGINT},</if>
+        <if test="number!= null">number = #{number,jdbcType=NUMBER},</if>
+        <if test="payType!= null">pay_type = #{payType,jdbcType=BIGINT},</if>
+        <if test="deliveryType!= null">delivery_type = #{deliveryType,jdbcType=BIGINT},</if>
+        <if test="deliveryAddr!= null">delivery_addr = #{deliveryAddr,jdbcType=VARCHAR},</if>
+        <if test="conditions!= null">conditions = #{conditions,jdbcType=VARCHAR},</if>
+        <if test="otherRequire!= null">other_require = #{otherRequire,jdbcType=VARCHAR},</if>
+        <if test="createTime!= null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+        <if test="updateTime!= null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
+        <if test="state!= null">state = #{state,jdbcType=TINYINT},</if>
+        <if test="remark!= null">remark = #{remark,jdbcType=VARCHAR},</if>
+        <if test="userId!= null">user_id = #{userId,jdbcType=BIGINT},</if>
+    </sql>
+
+    <!-- 动态where值信息  -->
+    <sql id="Dynamic_Where">
+        <if test="id != null">AND id = #{id, jdbcType=BIGINT}</if>
+        <if test="oilType != null">AND oil_type = #{oilType, jdbcType=TINYINT}</if>
+        <if test="purchaseType != null">AND purchase_type = #{purchaseType, jdbcType=TINYINT}</if>
+        <if test="qualityStandard != null">AND quality_standard = #{qualityStandard, jdbcType=BIGINT}</if>
+        <if test="productModel != null">AND product_model = #{productModel, jdbcType=BIGINT}</if>
+        <if test="number != null">AND number = #{number, jdbcType=NUMBER}</if>
+        <if test="payType != null">AND pay_type = #{payType, jdbcType=BIGINT}</if>
+        <if test="deliveryType != null">AND delivery_type = #{deliveryType, jdbcType=BIGINT}</if>
+        <if test="deliveryAddr != null">AND delivery_addr = #{deliveryAddr, jdbcType=VARCHAR}</if>
+        <if test="conditions != null">AND conditions = #{conditions, jdbcType=VARCHAR}</if>
+        <if test="otherRequire != null">AND other_require = #{otherRequire, jdbcType=VARCHAR}</if>
+        <if test="createTime != null">AND create_time = #{createTime, jdbcType=TIMESTAMP}</if>
+        <if test="updateTime != null">AND update_time = #{updateTime, jdbcType=TIMESTAMP}</if>
+        <if test="state != null">AND state = #{state, jdbcType=TINYINT}</if>
+        <if test="remark != null">AND remark = #{remark, jdbcType=VARCHAR}</if>
+        <if test="userId != null">AND user_id = #{userId, jdbcType=BIGINT}</if>
+    </sql>
+
+    <!-- 查询列表  -->
+    <select id="listPurchase" resultMap="PurchaseMapper" parameterType="Purchase">
+        select
+        <include refid="All_Column"/>
+        from purchase
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 查询总数  -->
+    <select id="countPurchase" resultType="Integer" parameterType="Purchase">
+        <include refid="countingHeader"/>
+        select
+        <include refid="All_Column"/>
+        from purchase
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+        <include refid="countingFooter"/>
+    </select>
+
+    <!-- 分页列表  -->
+    <select id="pageListPurchase" resultMap="PurchaseMapper" parameterType="QueryPurchase">
+        select
+        <include refid="All_Column"/>
+        from purchase
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+        <include refid="pagingFooter"/>
+    </select>
+
+    <!-- 查询  -->
+    <select id="getPurchase" resultMap="PurchaseMapper" parameterType="Purchase">
+        select
+        <include refid="All_Column"/>
+        from purchase
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 新增  -->
+    <insert id="savePurchase" useGeneratedKeys="true" keyProperty="id" parameterType="Purchase">
+        insert into purchase
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Column"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Value"/>
+        </trim>
+    </insert>
+
+    <!-- 根据id修改  -->
+    <update id="modifyPurchase" parameterType="Purchase">
+        update purchase
+        <set>
+            <include refid="Dynamic_SetValue"/>
+        </set>
+        <where>
+            <if test="id != null">AND ID = #{id, jdbcType=NUMERIC}</if>
+        </where>
+    </update>
+
+    <!-- 删除  -->
+    <delete id="removePurchase" parameterType="Purchase">
+        delete from purchase
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </delete>
+
+</mapper>

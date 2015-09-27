@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oil.detection.dao.UserMapper">
+
+    <!-- mysql分页查询 -->
+    <sql id="pagingFooter"> limit #{pageRows} offset #{offset}</sql>
+    <sql id="countingHeader">select count(*) from(</sql>
+    <sql id="countingFooter">) a</sql>
+
+    <!-- 结果映射  -->
+    <resultMap id="UserMapper" type="User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <id column="user_type" property="userType" jdbcType="TINYINT"/>
+        <id column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <id column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <id column="company_name" property="companyName" jdbcType="VARCHAR"/>
+        <id column="phone" property="phone" jdbcType="VARCHAR"/>
+        <id column="email" property="email" jdbcType="VARCHAR"/>
+        <id column="password" property="password" jdbcType="VARCHAR"/>
+        <id column="head_portrait" property="headPortrait" jdbcType="VARCHAR"/>
+        <id column="sex" property="sex" jdbcType="TINYINT"/>
+        <id column="device" property="device" jdbcType="VARCHAR"/>
+        <id column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <id column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <id column="longitude" property="longitude" jdbcType="VARCHAR"/>
+        <id column="latitude" property="latitude" jdbcType="VARCHAR"/>
+        <id column="state" property="state" jdbcType="TINYINT"/>
+        <id column="remark" property="remark" jdbcType="VARCHAR"/>
+        <id column="supplier_id" property="supplierId" jdbcType="BIGINT"/>
+    </resultMap>
+    <!-- 所有列信息  -->
+    <sql id="All_Column">
+        id,
+            user_id,
+            user_type,
+            nickname,
+            real_name,
+            company_name,
+            phone,
+            email,
+            password,
+            head_portrait,
+            sex,
+            device,
+            create_time,
+            update_time,
+            longitude,
+            latitude,
+            state,
+            remark,
+                supplier_id
+        </sql>
+    <!-- 动态列信息  -->
+    <sql id="Dynamic_Column">
+        <if test="userId!= null">user_id,</if>
+        <if test="userType!= null">user_type,</if>
+        <if test="nickname!= null">nickname,</if>
+        <if test="realName!= null">real_name,</if>
+        <if test="companyName!= null">company_name,</if>
+        <if test="phone!= null">phone,</if>
+        <if test="email!= null">email,</if>
+        <if test="password!= null">password,</if>
+        <if test="headPortrait!= null">head_portrait,</if>
+        <if test="sex!= null">sex,</if>
+        <if test="device!= null">device,</if>
+        <if test="createTime!= null">create_time,</if>
+        <if test="updateTime!= null">update_time,</if>
+        <if test="longitude!= null">longitude,</if>
+        <if test="latitude!= null">latitude,</if>
+        <if test="state!= null">state,</if>
+        <if test="remark!= null">remark,</if>
+        <if test="supplierId!= null">supplier_id,</if>
+    </sql>
+    <!-- 动态值信息  -->
+    <sql id="Dynamic_Value">
+        <if test="userId!= null">#{userId,jdbcType=VARCHAR},</if>
+        <if test="userType!= null">#{userType,jdbcType=TINYINT},</if>
+        <if test="nickname!= null">#{nickname,jdbcType=VARCHAR},</if>
+        <if test="realName!= null">#{realName,jdbcType=VARCHAR},</if>
+        <if test="companyName!= null">#{companyName,jdbcType=VARCHAR},</if>
+        <if test="phone!= null">#{phone,jdbcType=VARCHAR},</if>
+        <if test="email!= null">#{email,jdbcType=VARCHAR},</if>
+        <if test="password!= null">#{password,jdbcType=VARCHAR},</if>
+        <if test="headPortrait!= null">#{headPortrait,jdbcType=VARCHAR},</if>
+        <if test="sex!= null">#{sex,jdbcType=TINYINT},</if>
+        <if test="device!= null">#{device,jdbcType=VARCHAR},</if>
+        <if test="createTime!= null">#{createTime,jdbcType=TIMESTAMP},</if>
+        <if test="updateTime!= null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        <if test="longitude!= null">#{longitude,jdbcType=VARCHAR},</if>
+        <if test="latitude!= null">#{latitude,jdbcType=VARCHAR},</if>
+        <if test="state!= null">#{state,jdbcType=TINYINT},</if>
+        <if test="remark!= null">#{remark,jdbcType=VARCHAR},</if>
+        <if test="supplierId!= null">#{supplierId,jdbcType=BIGINT},</if>
+    </sql>
+
+    <!-- 动态设置值信息  -->
+    <sql id="Dynamic_SetValue">
+        <if test="userId!= null">user_id = #{userId,jdbcType=VARCHAR},</if>
+        <if test="userType!= null">user_type = #{userType,jdbcType=TINYINT},</if>
+        <if test="nickname!= null">nickname = #{nickname,jdbcType=VARCHAR},</if>
+        <if test="realName!= null">real_name = #{realName,jdbcType=VARCHAR},</if>
+        <if test="companyName!= null">company_name = #{companyName,jdbcType=VARCHAR},</if>
+        <if test="phone!= null">phone = #{phone,jdbcType=VARCHAR},</if>
+        <if test="email!= null">email = #{email,jdbcType=VARCHAR},</if>
+        <if test="password!= null">password = #{password,jdbcType=VARCHAR},</if>
+        <if test="headPortrait!= null">head_portrait = #{headPortrait,jdbcType=VARCHAR},</if>
+        <if test="sex!= null">sex = #{sex,jdbcType=TINYINT},</if>
+        <if test="device!= null">device = #{device,jdbcType=VARCHAR},</if>
+        <if test="createTime!= null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+        <if test="updateTime!= null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
+        <if test="longitude!= null">longitude = #{longitude,jdbcType=VARCHAR},</if>
+        <if test="latitude!= null">latitude = #{latitude,jdbcType=VARCHAR},</if>
+        <if test="state!= null">state = #{state,jdbcType=TINYINT},</if>
+        <if test="remark!= null">remark = #{remark,jdbcType=VARCHAR},</if>
+        <if test="supplierId!= null">supplier_id = #{supplierId,jdbcType=BIGINT},</if>
+    </sql>
+
+    <!-- 动态where值信息  -->
+    <sql id="Dynamic_Where">
+        <if test="id != null">AND id = #{id, jdbcType=BIGINT}</if>
+        <if test="userId != null">AND user_id = #{userId, jdbcType=VARCHAR}</if>
+        <if test="userType != null">AND user_type = #{userType, jdbcType=TINYINT}</if>
+        <if test="nickname != null">AND nickname = #{nickname, jdbcType=VARCHAR}</if>
+        <if test="realName != null">AND real_name = #{realName, jdbcType=VARCHAR}</if>
+        <if test="companyName != null">AND company_name = #{companyName, jdbcType=VARCHAR}</if>
+        <if test="phone != null">AND phone = #{phone, jdbcType=VARCHAR}</if>
+        <if test="email != null">AND email = #{email, jdbcType=VARCHAR}</if>
+        <if test="password != null">AND password = #{password, jdbcType=VARCHAR}</if>
+        <if test="headPortrait != null">AND head_portrait = #{headPortrait, jdbcType=VARCHAR}</if>
+        <if test="sex != null">AND sex = #{sex, jdbcType=TINYINT}</if>
+        <if test="device != null">AND device = #{device, jdbcType=VARCHAR}</if>
+        <if test="createTime != null">AND create_time = #{createTime, jdbcType=TIMESTAMP}</if>
+        <if test="updateTime != null">AND update_time = #{updateTime, jdbcType=TIMESTAMP}</if>
+        <if test="longitude != null">AND longitude = #{longitude, jdbcType=VARCHAR}</if>
+        <if test="latitude != null">AND latitude = #{latitude, jdbcType=VARCHAR}</if>
+        <if test="state != null">AND state = #{state, jdbcType=TINYINT}</if>
+        <if test="remark != null">AND remark = #{remark, jdbcType=VARCHAR}</if>
+        <if test="supplierId != null">AND supplier_id = #{supplierId, jdbcType=BIGINT}</if>
+    </sql>
+
+    <!-- 查询列表  -->
+    <select id="listUser" resultMap="UserMapper" parameterType="User">
+        select
+        <include refid="All_Column"/>
+        from user
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 查询总数  -->
+    <select id="countUser" resultType="Integer" parameterType="User">
+        <include refid="countingHeader"/>
+        select
+        <include refid="All_Column"/>
+        from user
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+        <include refid="countingFooter"/>
+    </select>
+
+    <!-- 分页列表  -->
+    <select id="pageListUser" resultMap="UserMapper" parameterType="QueryUser">
+        select
+        <include refid="All_Column"/>
+        from user
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+        <include refid="pagingFooter"/>
+    </select>
+
+    <!-- 查询  -->
+    <select id="getUser" resultMap="UserMapper" parameterType="User">
+        select
+        <include refid="All_Column"/>
+        from user
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 新增  -->
+    <insert id="saveUser" useGeneratedKeys="true" keyProperty="id" parameterType="User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Column"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Value"/>
+        </trim>
+    </insert>
+
+    <!-- 根据id修改  -->
+    <update id="modifyUser" parameterType="User">
+        update user
+        <set>
+            <include refid="Dynamic_SetValue"/>
+        </set>
+        <where>
+            <if test="id != null">AND ID = #{id, jdbcType=NUMERIC}</if>
+        </where>
+    </update>
+
+    <!-- 删除  -->
+    <delete id="removeUser" parameterType="User">
+        delete from user
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </delete>
+
+</mapper>

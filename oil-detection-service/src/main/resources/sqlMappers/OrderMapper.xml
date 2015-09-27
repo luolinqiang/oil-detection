@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oil.detection.dao.OrderMapper">
+
+    <!-- mysql分页查询 -->
+    <sql id="pagingFooter">limit #{pageRows} offset #{offset}</sql>
+    <sql id="countingHeader">select count(*) from(</sql>
+    <sql id="countingFooter">) a</sql>
+
+    <!-- 结果映射  -->
+    <resultMap id="OrderMapper" type="Order">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="BIGINT"/>
+        <id column="product_id" property="productId" jdbcType="BIGINT"/>
+        <id column="supplier_id" property="supplierId" jdbcType="BIGINT"/>
+        <id column="order_type" property="orderType" jdbcType="TINYINT"/>
+        <id column="price" property="price" jdbcType="DECIMAL"/>
+        <id column="number" property="number" jdbcType="DECIMAL"/>
+        <id column="total_price" property="totalPrice" jdbcType="DECIMAL"/>
+        <id column="pay_type" property="payType" jdbcType="TINYINT"/>
+        <id column="delivery_type" property="deliveryType" jdbcType="BIGINT"/>
+        <id column="car_number" property="carNumber" jdbcType="VARCHAR"/>
+        <id column="receiver_name" property="receiverName" jdbcType="VARCHAR"/>
+        <id column="receiver_phone" property="receiverPhone" jdbcType="VARCHAR"/>
+        <id column="receiver_addr" property="receiverAddr" jdbcType="VARCHAR"/>
+        <id column="other_require" property="otherRequire" jdbcType="VARCHAR"/>
+        <id column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <id column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <id column="arrival_time" property="arrivalTime" jdbcType="TIMESTAMP"/>
+        <id column="remark" property="remark" jdbcType="VARCHAR"/>
+        <id column="state" property="state" jdbcType="TINYINT"/>
+    </resultMap>
+    <!-- 所有列信息  -->
+    <sql id="All_Column">
+        id,
+        user_id,
+        product_id,
+        supplier_id,
+        order_type,
+        price,
+        number,
+        total_price,
+        pay_type,
+        delivery_type,
+        car_number,
+        receiver_name,
+        receiver_phone,
+        receiver_addr,
+        other_require,
+        create_time,
+        update_time,
+        arrival_time,
+        remark,
+        state
+    </sql>
+    <!-- 动态列信息  -->
+    <sql id="Dynamic_Column">
+        <if test="userId!= null">user_id,</if>
+        <if test="productId!= null">product_id,</if>
+        <if test="supplierId!= null">supplier_id,</if>
+        <if test="orderType!= null">order_type,</if>
+        <if test="price!= null">price,</if>
+        <if test="number!= null">number,</if>
+        <if test="totalPrice!= null">total_price,</if>
+        <if test="payType!= null">pay_type,</if>
+        <if test="deliveryType!= null">delivery_type,</if>
+        <if test="carNumber!= null">car_number,</if>
+        <if test="receiverName!= null">receiver_name,</if>
+        <if test="receiverPhone!= null">receiver_phone,</if>
+        <if test="receiverAddr!= null">receiver_addr,</if>
+        <if test="otherRequire!= null">other_require,</if>
+        <if test="createTime!= null">create_time,</if>
+        <if test="updateTime!= null">update_time,</if>
+        <if test="arrivalTime!= null">arrival_time,</if>
+        <if test="remark!= null">remark,</if>
+        <if test="state!= null">state,</if>
+    </sql>
+    <!-- 动态值信息  -->
+    <sql id="Dynamic_Value">
+        <if test="userId!= null">#{userId,jdbcType=BIGINT},</if>
+        <if test="productId!= null">#{productId,jdbcType=BIGINT},</if>
+        <if test="supplierId!= null">#{supplierId,jdbcType=BIGINT},</if>
+        <if test="orderType!= null">#{orderType,jdbcType=TINYINT},</if>
+        <if test="price!= null">#{price,jdbcType=DECIMAL},</if>
+        <if test="number!= null">#{number,jdbcType=DECIMAL},</if>
+        <if test="totalPrice!= null">#{totalPrice,jdbcType=DECIMAL},</if>
+        <if test="payType!= null">#{payType,jdbcType=TINYINT},</if>
+        <if test="deliveryType!= null">#{deliveryType,jdbcType=BIGINT},</if>
+        <if test="carNumber!= null">#{carNumber,jdbcType=VARCHAR},</if>
+        <if test="receiverName!= null">#{receiverName,jdbcType=VARCHAR},</if>
+        <if test="receiverPhone!= null">#{receiverPhone,jdbcType=VARCHAR},</if>
+        <if test="receiverAddr!= null">#{receiverAddr,jdbcType=VARCHAR},</if>
+        <if test="otherRequire!= null">#{otherRequire,jdbcType=VARCHAR},</if>
+        <if test="createTime!= null">#{createTime,jdbcType=TIMESTAMP},</if>
+        <if test="updateTime!= null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        <if test="arrivalTime!= null">#{arrivalTime,jdbcType=TIMESTAMP},</if>
+        <if test="remark!= null">#{remark,jdbcType=VARCHAR},</if>
+        <if test="state!= null">#{state,jdbcType=TINYINT},</if>
+    </sql>
+
+    <!-- 动态设置值信息  -->
+    <sql id="Dynamic_SetValue">
+        <if test="userId!= null">user_id = #{userId,jdbcType=BIGINT},</if>
+        <if test="productId!= null">product_id = #{productId,jdbcType=BIGINT},</if>
+        <if test="supplierId!= null">supplier_id = #{supplierId,jdbcType=BIGINT},</if>
+        <if test="orderType!= null">order_type = #{orderType,jdbcType=TINYINT},</if>
+        <if test="price!= null">price = #{price,jdbcType=DECIMAL},</if>
+        <if test="number!= null">number = #{number,jdbcType=DECIMAL},</if>
+        <if test="totalPrice!= null">total_price = #{totalPrice,jdbcType=DECIMAL},</if>
+        <if test="payType!= null">pay_type = #{payType,jdbcType=TINYINT},</if>
+        <if test="deliveryType!= null">delivery_type = #{deliveryType,jdbcType=BIGINT},</if>
+        <if test="carNumber!= null">car_number = #{carNumber,jdbcType=VARCHAR},</if>
+        <if test="receiverName!= null">receiver_name = #{receiverName,jdbcType=VARCHAR},</if>
+        <if test="receiverPhone!= null">receiver_phone = #{receiverPhone,jdbcType=VARCHAR},</if>
+        <if test="receiverAddr!= null">receiver_addr = #{receiverAddr,jdbcType=VARCHAR},</if>
+        <if test="otherRequire!= null">other_require = #{otherRequire,jdbcType=VARCHAR},</if>
+        <if test="createTime!= null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+        <if test="updateTime!= null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
+        <if test="arrivalTime!= null">arrival_time = #{arrivalTime,jdbcType=TIMESTAMP},</if>
+        <if test="remark!= null">remark = #{remark,jdbcType=VARCHAR},</if>
+        <if test="state!= null">state = #{state,jdbcType=TINYINT},</if>
+    </sql>
+
+    <!-- 动态where值信息  -->
+    <sql id="Dynamic_Where">
+        <if test="id != null">AND id = #{id, jdbcType=BIGINT}</if>
+        <if test="userId != null">AND user_id = #{userId, jdbcType=BIGINT}</if>
+        <if test="productId != null">AND product_id = #{productId, jdbcType=BIGINT}</if>
+        <if test="supplierId != null">AND supplier_id = #{supplierId, jdbcType=BIGINT}</if>
+        <if test="orderType != null">AND order_type = #{orderType, jdbcType=TINYINT}</if>
+        <if test="price != null">AND price = #{price, jdbcType=DECIMAL}</if>
+        <if test="number != null">AND number = #{number, jdbcType=DECIMAL}</if>
+        <if test="totalPrice != null">AND total_price = #{totalPrice, jdbcType=DECIMAL}</if>
+        <if test="payType != null">AND pay_type = #{payType, jdbcType=TINYINT}</if>
+        <if test="deliveryType != null">AND delivery_type = #{deliveryType, jdbcType=BIGINT}</if>
+        <if test="carNumber != null">AND car_number = #{carNumber, jdbcType=VARCHAR}</if>
+        <if test="receiverName != null">AND receiver_name = #{receiverName, jdbcType=VARCHAR}</if>
+        <if test="receiverPhone != null">AND receiver_phone = #{receiverPhone, jdbcType=VARCHAR}</if>
+        <if test="receiverAddr != null">AND receiver_addr = #{receiverAddr, jdbcType=VARCHAR}</if>
+        <if test="otherRequire != null">AND other_require = #{otherRequire, jdbcType=VARCHAR}</if>
+        <if test="createTime != null">AND create_time = #{createTime, jdbcType=TIMESTAMP}</if>
+        <if test="updateTime != null">AND update_time = #{updateTime, jdbcType=TIMESTAMP}</if>
+        <if test="arrivalTime != null">AND arrival_time = #{arrivalTime, jdbcType=TIMESTAMP}</if>
+        <if test="remark != null">AND remark = #{remark, jdbcType=VARCHAR}</if>
+        <if test="state != null">AND state = #{state, jdbcType=TINYINT}</if>
+    </sql>
+
+    <!-- 查询列表  -->
+    <select id="listOrder" resultMap="OrderMapper" parameterType="Order">
+        select
+        <include refid="All_Column"/>
+        from order
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 查询总数  -->
+    <select id="countOrder" resultType="Integer" parameterType="Order">
+        <include refid="countingHeader"/>
+        select
+        <include refid="All_Column"/>
+        from order
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+        <include refid="countingFooter"/>
+    </select>
+
+    <!-- 分页列表  -->
+    <select id="pageListOrder" resultMap="OrderMapper" parameterType="QueryOrder">
+        select
+        <include refid="All_Column"/>
+        from order
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+        <include refid="pagingFooter"/>
+    </select>
+
+    <!-- 查询  -->
+    <select id="getOrder" resultMap="OrderMapper" parameterType="Order">
+        select
+        <include refid="All_Column"/>
+        from order
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 新增  -->
+    <insert id="saveOrder" useGeneratedKeys="true" keyProperty="id" parameterType="Order">
+        insert into order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Column"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Value"/>
+        </trim>
+    </insert>
+
+    <!-- 根据id修改  -->
+    <update id="modifyOrder" parameterType="Order">
+        update order
+        <set>
+            <include refid="Dynamic_SetValue"/>
+        </set>
+        <where>
+            <if test="id != null">AND ID = #{id, jdbcType=NUMERIC}</if>
+        </where>
+    </update>
+
+    <!-- 删除  -->
+    <delete id="removeOrder" parameterType="Order">
+        delete from order
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </delete>
+
+</mapper>

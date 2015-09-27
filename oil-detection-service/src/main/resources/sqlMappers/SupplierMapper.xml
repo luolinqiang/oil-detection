@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oil.detection.dao.SupplierMapper">
+
+    <!-- mysql分页查询 -->
+    <sql id="pagingFooter">limit #{pageRows} offset #{offset}</sql>
+    <sql id="countingHeader">select count(*) from(</sql>
+    <sql id="countingFooter">) a</sql>
+
+    <!-- 结果映射  -->
+    <resultMap id="SupplierMapper" type="Supplier">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="type" property="type" jdbcType="TINYINT"/>
+        <id column="company_name" property="companyName" jdbcType="VARCHAR"/>
+        <id column="company_logo" property="companyLogo" jdbcType="VARCHAR"/>
+        <id column="contacts" property="contacts" jdbcType="VARCHAR"/>
+        <id column="phone" property="phone" jdbcType="VARCHAR"/>
+        <id column="area_id" property="areaId" jdbcType="BIGINT"/>
+        <id column="address" property="address" jdbcType="VARCHAR"/>
+        <id column="operate_product" property="operateProduct" jdbcType="VARCHAR"/>
+        <id column="oil_name" property="oilName" jdbcType="VARCHAR"/>
+        <id column="oil_address" property="oilAddress" jdbcType="VARCHAR"/>
+        <id column="company_type" property="companyType" jdbcType="BIGINT"/>
+        <id column="company_desc" property="companyDesc" jdbcType="VARCHAR"/>
+        <id column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <id column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <id column="state" property="state" jdbcType="TINYINT"/>
+        <id column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 所有列信息  -->
+    <sql id="All_Column">
+        id,
+            type,
+            company_name,
+            company_logo,
+            contacts,
+            phone,
+            area_id,
+            address,
+            operate_product,
+            oil_name,
+            oil_address,
+            company_type,
+            company_desc,
+            create_time,
+            update_time,
+            state,
+                remark
+        </sql>
+    <!-- 动态列信息  -->
+    <sql id="Dynamic_Column">
+        <if test="type!= null">type,</if>
+        <if test="companyName!= null">company_name,</if>
+        <if test="companyLogo!= null">company_logo,</if>
+        <if test="contacts!= null">contacts,</if>
+        <if test="phone!= null">phone,</if>
+        <if test="areaId!= null">area_id,</if>
+        <if test="address!= null">address,</if>
+        <if test="operateProduct!= null">operate_product,</if>
+        <if test="oilName!= null">oil_name,</if>
+        <if test="oilAddress!= null">oil_address,</if>
+        <if test="companyType!= null">company_type,</if>
+        <if test="companyDesc!= null">company_desc,</if>
+        <if test="createTime!= null">create_time,</if>
+        <if test="updateTime!= null">update_time,</if>
+        <if test="state!= null">state,</if>
+        <if test="remark!= null">remark,</if>
+    </sql>
+    <!-- 动态值信息  -->
+    <sql id="Dynamic_Value">
+        <if test="type!= null">#{type,jdbcType=TINYINT},</if>
+        <if test="companyName!= null">#{companyName,jdbcType=VARCHAR},</if>
+        <if test="companyLogo!= null">#{companyLogo,jdbcType=VARCHAR},</if>
+        <if test="contacts!= null">#{contacts,jdbcType=VARCHAR},</if>
+        <if test="phone!= null">#{phone,jdbcType=VARCHAR},</if>
+        <if test="areaId!= null">#{areaId,jdbcType=BIGINT},</if>
+        <if test="address!= null">#{address,jdbcType=VARCHAR},</if>
+        <if test="operateProduct!= null">#{operateProduct,jdbcType=VARCHAR},</if>
+        <if test="oilName!= null">#{oilName,jdbcType=VARCHAR},</if>
+        <if test="oilAddress!= null">#{oilAddress,jdbcType=VARCHAR},</if>
+        <if test="companyType!= null">#{companyType,jdbcType=BIGINT},</if>
+        <if test="companyDesc!= null">#{companyDesc,jdbcType=VARCHAR},</if>
+        <if test="createTime!= null">#{createTime,jdbcType=TIMESTAMP},</if>
+        <if test="updateTime!= null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        <if test="state!= null">#{state,jdbcType=TINYINT},</if>
+        <if test="remark!= null">#{remark,jdbcType=VARCHAR},</if>
+    </sql>
+
+    <!-- 动态设置值信息  -->
+    <sql id="Dynamic_SetValue">
+        <if test="type!= null">type = #{type,jdbcType=TINYINT},</if>
+        <if test="companyName!= null">company_name = #{companyName,jdbcType=VARCHAR},</if>
+        <if test="companyLogo!= null">company_logo = #{companyLogo,jdbcType=VARCHAR},</if>
+        <if test="contacts!= null">contacts = #{contacts,jdbcType=VARCHAR},</if>
+        <if test="phone!= null">phone = #{phone,jdbcType=VARCHAR},</if>
+        <if test="areaId!= null">area_id = #{areaId,jdbcType=BIGINT},</if>
+        <if test="address!= null">address = #{address,jdbcType=VARCHAR},</if>
+        <if test="operateProduct!= null">operate_product = #{operateProduct,jdbcType=VARCHAR},</if>
+        <if test="oilName!= null">oil_name = #{oilName,jdbcType=VARCHAR},</if>
+        <if test="oilAddress!= null">oil_address = #{oilAddress,jdbcType=VARCHAR},</if>
+        <if test="companyType!= null">company_type = #{companyType,jdbcType=BIGINT},</if>
+        <if test="companyDesc!= null">company_desc = #{companyDesc,jdbcType=VARCHAR},</if>
+        <if test="createTime!= null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+        <if test="updateTime!= null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
+        <if test="state!= null">state = #{state,jdbcType=TINYINT},</if>
+        <if test="remark!= null">remark = #{remark,jdbcType=VARCHAR},</if>
+    </sql>
+
+    <!-- 动态where值信息  -->
+    <sql id="Dynamic_Where">
+        <if test="id != null">AND id = #{id, jdbcType=BIGINT}</if>
+        <if test="type != null">AND type = #{type, jdbcType=TINYINT}</if>
+        <if test="companyName != null">AND company_name = #{companyName, jdbcType=VARCHAR}</if>
+        <if test="companyLogo != null">AND company_logo = #{companyLogo, jdbcType=VARCHAR}</if>
+        <if test="contacts != null">AND contacts = #{contacts, jdbcType=VARCHAR}</if>
+        <if test="phone != null">AND phone = #{phone, jdbcType=VARCHAR}</if>
+        <if test="areaId != null">AND area_id = #{areaId, jdbcType=BIGINT}</if>
+        <if test="address != null">AND address = #{address, jdbcType=VARCHAR}</if>
+        <if test="operateProduct != null">AND operate_product = #{operateProduct, jdbcType=VARCHAR}</if>
+        <if test="oilName != null">AND oil_name = #{oilName, jdbcType=VARCHAR}</if>
+        <if test="oilAddress != null">AND oil_address = #{oilAddress, jdbcType=VARCHAR}</if>
+        <if test="companyType != null">AND company_type = #{companyType, jdbcType=BIGINT}</if>
+        <if test="companyDesc != null">AND company_desc = #{companyDesc, jdbcType=VARCHAR}</if>
+        <if test="createTime != null">AND create_time = #{createTime, jdbcType=TIMESTAMP}</if>
+        <if test="updateTime != null">AND update_time = #{updateTime, jdbcType=TIMESTAMP}</if>
+        <if test="state != null">AND state = #{state, jdbcType=TINYINT}</if>
+        <if test="remark != null">AND remark = #{remark, jdbcType=VARCHAR}</if>
+    </sql>
+
+    <!-- 查询列表  -->
+    <select id="listSupplier" resultMap="SupplierMapper" parameterType="Supplier">
+        select
+        <include refid="All_Column"/>
+        from supplier
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 查询总数  -->
+    <select id="countSupplier" resultType="Integer" parameterType="Supplier">
+        <include refid="countingHeader"/>
+        select
+        <include refid="All_Column"/>
+        from supplier
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+        <include refid="countingFooter"/>
+    </select>
+
+    <!-- 分页列表  -->
+    <select id="pageListSupplier" resultMap="SupplierMapper" parameterType="QuerySupplier">
+        select
+        <include refid="All_Column"/>
+        from supplier
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+        <include refid="pagingFooter"/>
+    </select>
+
+    <!-- 查询  -->
+    <select id="getSupplier" resultMap="SupplierMapper" parameterType="Supplier">
+        select
+        <include refid="All_Column"/>
+        from supplier
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 新增  -->
+    <insert id="saveSupplier" useGeneratedKeys="true" keyProperty="id" parameterType="Supplier">
+        insert into supplier
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Column"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Dynamic_Value"/>
+        </trim>
+    </insert>
+
+    <!-- 根据id修改  -->
+    <update id="modifySupplier" parameterType="Supplier">
+        update supplier
+        <set>
+            <include refid="Dynamic_SetValue"/>
+        </set>
+        <where>
+            <if test="id != null">AND ID = #{id, jdbcType=NUMERIC}</if>
+        </where>
+    </update>
+
+    <!-- 删除  -->
+    <delete id="removeSupplier" parameterType="Supplier">
+        delete from supplier
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </delete>
+
+</mapper>
