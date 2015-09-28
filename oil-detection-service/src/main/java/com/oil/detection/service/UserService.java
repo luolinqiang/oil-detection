@@ -1,22 +1,19 @@
 package com.oil.detection.service;
 
 import com.oil.detection.domain.User;
-import com.oil.detection.domain.page.QueryUser;
-
-import java.util.List;
+import com.oil.detection.domain.param.UserLogin;
+import com.oil.detection.domain.param.UserReg;
+import com.oil.detection.domain.param.UserReset;
+import org.springframework.validation.BindingResult;
 
 public interface UserService {
-    List<User> listUser(User user);
+    void reg(UserReg userReg, BindingResult valid);
 
-    int countUser(User user);
+    User login(UserLogin userLogin, BindingResult valid);
 
-    List<User> pageListUser(QueryUser user);
-
-    User getUser(User user);
-
-    Integer saveUser(User user);
+    User resetPwd(UserReset userReset, BindingResult valid);
 
     void modifyUser(User user);
 
-    void removeUser(User user);
+    User getUser(User user);
 }

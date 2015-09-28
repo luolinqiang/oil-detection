@@ -191,6 +191,14 @@
             <artifactId>javassist</artifactId>
             <version>3.12.1.GA</version>
         </dependency>
+
+        <!-- if you enable JSR303 (Bean Validation) in spring. -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.1.0.Final</version>
+            <!-- <optional>true</optional> -->
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -1,84 +1,104 @@
 package com.oil.detection.web.base;
 
-import com.oil.detection.domain.resultxml.ErrorJson;
-import com.oil.detection.enums.ErrorEnum;
-import com.oil.detection.exception.JsiParamRuntimeException;
-import com.oil.detection.exception.JsiRuntimeException;
+import com.jd.common.web.cookie.CookieUtils;
+import com.oil.detection.common.CommonConstants;
+import com.oil.detection.common.ResponsesDTO;
+import com.oil.detection.common.ReturnCode;
+import com.oil.detection.dao.UserMapper;
+import com.oil.detection.domain.User;
 import com.oil.detection.log.RunLog;
-import com.oil.detection.web.interceptor.RequestHandleInterceptor;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class BaseControllor {
-    /**
-     * JsiRuntimeException
-     */
-    @ResponseBody
-    @ExceptionHandler({JsiRuntimeException.class})
-    public ErrorJson jsiRuntimeException(JsiRuntimeException e, HttpServletRequest request, HttpServletResponse response) {
-        String requestId = request.getAttribute(RequestHandleInterceptor.X_JSS_REQUEST_ID) + "";
-
-        String requestURI = getRequestUrl(request);
-
-        RunLog.LOG.error(String.format("【requestId:%s,requestURL:%s,ErrorMsg:%s】", requestId, requestURI, e.getMessage()));
-        RunLog.LOG.error(e.getMessage(), e);
-        System.out.println(e.getMessage());
-        response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-
-        ErrorJson errorJson = new ErrorJson(ErrorEnum.Server_Internal_Error, requestId, requestURI);
-        errorJson.data = e.getErrData();
-        return errorJson;
-    }
+public abstract class BaseControllor extends GlobalControllor {
+    @Resource
+    protected CookieUtils cookieUtils;
+    @Resource
+    protected UserMapper userMapper;
 
     /**
-     * RuntimeException
+     * 获取当前登录用户pin值
+     *
+     * @return
      */
-    @ResponseBody
-    @ExceptionHandler({RuntimeException.class})
-    public ErrorJson runtimeException(RuntimeException e, HttpServletRequest request, HttpServletResponse response) {
-        String requestId = request.getAttribute(RequestHandleInterceptor.X_JSS_REQUEST_ID) + "";
-
-        String requestURI = getRequestUrl(request);
-
-        RunLog.LOG.error(String.format("【requestId:%s,requestURL:%s,ErrorMsg:%s】", requestId, requestURI, e.getMessage()));
-        RunLog.LOG.error(e.getMessage(), e);
-        System.out.println(e.getMessage());
-        response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-
-        ErrorJson errorJson = new ErrorJson(ErrorEnum.Server_Internal_Error, requestId, requestURI);
-        return errorJson;
-    }
-
-    /**
-     * JsiParamRuntimeException
-     */
-    @ResponseBody
-    @ExceptionHandler({JsiParamRuntimeException.class})
-    public ErrorJson jsiParamRuntimeException(JsiParamRuntimeException e, HttpServletRequest request, HttpServletResponse response) {
-        String requestId = request.getAttribute(RequestHandleInterceptor.X_JSS_REQUEST_ID) + "";
-
-        String requestURI = getRequestUrl(request);
-
-        RunLog.LOG.error(String.format("【requestId:%s,requestURL:%s,ErrorMsg:%s】", requestId, requestURI, e.getMessage()));
-        RunLog.LOG.error(e.getMessage(), e);
-        System.out.println(e.getMessage());
-        response.setStatus(HttpStatus.SC_BAD_REQUEST);
-
-        ErrorJson errorJson = new ErrorJson(e.getErrorEnum(), requestId, requestURI);
-        return errorJson;
-    }
-
-    private String getRequestUrl(HttpServletRequest request) {
-        String requestURI = request.getMethod() + " " + request.getRequestURI();
-        String queryString = request.getQueryString();
-        if (StringUtils.isNotBlank(queryString)) {
-            requestURI += "?" + queryString;
+    protected User getUserInfo(HttpServletRequest request) {
+        String cookieValue = cookieUtils.getCookieValue(request, CommonConstants.OIL_DETECTION_PIN_COOKIE);
+        RunLog.LOG.info("-----------------cookie-----------------" + cookieValue);
+        User user = parseCookie(cookieValue);
+        // b端用户获取SupplierId
+        if (user != null) {
+            User userQ = new User();
+            userQ.setId(user.getId());
+            User userR = userMapper.getUser(userQ);
+            if (userR != null) {
+                user.setSupplierId(userR.getSupplierId());
+            }
         }
-        return requestURI;
+        return user;
+    }
+
+    public static User parseCookie(String cookieValue) {
+        RunLog.LOG.info(String.format("【BaseControllor】【cookieValue:%s】", cookieValue));
+        if (StringUtils.isNotBlank(cookieValue)) {
+            String[] splitArr = cookieValue.split("\\" + CommonConstants.SEPARATOR);
+            User user = new User();
+
+            if (splitArr != null && splitArr.length >= 4) {
+                user.setUserId(splitArr[0]);
+                user.setPhone(splitArr[0]);
+                if (StringUtils.isNotBlank(splitArr[1]) && !"null".equalsIgnoreCase(splitArr[1])) {
+                    user.setUserType(Integer.parseInt(splitArr[1]));
+                }
+                if (StringUtils.isNotBlank(splitArr[2]) && !"null".equalsIgnoreCase(splitArr[2])) {
+                    user.setId(Long.parseLong(splitArr[2]));
+                }
+                user.setDevice(splitArr[3]);
+                return user;
+            }
+
+            if (splitArr != null && splitArr.length >= 3) {
+                user.setUserId(splitArr[0]);
+                user.setPhone(splitArr[0]);
+                if (StringUtils.isNotBlank(splitArr[1]) && !"null".equalsIgnoreCase(splitArr[1])) {
+                    user.setUserType(Integer.parseInt(splitArr[1]));
+                }
+                if (StringUtils.isNotBlank(splitArr[2]) && !"null".equalsIgnoreCase(splitArr[2])) {
+                    user.setId(Long.parseLong(splitArr[2]));
+                }
+
+                if (splitArr.length >= 4) {
+                    user.setDevice(splitArr[3]);
+                }
+                return user;
+            }
+        }
+        return null;
+    }
+
+    protected void setCookieRedis(HttpServletResponse response, User user, ResponsesDTO responsesDTO) {
+        Integer userType = user.getUserType();
+        String userId = user.getUserId();
+        String device = user.getDevice();
+
+        if (responsesDTO.getCode() == ReturnCode.ACTIVE_SUCCESS.code()) {
+            User userR = (User) responsesDTO.getData();
+            String value = String.format(CommonConstants.COOKIE_FORMAT, userId, userType, userR.getId(), device);
+            cookieUtils.setCookie(response, CommonConstants.OIL_DETECTION_PIN_COOKIE, value);
+//            String key = String.format(CommonCacheImpl.KEY, SysConstants.REDIS_PREFIX, "cookie_" + userR.getUserType(), userR.getUserId());
+//            commonCache.setex(key, value, Constants.REDIS_COOKIE_TIMEOUT);
+        }
+    }
+
+    protected void removeCookieRedis(HttpServletRequest request, HttpServletResponse response) {
+        cookieUtils.deleteCookie(response, CommonConstants.OIL_DETECTION_PIN_COOKIE);
+        User user = this.getUserInfo(request);
+        if (user != null) {
+//            String key = String.format(CommonCacheImpl.KEY, SysConstants.REDIS_PREFIX, "cookie_"
+//                    + user.getUserType(), user.getUserId());
+//            commonCache.remove(key);
+        }
     }
 }

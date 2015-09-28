@@ -204,6 +204,19 @@
         </where>
     </update>
 
+    <!-- 根据userid修改  -->
+    <update id="modifyUserByUserId" parameterType="User">
+        UPDATE user_info
+        <set>
+            <include refid="Dynamic_SetValue"/>
+        </set>
+        <where>
+            <if test="id != null">AND ID = #{id, jdbcType=NUMERIC}</if>
+            <if test="userId!= null">AND USER_ID = #{userId,jdbcType=VARCHAR}</if>
+            <if test="userType!= null">AND USER_TYPE = #{userType,jdbcType=VARCHAR}</if>
+        </where>
+    </update>
+
     <!-- 删除  -->
     <delete id="removeUser" parameterType="User">
         delete from user

@@ -62,4 +62,13 @@
         </property>
     </bean>
 
+    <bean id="validatorMessageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="validatormessages"/>
+    </bean>
+
+    <bean id="validator"
+          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="validatorMessageSource"/>
+    </bean>
 </beans>

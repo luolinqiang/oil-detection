@@ -55,6 +55,12 @@ public interface UserMapper {
     void modifyUser(User user);
 
     /**
+     * 修改用户信息
+     * @param user
+     */
+    void modifyUserByUserId(User user);
+
+    /**
      * 删除
      *
      * @param user
