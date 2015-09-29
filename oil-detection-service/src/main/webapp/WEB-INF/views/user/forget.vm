@@ -1,4 +1,5 @@
 #set($title="忘记密码")
+#parse("/layout/header.vm")
 <body>
     <div class="am-g">
         <div class="am-u-sm-centered">

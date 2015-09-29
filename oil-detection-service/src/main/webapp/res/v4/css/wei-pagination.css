@@ -1,0 +1,78 @@
+@CHARSET "UTF-8";
+
+.wei-pagination-wrapper {
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 48px;
+    width: 100%;
+    overflow: auto;
+}
+
+.wei-pagination-scroller {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 100%;
+    padding: 0;
+}
+.wei-pagination-scroller ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+}
+.wei-pagination-scroller li {
+    padding: 0px;
+    min-height: 40px;
+    margin: 5px;
+    background-color: #fff;
+    -webkit-box-shadow: 3px 3px 3px #999;
+    -moz-box-shadow: 3px 3px 3px #999;
+    box-shadow: 3px 3px 3px #999;
+}
+.wei-pagination-pull-down, .wei-pagination-pull-up {
+    min-height: 40px;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #888;
+}
+.wei-pagination-pull-up-label {
+    line-height: 40px;
+}
+
+.wei-pagination-pull-up .wei-pagination-pull-up-icon {
+    display: block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url(../images/pull-icon@2x.png) 0 0 no-repeat;
+    -webkit-background-size: 40px 80px;
+    background-size: 40px 80px;
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 250ms;
+}
+
+.wei-pagination-pull-up .wei-pagination-pull-up-icon {
+    -webkit-transform: rotate(-180deg) translateZ(0);
+}
+
+.wei-pagination-pull-up.flip .wei-pagination-pull-up-icon {
+    -webkit-transform: rotate(0deg) translateZ(0);
+}
+
+.wei-pagination-pull-up.loading .wei-pagination-pull-up-icon {
+    background-position: 0 100%;
+    -webkit-transform: rotate(0deg) translateZ(0);
+    -webkit-transition-duration: 0ms;
+    -webkit-animation-name: loading;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+@-webkit-keyframes loading {
+    from { -webkit-transform:rotate(0deg) translateZ(0); }
+    to { -webkit-transform:rotate(360deg) translateZ(0); }
+}

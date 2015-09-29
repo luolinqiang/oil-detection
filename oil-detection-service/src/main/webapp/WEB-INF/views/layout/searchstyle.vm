@@ -1,0 +1,70 @@
+<style>
+    #car {
+        position: relative; /*汽车在容器中采用绝对定位*/
+        z-index: 1; /*让汽车在背景的上方*/
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .tire {
+        z-index: 1;
+        position: absolute;
+        bottom: 0;
+        border-radius: 250px; /*圆半径*/
+        -o-transform: rotate(0deg); /*旋转(单位：度)*/
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+    }
+    .canv {
+        width:100%;
+        height:100%;
+        z-index: 100;
+        position: absolute;
+    }
+    .item {
+        position:absolute;
+        z-index : 1000;
+    }
+    .pagination-bar {
+        position: fixed;
+        bottom: 50px;
+        z-index: 1000;
+        min-height: 32px;
+        overflow: hidden;
+        border-radius: 0;
+        text-align: center;
+    }
+    .prev {
+        left : 10px;
+    }
+    .next {
+        right: 10px;
+    }
+    .black-bg {
+        background-color:#000;
+    }
+    .list-item {
+    }
+    .list-item a:link{
+        text-decoration:none;
+        color:#000
+    }
+    .list-item a:visited{
+        text-decoration:none;
+        color:#333;
+    }
+    .list-item a:hover{
+        text-decoration:none;
+        color:#333;
+    }
+    .list-item a:active{
+        text-decoration:none;
+        color:#333;
+    }
+    .list-item a.web:visited{
+        text-decoration:none;
+        color:#333;
+    }
+
+</style>
