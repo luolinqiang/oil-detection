@@ -12,11 +12,33 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
     <context:property-placeholder location="classpath:conf/config.properties" ignore-unresolvable="true"/>
     <context:component-scan base-package="com.oil.detection.web,com.oil.detection.common"/>
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven validator="validator"/>
 
     <mvc:interceptors>
         <bean class="com.oil.detection.web.interceptor.RequestHandleInterceptor"/>
     </mvc:interceptors>
+
+    <bean id="cookieUtils" class="com.jd.common.web.cookie.CookieUtils">
+        <property name="jdCookie">
+            <util:list>
+
+                <bean class="com.jd.common.web.cookie.JdCookie">
+                    <property name="name" value="${server.cookie.pin}"/>
+                    <property name="domain" value="${server.cookie.domain}"/>
+                    <property name="expiry" value="${server.session.timeout}"/>
+                    <property name="path" value="/"/>
+                    <property name="encrypt" value="true"/>
+                    <property name="key" value="${client.encrypt.cookie.key}"/>
+                    <property name="cookieCipherTools" ref="cookieCipherTools"/>
+                </bean>
+
+            </util:list>
+        </property>
+    </bean>
+
+    <bean id="cookieCipherTools" class="com.jd.common.web.cookie.CookieCipherTools">
+        <property name="charsetName" value="utf-8"/>
+    </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
         <property name="cache" value="false"/>
@@ -71,4 +93,5 @@
           class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="validatorMessageSource"/>
     </bean>
+
 </beans>

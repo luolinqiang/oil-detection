@@ -29,6 +29,7 @@ public abstract class GlobalControllor {
         RunLog.LOG.error(e.getMessage(), e.getCause());
         printStackTrace(e);
         Map<String, Object> map = (Map<String, Object>) ReturnCode.ERROR_SERVER.Map();
+        map.put("data", e.getMessage());
         return map;
     }
 
@@ -38,7 +39,7 @@ public abstract class GlobalControllor {
         RunLog.LOG.error(e.getMessage(), e.getCause());
         printStackTrace(e);
         Map<String, Object> map = (Map<String, Object>) ReturnCode.ERROR_SERVER.Map();
-        map.put("data", map.get("msg"));
+        map.put("data", e.getMessage());
         map.remove("msg");
         return map;
     }

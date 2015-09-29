@@ -5,6 +5,7 @@ import com.oil.detection.common.ReturnCode;
 import com.oil.detection.domain.UserAttention;
 import com.oil.detection.domain.page.QueryUserAttention;
 import com.oil.detection.service.UserAttentionService;
+import com.oil.detection.util.Precondition;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/userattention")
+@RequestMapping(value = "/attention")
 public class UserAttentionController extends BaseControllor {
 
     private static final Logger logger = Logger.getLogger(UserAttentionController.class);
@@ -25,8 +28,9 @@ public class UserAttentionController extends BaseControllor {
 
     @RequestMapping(value = "/list", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResponsesDTO listUserAttention(UserAttention userattention) {
+    public ResponsesDTO listUserAttention(HttpServletRequest request, UserAttention userattention) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        userattention.setUserId(super.getUserInfo(request).getId());
         List<UserAttention> userattentions = userattentionService.listUserAttention(userattention);
         responsesDTO.setData(userattentions);
         return responsesDTO;
@@ -34,16 +38,18 @@ public class UserAttentionController extends BaseControllor {
 
     @RequestMapping(value = "/count", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResponsesDTO countUserAttention(UserAttention userattention) {
+    public ResponsesDTO countUserAttention(HttpServletRequest request, UserAttention userattention) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        userattention.setUserId(super.getUserInfo(request).getId());
         responsesDTO.setData(userattentionService.countUserAttention(userattention));
         return responsesDTO;
     }
 
     @RequestMapping(value = "/pageList", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResponsesDTO pageListUserAttention(QueryUserAttention userattention) {
+    public ResponsesDTO pageListUserAttention(HttpServletRequest request, QueryUserAttention userattention) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        userattention.setUserId(super.getUserInfo(request).getId());
         List<UserAttention> userattentions = userattentionService.pageListUserAttention(userattention);
         responsesDTO.setData(userattentions);
         return responsesDTO;
@@ -51,27 +57,33 @@ public class UserAttentionController extends BaseControllor {
 
     @RequestMapping(value = "/get", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResponsesDTO getUserAttention(UserAttention userattentionQuery) {
+    public ResponsesDTO getUserAttention(HttpServletRequest request, UserAttention userattentionQuery) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        userattentionQuery.setUserId(super.getUserInfo(request).getId());
         UserAttention userattention = userattentionService.getUserAttention(userattentionQuery);
         responsesDTO.setData(userattention);
         return responsesDTO;
     }
 
-    @RequestMapping(value = "/save", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/follow", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResponsesDTO saveUserAttention(UserAttention userattention) {
+    public ResponsesDTO follow(HttpServletRequest request, UserAttention userattention) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        Precondition.assertionNotBlank(userattention, "supplierId");
+        Precondition.assertionNotBlank(userattention, "productId");
+        userattention.setUserId(super.getUserInfo(request).getId());
+        userattention.setCreateTime(new Date());
         userattentionService.saveUserAttention(userattention);
         return responsesDTO;
     }
 
 
-    @RequestMapping(value = "/modify", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/unFollow", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResponsesDTO modifyUserAttention(UserAttention userattention) {
+    public ResponsesDTO unFollow(HttpServletRequest request, UserAttention userattention) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
-        userattentionService.modifyUserAttention(userattention);
+        Precondition.assertionNotBlank(userattention, "id");
+        userattentionService.removeUserAttention(userattention);
         return responsesDTO;
     }
 }

@@ -124,7 +124,7 @@ public class UserController extends BaseControllor {
     @ResponseBody
     public ResponsesDTO modify(HttpServletRequest request, HttpServletResponse response,
                                UserModify userModify) {
-        logger.debug("UserControllor--->updateinfo--->start");
+        logger.debug("UserControllor--->modify--->start");
         User user = new User();
         BeanUtils.copyProperties(userModify, user);
         user.setId(super.getUserInfo(request).getId());

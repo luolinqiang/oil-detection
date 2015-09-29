@@ -1,8 +1,7 @@
 package com.oil.detection.log;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 public class RunLog {
-    public final static Logger LOG = LoggerFactory.getLogger(RunLog.class);
+    public final static org.apache.log4j.Logger LOG = Logger.getLogger(RunLog.class);
 }
