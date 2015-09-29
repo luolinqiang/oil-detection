@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html class="no-js">
-    #parse("/layout/header.vm")
-
     $screen_content
 <!-- footer begin -->
 <!-- footer end -->

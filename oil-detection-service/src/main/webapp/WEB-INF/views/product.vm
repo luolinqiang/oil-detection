@@ -1,0 +1,123 @@
+#set($title="国四93#汽油")
+<head>
+    #parse("/layout/web_header.vm")
+    <style>
+        .am-container {
+            padding-left : 3rem;
+            padding-right: 3rem;
+        }
+        .fm-left {
+            border-top : solid 1px #999;
+            border-left : solid 1px #999;
+            text-align : center;
+        }
+        .fm-right {
+            border-top : solid 1px #999;
+            border-left : solid 1px #999;
+            border-right : solid 1px #999;
+            text-align : center;
+        }
+        .fm-bottom {
+            border-bottom : solid 1px #999;
+        }
+    </style>
+</head>
+<body style="background-color:#fff;">
+    <!-- 商品图片轮播 start -->
+    <div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{}'>
+        <ul class="am-slides">
+        </ul>
+    </div>
+    <!-- 商品图片轮播 end -->
+    <div class="separator-block"></div>
+    <!-- 商品信息 start -->
+    <div class="am-g" style="background-color:#fff;">
+        <div class="am-u-sm-7" style="text-align:left;">
+            <div class="text-overflow-ellipsis" style="width:100%">
+                <strong>国四93#汽油</strong>
+            </div>
+            <div class="text-overflow-ellipsis" style="width:100%">
+                <span  style="color:red;font-size: 2rem;margin-right:1rem;">￥5700</span>
+                <span style="width:50%;" style="text-decoration:line-through;color:#333;">
+                </span>
+            </div>
+            <div class="text-overflow-ellipsis" style="width:100%">
+                提货地：东营港
+            </div>
+        </div>
+        <div class="am-u-sm-5" style="text-align:right;">
+            <div class="am-u-sm-12" style="text-align:center;">
+                <img src="res/v4/images/btn-watch-add.png" style="display:none" id="btn-watch-add" onclick="watch()"/>
+                <img src="res/v4/images/btn-watch-del.png" style="display:none" id="btn-watch-del" onclick="removeWatch()"/>
+            </div>
+            <div class="am-u-sm-12" style="text-align:center;">
+                <img src="res/v4/images/btn-order.png" onclick="window.location.href='/weisite/requirement-154.html'"/>
+            </div>
+        </div>
+        <div class="am-u-sm-7" style="width:100%">
+            厂商电话：<a href='tel:15254629299'>☏15254629299</a>
+        </div>
+    </div>
+    <!-- 商品信息 end -->
+    <div class="separator-block"></div>
+    <!-- 商户信息 start -->
+    <div class="am-g" style="padding-top:0.5rem;padding-bottom:0.5rem;background-color:#fff;">
+        <div class="am-u-sm-12" style="text-align:center;">
+            <table width="100%" border="0">
+                <tr>
+                    <td nowrap="nowrap">
+                        <a href="/supplier/shop-54">
+                            <img src="" style="width:4rem;height:4rem;"/>
+                        </a>
+                    </td>
+                    <td nowrap="nowrap" valign="middle" align="left">
+                        <div>东营市亚通石化</div>
+                        <div style="width:100%;text-align:right;color:#8c8c8c;"><a href="/supplier/shop-54">浏览其他产品 >></a></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- 商户信息  end -->
+    <!-- 商品参数 start -->
+    <div class="am-g" style="background-color:#f0f0f0;padding:0.8rem;margin-bottom:1rem;">
+        <div class="am-u-sm-12" style="text-align:center;">商品参数</div>
+    </div>
+    <div class="am-container" style="background-color:#fff;">
+        <div class="am-g" >
+            <div class="am-u-sm-6 fm-left" >质量标准</div>
+            <div class="am-u-sm-6 fm-right" style="text-overflow-ellipsis">
+                国四
+            </div>
+        </div>
+        <div class="am-g" >
+            <div class="am-u-sm-6 fm-left" >产品型号</div>
+            <div class="am-u-sm-6 fm-right" style="text-overflow-ellipsis">
+                93#
+            </div>
+        </div>
+        <div class="am-g fm-bottom" style="margin-bottom:10px;" >
+        </div>
+    </div>
+    <!-- 商品参数 end -->
+    <!-- 商品详情 start -->
+    <div class="am-g" style="background-color:#f0f0f0;padding:0.8rem;">
+        <div class="am-u-sm-12" style="text-align:center;">商品详情</div>
+    </div>
+    <div class="am-container" style="background-color:#fff;padding:10px;">
+
+    </div>
+    <!-- 商品详情 end -->
+    <!-- 回到顶部 start -->
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed am-no-layout am-active">
+        <a href="#top" title=""><img class="am-gotop-icon-custom" src="res/v4/images/goto-top.png"></a>
+    </div>
+    <!-- 回到顶部 end -->
+    #parse("/layout/tabbar.vm")
+    #parse("/layout/alert.vm")
+    #parse("/layout/loading.vm")
+    <script type="text/javascript">
+        var itemId = '154';
+    </script>
+    <script src="res/v4/js/item.js"></script>
+</body>

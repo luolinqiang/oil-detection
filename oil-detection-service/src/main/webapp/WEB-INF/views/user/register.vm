@@ -1,4 +1,5 @@
 #set($title="注册")
+#parse("/layout/header.vm")
 <body>
     <div class="am-g">
         <div class="am-u-sm-centered">

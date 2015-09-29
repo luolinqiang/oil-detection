@@ -1,0 +1,17 @@
+#parse("/layout/web_header.vm")
+<style>
+    .recommend {
+        padding : 5px;
+        font-size : 14px;
+    }
+</style>
+<body>
+    <div id="ewm-container" style="background-color:#fff;width:100%;height:100%;position:absolute;z-index:1300;text-align:center;vertical-align:middle;">
+        <i style="display:inline-block;height:100%;vertical-align:middle;"></i>
+        <div style="display:inline-block;width:70%;margin:auto;vertical-align:middle;">
+            <span style="color:#8c8c8c;">正在审核中...</span><br>
+            <div class="am-g" style="border-bottom:1px solid #f0f0f0;padding:5px;width:100%"></div><br>
+            <div><button class="am-btn am-btn-warning"  data-href="/index" style="width:80%">返回</button></div>
+        </div>
+    </div>
+</body>

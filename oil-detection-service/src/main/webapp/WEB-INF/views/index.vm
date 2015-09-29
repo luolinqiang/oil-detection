@@ -1,3 +1,4 @@
+#parse("/layout/header.vm")
 <body>
     <!-- 宣传图轮播 start -->
     <div data-am-widget="slider" class="am-slider am-slider-a1 index-ad" data-am-slider='{}'  style="height:160px;">
