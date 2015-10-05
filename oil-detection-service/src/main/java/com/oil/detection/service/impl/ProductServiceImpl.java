@@ -3,6 +3,7 @@ package com.oil.detection.service.impl;
 import com.oil.detection.dao.ProductMapper;
 import com.oil.detection.domain.Product;
 import com.oil.detection.domain.page.QueryProduct;
+import com.oil.detection.domain.result.RsOfferProduct;
 import com.oil.detection.service.ProductService;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +49,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void removeProduct(Product product) {
         productMapper.removeProduct(product);
+    }
+
+    @Override
+    public int countOfferProduct(Product product) {
+        return productMapper.countOfferProduct(product);
+    }
+
+    @Override
+    public List<RsOfferProduct> pageListOfferProduct(QueryProduct product) {
+        return productMapper.pageListOfferProduct(product);
     }
 }

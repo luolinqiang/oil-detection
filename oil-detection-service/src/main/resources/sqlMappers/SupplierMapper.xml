@@ -30,23 +30,23 @@
     <!-- 所有列信息  -->
     <sql id="All_Column">
         id,
-            type,
-            company_name,
-            company_logo,
-            contacts,
-            phone,
-            area_id,
-            address,
-            operate_product,
-            oil_name,
-            oil_address,
-            company_type,
-            company_desc,
-            create_time,
-            update_time,
-            state,
-                remark
-        </sql>
+        type,
+        company_name,
+        company_logo,
+        contacts,
+        phone,
+        area_id,
+        address,
+        operate_product,
+        oil_name,
+        oil_address,
+        company_type,
+        company_desc,
+        create_time,
+        update_time,
+        state,
+        remark
+    </sql>
     <!-- 动态列信息  -->
     <sql id="Dynamic_Column">
         <if test="type!= null">type,</if>

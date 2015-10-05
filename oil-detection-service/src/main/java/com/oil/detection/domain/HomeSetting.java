@@ -11,7 +11,7 @@ public class HomeSetting implements Serializable {
     private Integer sort;
     private Date createTime;
     private Date updateTime;
-    private Long state;
+    private Integer state;
     private String remark;
 
     public Long getId() {
@@ -62,11 +62,11 @@ public class HomeSetting implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Long getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(Long state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 

@@ -21,6 +21,15 @@ public class Purchase implements Serializable {
     private Integer state;
     private String remark;
     private Long userId;
+    private Long productId;
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
 
     public Long getId() {
         return id;

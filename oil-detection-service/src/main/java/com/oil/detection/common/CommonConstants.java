@@ -7,11 +7,23 @@ public class CommonConstants {
     public static final String COOKIE_FORMAT = "%s|%s|%s|%s";
 
     public static class Common {
-        public final static Long STATE_0 = 0l;
-        public final static Long STATE_1 = 2l;
-        public final static Long STATE_2 = 3l;
-        public final static Long STATE_3 = 3l;
-        public final static Long STATE_4 = 4l;
+        public final static Integer STATE_0 = 0;
+        public final static Integer STATE_1 = 2;
+        public final static Integer STATE_2 = 3;
+        public final static Integer STATE_3 = 3;
+        public final static Integer STATE_4 = 4;
+
+
+        public final static Integer TYPE_0 = 0;
+        public final static Integer TYPE_1 = 2;
+        public final static Integer TYPE_2 = 3;
+        public final static Integer TYPE_3 = 3;
+        public final static Integer TYPE_4 = 4;
+    }
+
+    public static class Product {
+        public final static Integer TYPE_DIESEL = 1;
+        public final static Integer TYPE_PETROL = 2;
     }
 
     public static class User {

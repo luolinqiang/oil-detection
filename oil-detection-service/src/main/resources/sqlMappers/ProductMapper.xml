@@ -32,6 +32,35 @@
         <id column="remark" property="remark" jdbcType="VARCHAR"/>
         <id column="supplier_id" property="supplierId" jdbcType="BIGINT"/>
     </resultMap>
+
+    <!-- 结果映射  -->
+    <resultMap id="RsOfferProductMapper" type="RsOfferProduct">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="type" property="type" jdbcType="TINYINT"/>
+        <id column="inventory" property="inventory" jdbcType="BIGINT"/>
+        <id column="name" property="name" jdbcType="VARCHAR"/>
+        <id column="price" property="price" jdbcType="DECIMAL"/>
+        <id column="quality_standard" property="qualityStandard" jdbcType="BIGINT"/>
+        <id column="product_model" property="productModel" jdbcType="BIGINT"/>
+        <id column="product_addr" property="productAddr" jdbcType="BIGINT"/>
+        <id column="density" property="density" jdbcType="DOUBLE"/>
+        <id column="flash_point" property="flashPoint" jdbcType="DECIMAL"/>
+        <id column="cetane_number" property="cetaneNumber" jdbcType="DECIMAL"/>
+        <id column="cfpp" property="cfpp" jdbcType="DECIMAL"/>
+        <id column="color" property="color" jdbcType="BIGINT"/>
+        <id column="boiling_range" property="boilingRange" jdbcType="VARCHAR"/>
+        <id column="details_type" property="detailsType" jdbcType="TINYINT"/>
+        <id column="details" property="details" jdbcType="VARCHAR"/>
+        <id column="sulphur_content" property="sulphurContent" jdbcType="DECIMAL"/>
+        <id column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <id column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <id column="state" property="state" jdbcType="TINYINT"/>
+        <id column="remark" property="remark" jdbcType="VARCHAR"/>
+        <id column="supplier_id" property="supplierId" jdbcType="BIGINT"/>
+        <id column="pic_url" property="picUrl" jdbcType="VARCHAR"/>
+        <id column="company_name" property="companyName" jdbcType="BIGINT"/>
+        <id column="company_logo" property="companyLogo" jdbcType="VARCHAR"/>
+    </resultMap>
     <!-- 所有列信息  -->
     <sql id="All_Column">
         id,
@@ -167,6 +196,17 @@
         </where>
     </select>
 
+    <!-- 查询列表  -->
+    <select id="listHomeTopProduct" resultMap="ProductMapper" parameterType="Product">
+        select
+        <include refid="All_Column"/>
+        from product a
+        <where>
+            id = (SELECT p.id FROM product p,supplier s WHERE p.supplier_id=s.id and p.type = a.type LIMIT 0,1) ORDER BY
+            a.type
+        </where>
+    </select>
+
     <!-- 查询总数  -->
     <select id="countProduct" resultType="Integer" parameterType="Product">
         <include refid="countingHeader"/>
@@ -188,6 +228,66 @@
             <include refid="Dynamic_Where"/>
         </where>
         <include refid="pagingFooter"/>
+    </select>
+
+    <!-- 查询总数  -->
+    <select id="countOfferProduct" resultType="Integer" parameterType="Product">
+        <include refid="countingHeader"/>
+        p.id
+        from product p
+        LEFT JOIN supplier s ON p.supplier_id = s.id
+        <if test="supplierId != null">AND p.supplier_id = #{supplierId, jdbcType=BIGINT}</if>
+        LEFT JOIN pic ON p.id = (SELECT owner_id FROM pic WHERE TYPE = 2 AND owner_id = p.id LIMIT 0,1)
+        <where>
+            <if test="type != null">AND p.type = #{type, jdbcType=TINYINT}</if>
+            <if test="qualityStandard != null">AND p.quality_standard = #{qualityStandard, jdbcType=BIGINT}</if>
+            <if test="areaId != null">AND s.areaId = #{areaId, jdbcType=BIGINT}</if>
+            <include refid="pagingFooter"/>
+            <if test="areaId != null">order by ${orderDesc}</if>
+        </where>
+        <include refid="pagingFooter"/>
+        <include refid="countingFooter"/>
+    </select>
+
+    <!-- 分页列表  -->
+    <select id="pageListOfferProduct" resultMap="RsOfferProductMapper" parameterType="QueryProduct">
+        select
+        pic.pic_url,
+        s.company_name,
+        s.company_logo,
+        p.id,
+        p.type,
+        p.inventory,
+        p.name,
+        p.price,
+        p.quality_standard,
+        p.product_model,
+        p.product_addr,
+        p.density,
+        p.flash_point,
+        p.cetane_number,
+        p.cfpp,
+        p.color,
+        p.boiling_range,
+        p.details_type,
+        p.details,
+        p.sulphur_content,
+        p.create_time,
+        p.update_time,
+        p.state,
+        p.remark,
+        p.supplier_id
+        from product p
+        LEFT JOIN supplier s ON p.supplier_id = s.id
+        <if test="supplierId != null">AND p.supplier_id = #{supplierId, jdbcType=BIGINT}</if>
+        LEFT JOIN pic ON p.id = (SELECT owner_id FROM pic WHERE TYPE = 2 AND owner_id = p.id LIMIT 0,1)
+        <where>
+            <if test="type != null">AND p.type = #{type, jdbcType=TINYINT}</if>
+            <if test="qualityStandard != null">AND p.quality_standard = #{qualityStandard, jdbcType=BIGINT}</if>
+            <if test="areaId != null">AND s.areaId = #{areaId, jdbcType=BIGINT}</if>
+            <include refid="pagingFooter"/>
+            <if test="areaId != null">order by ${orderDesc}</if>
+        </where>
     </select>
 
     <!-- 查询  -->

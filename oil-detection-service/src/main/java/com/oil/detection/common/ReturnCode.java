@@ -19,6 +19,8 @@ public enum ReturnCode {
     ERROR_PARAMS_REFLECT(402, "请求参数反射获取值错误"),
     ERROR_RESOURCES(404, "请求资源不存在"),
     ERROR_SERVER(500, "系统异常"),
+    ERROR_SERVER_TRANSFER(501, "实体转换错误"),
+    ERROR_SERVER_REFLECT_FIELD(502, "反射添加字段错误"),
     ERROR_NO_LOGIN(1010, "用户未登录"),
     ERROR_LOGIN_TIMEOUT(1011, "登录用户超时，请重新登录"),
     ERROR_USER_MORE(1012, "此用户已在其他客户端登录"),

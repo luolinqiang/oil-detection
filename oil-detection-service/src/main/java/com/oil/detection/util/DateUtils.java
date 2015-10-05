@@ -6,6 +6,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -87,4 +88,42 @@ public final class DateUtils {
         System.out.println(formatRfc1123Date((new Date())));
     }
 
+    public static String getTimeDesc(Date updateTime) {
+        Calendar nowCal = Calendar.getInstance();
+        Calendar updateCal = Calendar.getInstance();
+        updateCal.setTime(updateTime);
+        int updateYear = updateCal.get(Calendar.YEAR);
+        int updateMonth = updateCal.get(Calendar.MONTH);
+        int updateDay = updateCal.get(Calendar.DAY_OF_MONTH);
+        int updateHour = updateCal.get(Calendar.HOUR_OF_DAY);
+        int updateMin = updateCal.get(Calendar.MINUTE);
+
+        int nowYear = nowCal.get(Calendar.YEAR);
+        int nowMonth = nowCal.get(Calendar.MONTH);
+        int nowDay = nowCal.get(Calendar.DAY_OF_MONTH);
+        int nowHour = nowCal.get(Calendar.HOUR_OF_DAY);
+        int nowMin = nowCal.get(Calendar.MINUTE);
+
+        int year = nowYear - updateYear;
+        int month = nowMonth - updateMonth;
+        int day = nowDay - updateDay;
+        int hour = nowHour - updateHour;
+        int min = nowMin - updateMin;
+        if (year > 0) {
+            return year + "年前";
+        }
+        if (month > 0) {
+            return month + "月前";
+        }
+        if (day > 0) {
+            return day + "天前";
+        }
+        if (hour > 0) {
+            return hour + "小时前";
+        }
+        if (min > 0) {
+            return min + "分钟前";
+        }
+        return "";
+    }
 }

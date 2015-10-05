@@ -15,7 +15,7 @@
         <id column="sort" property="sort" jdbcType="TINYINT"/>
         <id column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <id column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        <id column="state" property="state" jdbcType="BIGINT"/>
+        <id column="state" property="state" jdbcType="TINYINT"/>
         <id column="remark" property="remark" jdbcType="VARCHAR"/>
     </resultMap>
     <!-- 所有列信息  -->
@@ -81,7 +81,6 @@
         <where>
             <include refid="Dynamic_Where"/>
         </where>
-        order by sort
     </select>
 
     <!-- 查询总数  -->

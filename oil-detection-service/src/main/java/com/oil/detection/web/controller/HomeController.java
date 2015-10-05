@@ -8,13 +8,15 @@ import com.oil.detection.common.CommonConstants;
 import com.oil.detection.common.ResponsesDTO;
 import com.oil.detection.common.ReturnCode;
 import com.oil.detection.domain.HomeSetting;
+import com.oil.detection.domain.Product;
 import com.oil.detection.domain.Supplier;
-import com.oil.detection.domain.result.RsSupplierHome;
+import com.oil.detection.domain.result.RsHomeProduct;
+import com.oil.detection.domain.result.RsHomeSupplier;
 import com.oil.detection.service.HomeSettingService;
 import com.oil.detection.service.SupplierService;
+import com.oil.detection.util.TransferUtils;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 首页相关接口
+ */
 @Controller
 @RequestMapping(value = "/h")
 public class HomeController extends BaseControllor {
@@ -57,18 +62,33 @@ public class HomeController extends BaseControllor {
         homeSetting.setState(CommonConstants.Common.STATE_2);
         List<HomeSetting> homeSettings = homeSettingService.listHomeSetting(homeSetting);
 
-        List<RsSupplierHome> rsSupplierHomes = new ArrayList<RsSupplierHome>();
+        List<RsHomeSupplier> rsSupplierHomes = new ArrayList<RsHomeSupplier>();
         for (HomeSetting setting : homeSettings) {
             Supplier supplier = new Supplier();
             supplier.setId(setting.getTargetId());
             Supplier supplierR = supplierService.getSupplier(supplier);
 
-            RsSupplierHome supplierHome = new RsSupplierHome();
-            BeanUtils.copyProperties(supplierR, supplierHome);
-            rsSupplierHomes.add(supplierHome);
+            rsSupplierHomes.add((RsHomeSupplier) TransferUtils.transfer(supplierR, RsHomeSupplier.class));
         }
 
         responsesDTO.setData(rsSupplierHomes);
+        return responsesDTO;
+    }
+
+    @RequestMapping(value = "/product", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ResponsesDTO product(HttpServletRequest request, HttpServletResponse response) {
+        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        List<RsHomeProduct> rs = new ArrayList<RsHomeProduct>();
+        List<Product> products = homeSettingService.product();
+        for (Product product : products) {
+            RsHomeProduct rsHomeProduct = (RsHomeProduct) TransferUtils.transfer(product, RsHomeProduct.class);
+            Supplier supplier = new Supplier();
+            supplier.setId(product.getId());
+            rsHomeProduct.setSupplierName(supplierService.getSupplier(supplier).getCompanyName());
+            rs.add(rsHomeProduct);
+        }
+        responsesDTO.setData(rs);
         return responsesDTO;
     }
 

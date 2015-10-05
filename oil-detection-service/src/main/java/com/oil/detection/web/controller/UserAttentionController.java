@@ -2,12 +2,16 @@ package com.oil.detection.web.controller;
 
 import com.oil.detection.common.ResponsesDTO;
 import com.oil.detection.common.ReturnCode;
+import com.oil.detection.domain.Supplier;
 import com.oil.detection.domain.UserAttention;
 import com.oil.detection.domain.page.QueryUserAttention;
+import com.oil.detection.service.SupplierService;
 import com.oil.detection.service.UserAttentionService;
+import com.oil.detection.util.DateUtils;
 import com.oil.detection.util.Precondition;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 关注相关接口
+ */
 @Controller
 @RequestMapping(value = "/attention")
 public class UserAttentionController extends BaseControllor {
@@ -25,25 +32,8 @@ public class UserAttentionController extends BaseControllor {
     private static final Logger logger = Logger.getLogger(UserAttentionController.class);
     @Resource
     private UserAttentionService userattentionService;
-
-    @RequestMapping(value = "/list", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public ResponsesDTO listUserAttention(HttpServletRequest request, UserAttention userattention) {
-        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
-        userattention.setUserId(super.getUserInfo(request).getId());
-        List<UserAttention> userattentions = userattentionService.listUserAttention(userattention);
-        responsesDTO.setData(userattentions);
-        return responsesDTO;
-    }
-
-    @RequestMapping(value = "/count", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public ResponsesDTO countUserAttention(HttpServletRequest request, UserAttention userattention) {
-        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
-        userattention.setUserId(super.getUserInfo(request).getId());
-        responsesDTO.setData(userattentionService.countUserAttention(userattention));
-        return responsesDTO;
-    }
+    @Resource
+    private SupplierService supplierService;
 
     @RequestMapping(value = "/pageList", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -51,6 +41,17 @@ public class UserAttentionController extends BaseControllor {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
         userattention.setUserId(super.getUserInfo(request).getId());
         List<UserAttention> userattentions = userattentionService.pageListUserAttention(userattention);
+        for (UserAttention userAttention : userattentions) {
+            Supplier supplier = new Supplier();
+            supplier.setId(userAttention.getSupplierId());
+            userAttention.setSupplierIdDesc(supplierService.getSupplier(supplier).getCompanyName());
+            userAttention.setTimeDesc(DateUtils.getTimeDesc(userAttention.getUpdateTime()));
+        }
+
+        UserAttention userAttentionPage = new UserAttention();
+        BeanUtils.copyProperties(userattention, userAttentionPage);
+        userattention.setTotalRows(userattentionService.countUserAttention(userAttentionPage));
+
         responsesDTO.setData(userattentions);
         return responsesDTO;
     }

@@ -29,7 +29,7 @@ public abstract class BaseControllor extends GlobalControllor {
         RunLog.LOG.info("-----------------cookie-----------------" + cookieValue);
         User user = parseCookie(cookieValue);
         // b端用户获取SupplierId
-        if (user != null) {
+        if (user != null && user.getUserType() == CommonConstants.User.USER_TYPE_B) {
             User userQ = new User();
             userQ.setId(user.getId());
             User userR = userMapper.getUser(userQ);

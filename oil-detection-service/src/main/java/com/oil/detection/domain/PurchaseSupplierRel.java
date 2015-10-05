@@ -6,7 +6,7 @@ import java.util.Date;
 public class PurchaseSupplierRel implements Serializable {
 
     private Long id;
-    private Long type;
+    private Integer type;
     private Long purchaseId;
     private Long supplierId;
     private Date createTime;
@@ -22,11 +22,11 @@ public class PurchaseSupplierRel implements Serializable {
         this.id = id;
     }
 
-    public Long getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Long type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

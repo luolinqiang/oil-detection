@@ -13,6 +13,24 @@ public class UserAttention implements Serializable {
     private Date updateTime;
     private Integer state;
     private String remark;
+    private String supplierIdDesc;
+    private String timeDesc;
+
+    public String getSupplierIdDesc() {
+        return supplierIdDesc;
+    }
+
+    public void setSupplierIdDesc(String supplierIdDesc) {
+        this.supplierIdDesc = supplierIdDesc;
+    }
+
+    public String getTimeDesc() {
+        return timeDesc;
+    }
+
+    public void setTimeDesc(String timeDesc) {
+        this.timeDesc = timeDesc;
+    }
 
     public Long getId() {
         return id;
@@ -77,4 +95,5 @@ public class UserAttention implements Serializable {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
 }

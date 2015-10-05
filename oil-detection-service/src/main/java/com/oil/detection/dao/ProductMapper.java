@@ -2,6 +2,7 @@ package com.oil.detection.dao;
 
 import com.oil.detection.domain.Product;
 import com.oil.detection.domain.page.QueryProduct;
+import com.oil.detection.domain.result.RsOfferProduct;
 
 import java.util.List;
 
@@ -14,6 +15,29 @@ public interface ProductMapper {
      * @return
      */
     List<Product> listProduct(Product product);
+
+    /**
+     * 查询列表
+     *
+     * @return
+     */
+    List<Product> listHomeTopProduct();
+
+    /**
+     * 查询总数
+     *
+     * @param product
+     * @return
+     */
+    int countOfferProduct(Product product);
+
+    /**
+     * 分页列表
+     *
+     * @param product
+     * @return
+     */
+    List<RsOfferProduct> pageListOfferProduct(QueryProduct product);
 
     /**
      * 查询总数

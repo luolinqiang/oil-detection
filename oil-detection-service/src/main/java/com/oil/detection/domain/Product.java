@@ -27,6 +27,15 @@ public class Product implements Serializable {
     private Integer state;
     private String remark;
     private Long supplierId;
+    private String timeDesc;
+
+    public String getTimeDesc() {
+        return timeDesc;
+    }
+
+    public void setTimeDesc(String timeDesc) {
+        this.timeDesc = timeDesc;
+    }
 
     public Long getId() {
         return id;
