@@ -27,6 +27,15 @@ public class QueryProduct extends BasePagingInfo implements Serializable {
     private Integer state;
     private String remark;
     private Long supplierId;
+    private Long areaId;
+
+    public Long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
+    }
 
     public Long getId() {
         return id;

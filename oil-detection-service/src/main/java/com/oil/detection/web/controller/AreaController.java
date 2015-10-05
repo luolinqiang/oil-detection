@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
+/**
+ * 地域相关接口
+ */
 @Controller
 @RequestMapping(value = "/area")
 public class AreaController extends BaseControllor {
@@ -44,6 +48,7 @@ public class AreaController extends BaseControllor {
     @ResponseBody
     public ResponsesDTO saveArea(Area area) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        area.setCreateTime(new Date());
         areaService.saveArea(area);
         return responsesDTO;
     }

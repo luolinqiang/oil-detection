@@ -8,15 +8,15 @@ public class CommonConstants {
 
     public static class Common {
         public final static Integer STATE_0 = 0;
-        public final static Integer STATE_1 = 2;
-        public final static Integer STATE_2 = 3;
+        public final static Integer STATE_1 = 1;
+        public final static Integer STATE_2 = 2;
         public final static Integer STATE_3 = 3;
         public final static Integer STATE_4 = 4;
 
 
         public final static Integer TYPE_0 = 0;
-        public final static Integer TYPE_1 = 2;
-        public final static Integer TYPE_2 = 3;
+        public final static Integer TYPE_1 = 1;
+        public final static Integer TYPE_2 = 2;
         public final static Integer TYPE_3 = 3;
         public final static Integer TYPE_4 = 4;
     }

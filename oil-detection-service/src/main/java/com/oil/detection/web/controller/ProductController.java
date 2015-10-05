@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,7 +63,7 @@ public class ProductController extends BaseControllor {
         Pic pic = new Pic();
         pic.setType(CommonConstants.Common.TYPE_2);
         pic.setOwnerId(product.getId());
-        List<Pic> pics = picService.listPic(pic);
+        List<Pic> pics = picService.listPicNoContent(pic);
 
         UserAttention attention = new UserAttention();
         attention.setUserId(super.getUserInfo(request).getId());
@@ -93,6 +94,7 @@ public class ProductController extends BaseControllor {
     @ResponseBody
     public ResponsesDTO saveProduct(Product product) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        product.setCreateTime(new Date());
         productService.saveProduct(product);
         return responsesDTO;
     }

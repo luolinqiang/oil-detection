@@ -12,6 +12,15 @@ public class BasePagingInfo implements Serializable {
     private int endIdx;
     private int totalRows;
     private int totalPages;
+    private String orderDesc;
+
+    public String getOrderDesc() {
+        return orderDesc;
+    }
+
+    public void setOrderDesc(String orderDesc) {
+        this.orderDesc = orderDesc;
+    }
 
     public int getPageRows() {
         return this.pageRows;

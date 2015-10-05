@@ -30,6 +30,15 @@ public class RsOfferProduct implements Serializable {
     private String picUrl;
     private String companyName;
     private String timeDesc;
+    private String companyLogo;
+
+    public String getCompanyLogo() {
+        return companyLogo;
+    }
+
+    public void setCompanyLogo(String companyLogo) {
+        this.companyLogo = companyLogo;
+    }
 
     public Long getId() {
         return id;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/dcar")
@@ -34,6 +35,7 @@ public class DiscoveryCarController extends BaseControllor {
     @ResponseBody
     public ResponsesDTO saveDiscoveryCar(DiscoveryCar discoverycar) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        discoverycar.setCreateTime(new Date());
         discoverycarService.saveDiscoveryCar(discoverycar);
         return responsesDTO;
     }

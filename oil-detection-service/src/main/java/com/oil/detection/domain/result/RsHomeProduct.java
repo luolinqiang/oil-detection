@@ -9,6 +9,15 @@ public class RsHomeProduct implements Serializable {
     private String name;
     private BigDecimal price;
     private String supplierName;
+    private String areaDesc;
+
+    public String getAreaDesc() {
+        return areaDesc;
+    }
+
+    public void setAreaDesc(String areaDesc) {
+        this.areaDesc = areaDesc;
+    }
 
     public Long getId() {
         return id;

@@ -3,7 +3,7 @@
 <mapper namespace="com.oil.detection.dao.PicMapper">
 
     <!-- mysql分页查询 -->
-    <sql id="pagingFooter">limit #{pageRows} offset #{offset}</sql>
+    <sql id="pagingFooter"> limit #{pageRows} offset #{offset}</sql>
     <sql id="countingHeader">select count(*) from(</sql>
     <sql id="countingFooter">) a</sql>
 
@@ -19,20 +19,22 @@
         <id column="state" property="state" jdbcType="TINYINT"/>
         <id column="remark" property="remark" jdbcType="VARCHAR"/>
         <id column="link_url" property="linkUrl" jdbcType="VARCHAR"/>
+        <id column="content" property="content" jdbcType="BLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
     </resultMap>
     <!-- 所有列信息  -->
     <sql id="All_Column">
         id,
-        type,
-        pic_url,
-        owner_id,
-        order,
-        create_time,
-        update_time,
-        state,
-        remark,
-        link_url
-    </sql>
+            `type`,
+            pic_url,
+            owner_id,
+            `order`,
+            create_time,
+            update_time,
+            state,
+            remark,
+            link_url,
+                content
+        </sql>
     <!-- 动态列信息  -->
     <sql id="Dynamic_Column">
         <if test="type!= null">type,</if>
@@ -44,6 +46,7 @@
         <if test="state!= null">state,</if>
         <if test="remark!= null">remark,</if>
         <if test="linkUrl!= null">link_url,</if>
+        <if test="content!= null">content,</if>
     </sql>
     <!-- 动态值信息  -->
     <sql id="Dynamic_Value">
@@ -56,6 +59,7 @@
         <if test="state!= null">#{state,jdbcType=TINYINT},</if>
         <if test="remark!= null">#{remark,jdbcType=VARCHAR},</if>
         <if test="linkUrl!= null">#{linkUrl,jdbcType=VARCHAR},</if>
+        <if test="content!= null">#{content,jdbcType=BLOB},</if>
     </sql>
 
     <!-- 动态设置值信息  -->
@@ -69,6 +73,7 @@
         <if test="state!= null">state = #{state,jdbcType=TINYINT},</if>
         <if test="remark!= null">remark = #{remark,jdbcType=VARCHAR},</if>
         <if test="linkUrl!= null">link_url = #{linkUrl,jdbcType=VARCHAR},</if>
+        <if test="content!= null">content = #{content,jdbcType=BLOB},</if>
     </sql>
 
     <!-- 动态where值信息  -->
@@ -83,12 +88,32 @@
         <if test="state != null">AND state = #{state, jdbcType=TINYINT}</if>
         <if test="remark != null">AND remark = #{remark, jdbcType=VARCHAR}</if>
         <if test="linkUrl != null">AND link_url = #{linkUrl, jdbcType=VARCHAR}</if>
+        <if test="content != null">AND content = #{content, jdbcType=BLOB}</if>
     </sql>
 
     <!-- 查询列表  -->
     <select id="listPic" resultMap="PicMapper" parameterType="Pic">
         select
         <include refid="All_Column"/>
+        from pic
+        <where>
+            <include refid="Dynamic_Where"/>
+        </where>
+    </select>
+
+    <!-- 查询列表  -->
+    <select id="listPicNoContent" resultMap="PicMapper" parameterType="Pic">
+        select
+        id,
+        `type`,
+        pic_url,
+        owner_id,
+        `order`,
+        create_time,
+        update_time,
+        state,
+        remark,
+        link_url
         from pic
         <where>
             <include refid="Dynamic_Where"/>

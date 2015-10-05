@@ -1,10 +1,16 @@
 package com.oil.detection.web.controller;
 
+import com.oil.detection.common.CommonConstants;
 import com.oil.detection.common.ResponsesDTO;
 import com.oil.detection.common.ReturnCode;
+import com.oil.detection.domain.Pic;
+import com.oil.detection.domain.Product;
 import com.oil.detection.domain.Supplier;
 import com.oil.detection.domain.UserAttention;
 import com.oil.detection.domain.page.QueryUserAttention;
+import com.oil.detection.domain.result.RsOfferProduct;
+import com.oil.detection.service.PicService;
+import com.oil.detection.service.ProductService;
 import com.oil.detection.service.SupplierService;
 import com.oil.detection.service.UserAttentionService;
 import com.oil.detection.util.DateUtils;
@@ -19,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,25 +41,48 @@ public class UserAttentionController extends BaseControllor {
     private UserAttentionService userattentionService;
     @Resource
     private SupplierService supplierService;
+    @Resource
+    private ProductService productService;
+    @Resource
+    private PicService picService;
 
     @RequestMapping(value = "/pageList", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO pageListUserAttention(HttpServletRequest request, QueryUserAttention userattention) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
         userattention.setUserId(super.getUserInfo(request).getId());
+        List<RsOfferProduct> rsList = new ArrayList<RsOfferProduct>();
         List<UserAttention> userattentions = userattentionService.pageListUserAttention(userattention);
         for (UserAttention userAttention : userattentions) {
+            Product product = new Product();
+            product.setId(userAttention.getProductId());
+            Product productDb = productService.getProduct(product);
+
+            RsOfferProduct rsOfferProduct = new RsOfferProduct();
+            BeanUtils.copyProperties(productDb, rsOfferProduct);
+
+
             Supplier supplier = new Supplier();
             supplier.setId(userAttention.getSupplierId());
-            userAttention.setSupplierIdDesc(supplierService.getSupplier(supplier).getCompanyName());
-            userAttention.setTimeDesc(DateUtils.getTimeDesc(userAttention.getUpdateTime()));
+            rsOfferProduct.setCompanyName(supplierService.getSupplier(supplier).getCompanyName());
+            rsOfferProduct.setTimeDesc(DateUtils.getTimeDesc(userAttention.getUpdateTime()));
+
+            Pic pic = new Pic();
+            pic.setType(CommonConstants.Common.TYPE_2);
+            pic.setOwnerId(userAttention.getProductId());
+            List<Pic> pics = picService.listPic(pic);
+            if(pics!=null && !pics.isEmpty()){
+                rsOfferProduct.setPicUrl(pics.get(0).getId()+"");
+            }
+
+            rsList.add(rsOfferProduct);
         }
 
         UserAttention userAttentionPage = new UserAttention();
         BeanUtils.copyProperties(userattention, userAttentionPage);
         userattention.setTotalRows(userattentionService.countUserAttention(userAttentionPage));
 
-        responsesDTO.setData(userattentions);
+        responsesDTO.setData(rsList);
         return responsesDTO;
     }
 

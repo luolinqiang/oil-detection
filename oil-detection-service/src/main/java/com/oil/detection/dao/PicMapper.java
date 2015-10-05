@@ -16,6 +16,14 @@ public interface PicMapper {
     List<Pic> listPic(Pic pic);
 
     /**
+     * 查询列表
+     *
+     * @param pic
+     * @return
+     */
+    List<Pic> listPicNoContent(Pic pic);
+
+    /**
      * 查询总数
      *
      * @param pic

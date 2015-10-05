@@ -110,6 +110,7 @@ public class PurchaseController extends BaseControllor {
     @ResponseBody
     public ResponsesDTO savePurchase(Purchase purchase) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        purchase.setCreateTime(new Date());
         purchaseService.savePurchase(purchase);
         return responsesDTO;
     }

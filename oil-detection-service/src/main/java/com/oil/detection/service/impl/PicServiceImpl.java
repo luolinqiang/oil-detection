@@ -21,6 +21,11 @@ public class PicServiceImpl implements PicService {
     }
 
     @Override
+    public List<Pic> listPicNoContent(Pic pic) {
+        return picMapper.listPicNoContent(pic);
+    }
+
+    @Override
     public int countPic(Pic pic) {
         return picMapper.countPic(pic);
     }

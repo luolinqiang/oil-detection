@@ -8,6 +8,8 @@ import java.util.List;
 public interface PicService {
     List<Pic> listPic(Pic pic);
 
+    List<Pic> listPicNoContent(Pic pic);
+
     int countPic(Pic pic);
 
     List<Pic> pageListPic(QueryPic pic);

@@ -25,6 +25,7 @@
         <id column="state" property="state" jdbcType="TINYINT"/>
         <id column="remark" property="remark" jdbcType="VARCHAR"/>
         <id column="user_id" property="userId" jdbcType="BIGINT"/>
+        <id column="product_id" property="productId" jdbcType="BIGINT"/>
     </resultMap>
     <!-- 所有列信息  -->
     <sql id="All_Column">
@@ -43,7 +44,8 @@
             update_time,
             state,
             remark,
-                user_id
+            user_id,
+                product_id
         </sql>
     <!-- 动态列信息  -->
     <sql id="Dynamic_Column">
@@ -62,6 +64,7 @@
         <if test="state!= null">state,</if>
         <if test="remark!= null">remark,</if>
         <if test="userId!= null">user_id,</if>
+        <if test="productId!= null">product_id,</if>
     </sql>
     <!-- 动态值信息  -->
     <sql id="Dynamic_Value">
@@ -69,7 +72,7 @@
         <if test="purchaseType!= null">#{purchaseType,jdbcType=TINYINT},</if>
         <if test="qualityStandard!= null">#{qualityStandard,jdbcType=BIGINT},</if>
         <if test="productModel!= null">#{productModel,jdbcType=BIGINT},</if>
-        <if test="number!= null">#{number,jdbcType=NUMBER},</if>
+        <if test="number!= null">#{number,jdbcType=BIGINT},</if>
         <if test="payType!= null">#{payType,jdbcType=BIGINT},</if>
         <if test="deliveryType!= null">#{deliveryType,jdbcType=BIGINT},</if>
         <if test="deliveryAddr!= null">#{deliveryAddr,jdbcType=VARCHAR},</if>
@@ -80,6 +83,7 @@
         <if test="state!= null">#{state,jdbcType=TINYINT},</if>
         <if test="remark!= null">#{remark,jdbcType=VARCHAR},</if>
         <if test="userId!= null">#{userId,jdbcType=BIGINT},</if>
+        <if test="productId!= null">#{productId,jdbcType=BIGINT},</if>
     </sql>
 
     <!-- 动态设置值信息  -->
@@ -88,7 +92,7 @@
         <if test="purchaseType!= null">purchase_type = #{purchaseType,jdbcType=TINYINT},</if>
         <if test="qualityStandard!= null">quality_standard = #{qualityStandard,jdbcType=BIGINT},</if>
         <if test="productModel!= null">product_model = #{productModel,jdbcType=BIGINT},</if>
-        <if test="number!= null">number = #{number,jdbcType=NUMBER},</if>
+        <if test="number!= null">number = #{number,jdbcType=BIGINT},</if>
         <if test="payType!= null">pay_type = #{payType,jdbcType=BIGINT},</if>
         <if test="deliveryType!= null">delivery_type = #{deliveryType,jdbcType=BIGINT},</if>
         <if test="deliveryAddr!= null">delivery_addr = #{deliveryAddr,jdbcType=VARCHAR},</if>
@@ -99,6 +103,7 @@
         <if test="state!= null">state = #{state,jdbcType=TINYINT},</if>
         <if test="remark!= null">remark = #{remark,jdbcType=VARCHAR},</if>
         <if test="userId!= null">user_id = #{userId,jdbcType=BIGINT},</if>
+        <if test="productId!= null">product_id = #{productId,jdbcType=BIGINT},</if>
     </sql>
 
     <!-- 动态where值信息  -->
@@ -108,7 +113,7 @@
         <if test="purchaseType != null">AND purchase_type = #{purchaseType, jdbcType=TINYINT}</if>
         <if test="qualityStandard != null">AND quality_standard = #{qualityStandard, jdbcType=BIGINT}</if>
         <if test="productModel != null">AND product_model = #{productModel, jdbcType=BIGINT}</if>
-        <if test="number != null">AND number = #{number, jdbcType=NUMBER}</if>
+        <if test="number != null">AND number = #{number, jdbcType=BIGINT}</if>
         <if test="payType != null">AND pay_type = #{payType, jdbcType=BIGINT}</if>
         <if test="deliveryType != null">AND delivery_type = #{deliveryType, jdbcType=BIGINT}</if>
         <if test="deliveryAddr != null">AND delivery_addr = #{deliveryAddr, jdbcType=VARCHAR}</if>
@@ -119,6 +124,7 @@
         <if test="state != null">AND state = #{state, jdbcType=TINYINT}</if>
         <if test="remark != null">AND remark = #{remark, jdbcType=VARCHAR}</if>
         <if test="userId != null">AND user_id = #{userId, jdbcType=BIGINT}</if>
+        <if test="productId != null">AND product_id = #{productId, jdbcType=BIGINT}</if>
     </sql>
 
     <!-- 查询列表  -->

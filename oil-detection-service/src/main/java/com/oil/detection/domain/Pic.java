@@ -15,6 +15,15 @@ public class Pic implements Serializable {
     private Integer state;
     private String remark;
     private String linkUrl;
+    private byte[] content;
+
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
 
     public Long getId() {
         return id;

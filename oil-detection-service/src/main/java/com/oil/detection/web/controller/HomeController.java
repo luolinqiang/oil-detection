@@ -7,11 +7,13 @@ package com.oil.detection.web.controller;
 import com.oil.detection.common.CommonConstants;
 import com.oil.detection.common.ResponsesDTO;
 import com.oil.detection.common.ReturnCode;
+import com.oil.detection.domain.Area;
 import com.oil.detection.domain.HomeSetting;
 import com.oil.detection.domain.Product;
 import com.oil.detection.domain.Supplier;
 import com.oil.detection.domain.result.RsHomeProduct;
 import com.oil.detection.domain.result.RsHomeSupplier;
+import com.oil.detection.service.AreaService;
 import com.oil.detection.service.HomeSettingService;
 import com.oil.detection.service.SupplierService;
 import com.oil.detection.util.TransferUtils;
@@ -40,6 +42,8 @@ public class HomeController extends BaseControllor {
     private HomeSettingService homeSettingService;
     @Resource
     private SupplierService supplierService;
+    @Resource
+    private AreaService areaService;
 
     @RequestMapping(value = "/banner", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -67,7 +71,7 @@ public class HomeController extends BaseControllor {
             Supplier supplier = new Supplier();
             supplier.setId(setting.getTargetId());
             Supplier supplierR = supplierService.getSupplier(supplier);
-
+            supplierR.setType(setting.getType());
             rsSupplierHomes.add((RsHomeSupplier) TransferUtils.transfer(supplierR, RsHomeSupplier.class));
         }
 
@@ -85,7 +89,13 @@ public class HomeController extends BaseControllor {
             RsHomeProduct rsHomeProduct = (RsHomeProduct) TransferUtils.transfer(product, RsHomeProduct.class);
             Supplier supplier = new Supplier();
             supplier.setId(product.getId());
-            rsHomeProduct.setSupplierName(supplierService.getSupplier(supplier).getCompanyName());
+            Supplier supplierDb = supplierService.getSupplier(supplier);
+            rsHomeProduct.setSupplierName(supplierDb.getCompanyName());
+
+            Area area = new Area();
+            area.setId(supplierDb.getAreaId());
+            Area areaDb = areaService.getArea(area);
+            rsHomeProduct.setAreaDesc(areaDb.getAreaName());
             rs.add(rsHomeProduct);
         }
         responsesDTO.setData(rs);

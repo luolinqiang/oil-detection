@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
+/**
+ * 数据字典相关接口
+ */
 @Controller
 @RequestMapping(value = "/dic")
 public class DictionaryController extends BaseControllor {
@@ -44,6 +48,7 @@ public class DictionaryController extends BaseControllor {
     @ResponseBody
     public ResponsesDTO saveDictionary(Dictionary dictionary) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        dictionary.setCreateTime(new Date());
         dictionaryService.saveDictionary(dictionary);
         return responsesDTO;
     }

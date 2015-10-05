@@ -242,8 +242,8 @@
             <if test="type != null">AND p.type = #{type, jdbcType=TINYINT}</if>
             <if test="qualityStandard != null">AND p.quality_standard = #{qualityStandard, jdbcType=BIGINT}</if>
             <if test="areaId != null">AND s.areaId = #{areaId, jdbcType=BIGINT}</if>
+            <if test="orderDesc != null">order by ${orderDesc}</if>
             <include refid="pagingFooter"/>
-            <if test="areaId != null">order by ${orderDesc}</if>
         </where>
         <include refid="pagingFooter"/>
         <include refid="countingFooter"/>
@@ -285,8 +285,8 @@
             <if test="type != null">AND p.type = #{type, jdbcType=TINYINT}</if>
             <if test="qualityStandard != null">AND p.quality_standard = #{qualityStandard, jdbcType=BIGINT}</if>
             <if test="areaId != null">AND s.areaId = #{areaId, jdbcType=BIGINT}</if>
+            <if test="orderDesc != null">order by ${orderDesc}</if>
             <include refid="pagingFooter"/>
-            <if test="areaId != null">order by ${orderDesc}</if>
         </where>
     </select>
 
