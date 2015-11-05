@@ -20,6 +20,7 @@ import com.oil.detection.util.TransferUtils;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,6 +45,16 @@ public class HomeController extends BaseControllor {
     private SupplierService supplierService;
     @Resource
     private AreaService areaService;
+
+    @RequestMapping(value = "/index")
+    public String index(Model model, HttpServletRequest request) throws Exception {
+        return "index";
+    }
+
+    @RequestMapping(value = "/more")
+    public String more(Model model, HttpServletRequest request) throws Exception {
+        return "more";
+    }
 
     @RequestMapping(value = "/banner", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody

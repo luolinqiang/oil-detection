@@ -140,6 +140,20 @@
             sidebar.render();
         })();
 
+        function loadBanner(){
+            $.ajax({
+                type:'get',
+                url:'/banner',
+                timeout:30000,
+                dataType:'json',
+                success:function(data){
+                     alert(JSON.stringify(data));
+                },
+                error:function(){
+                    console.log('error');
+                }
+            });
+        }
 
         function loadRecommend(){
             $.ajax({
