@@ -8,6 +8,8 @@ import com.oil.detection.dao.UserMapper;
 import com.oil.detection.domain.User;
 import com.oil.detection.log.RunLog;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -100,5 +102,12 @@ public abstract class BaseControllor extends GlobalControllor {
 //                    + user.getUserType(), user.getUserId());
 //            commonCache.remove(key);
         }
+    }
+
+    @ModelAttribute
+    public void clearCache(HttpServletRequest request,HttpServletResponse response){
+        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("expires", -1);
     }
 }

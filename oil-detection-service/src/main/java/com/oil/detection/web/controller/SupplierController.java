@@ -104,18 +104,4 @@ public class SupplierController extends BaseControllor {
         return responsesDTO;
     }
 
-    @RequestMapping(value = "/shop-{shopId}")
-    public String shopDetail(@PathVariable("shopId") Long shopId, Model model, HttpServletRequest request) throws Exception {
-
-
-        return "shop";
-    }
-
-    @RequestMapping(value = "/product-{pid}")
-    public String productDetail(@PathVariable("pid") Long pid, Model model, HttpServletRequest request) throws Exception {
-
-
-        return "product";
-    }
-
 }
