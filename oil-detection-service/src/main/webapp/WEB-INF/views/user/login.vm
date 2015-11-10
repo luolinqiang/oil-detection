@@ -2,17 +2,17 @@
 #parse("/layout/header.vm")
 <body style="background-color:#1c1c1c;">
     <div style="width:100%;text-align:center;padding-top:50px;padding-bottom:20px;">
-        <img src="res/v4/images/logo.png" style="width:40%;" />
+        <img src="#springUrl('')/res/v4/images/logo.png" style="width:40%;" />
     </div>
     <div class="am-g">
         <div class="am-u-sm-centered" style="padding-left:10px;padding-right:10px;">
             <form method="post" class="am-form am-form-inline">
                 <div class="am-form-group am-form-icon" style="position:relative;background-color:#fff;width:100%;" >
-                    <img src="res/v4/images/icon-user.png" style="height:100%;margin-top:auto;margin-bottom:auto;position:absolute;z-index:1000;" />
+                    <img src="#springUrl('')/res/v4/images/icon-user.png" style="height:100%;margin-top:auto;margin-bottom:auto;position:absolute;z-index:1000;" />
                     <input type="tel" name="mobile" id="mobile" class="am-form-field" placeholder="手机号" style="width:70%;text-align:center;margin-left:64px;border:0;">
                 </div>
                 <div class="am-form-group am-form-icon" style="position:relative;background-color:#fff;width:100%;" >
-                    <img src="res/v4/images/icon-lock.png" style="height:100%;margin-top:auto;margin-bottom:auto;position:absolute;z-index:1000;" />
+                    <img src="#springUrl('')/res/v4/images/icon-lock.png" style="height:100%;margin-top:auto;margin-bottom:auto;position:absolute;z-index:1000;" />
                     <input type="password" name="password" id="password" class="am-form-field" placeholder="密码" style="width:70%;text-align:center;margin-left:64px;border:0;">
                 </div>
                 <label for="remember-me">

@@ -103,11 +103,4 @@ public abstract class BaseControllor extends GlobalControllor {
 //            commonCache.remove(key);
         }
     }
-
-    @ModelAttribute
-    public void clearCache(HttpServletRequest request,HttpServletResponse response){
-        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Pragma", "no-cache");
-        response.setDateHeader("expires", -1);
-    }
 }

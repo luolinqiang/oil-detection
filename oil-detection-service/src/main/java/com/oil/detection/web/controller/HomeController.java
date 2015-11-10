@@ -20,6 +20,7 @@ import com.oil.detection.util.TransferUtils;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,7 +35,6 @@ import java.util.List;
  * 首页相关接口
  */
 @Controller
-@RequestMapping(value = "/h")
 public class HomeController extends BaseControllor {
 
     private static final Logger logger = Logger.getLogger(HomeController.class);
@@ -45,19 +45,17 @@ public class HomeController extends BaseControllor {
     @Resource
     private AreaService areaService;
 
-    @RequestMapping(value = "/banner", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public ResponsesDTO banner(HttpServletRequest request, HttpServletResponse response) {
-        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+    @RequestMapping(value = "/index")
+    public String index(Model model, HttpServletRequest request) throws Exception {
         HomeSetting homeSetting = new HomeSetting();
         homeSetting.setType(CommonConstants.HomeSetting.TYPE_BANNER);
         homeSetting.setState(CommonConstants.Common.STATE_2);
         List<HomeSetting> homeSettings = homeSettingService.listHomeSetting(homeSetting);
-        responsesDTO.setData(homeSettings);
-        return responsesDTO;
+        model.addAttribute("banners", homeSettings);
+        return "index";
     }
 
-    @RequestMapping(value = "/directSale", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/h/ajax/directSale", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO directSale(HttpServletRequest request, HttpServletResponse response) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
@@ -79,7 +77,7 @@ public class HomeController extends BaseControllor {
         return responsesDTO;
     }
 
-    @RequestMapping(value = "/product", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/h/ajax/recommend", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO product(HttpServletRequest request, HttpServletResponse response) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
@@ -102,7 +100,7 @@ public class HomeController extends BaseControllor {
         return responsesDTO;
     }
 
-    @RequestMapping(value = "/link", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/h/ajax/link", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO link(HttpServletRequest request, HttpServletResponse response) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);

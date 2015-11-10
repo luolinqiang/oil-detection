@@ -16,6 +16,14 @@
 
     <mvc:interceptors>
         <bean class="com.oil.detection.web.interceptor.RequestHandleInterceptor"/>
+
+
+        <!-- 强制登录用户检查 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/u/more"/>
+
+            <bean class="com.oil.detection.web.interceptor.TicketRequiredInterceptor"></bean>
+        </mvc:interceptor>
     </mvc:interceptors>
 
     <bean id="cookieUtils" class="com.jd.common.web.cookie.CookieUtils">

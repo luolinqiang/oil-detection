@@ -57,7 +57,7 @@
             </a>
         </li>
         <li>
-            <a href="/more" class="">
+            <a href="/u/more" class="">
                 <span class="am-icon-ellipsis-h am-icon-lg"></span><span class="am-navbar-label">更多</span>
             </a>
         </li>
