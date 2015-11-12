@@ -23,7 +23,8 @@ public class TicketRequiredInterceptor extends AbstractInterceptor {
     public final boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)throws Exception {
         String cookieValue = cookieUtils.getCookieValue(request, CommonConstants.OIL_DETECTION_PIN_COOKIE);
         if (null == cookieValue) {
-            response.sendRedirect("/u/login");
+            String redirectUrl = request.getRequestURI();
+            response.sendRedirect("/u/login?redirectUrl=" + redirectUrl);
             return false;
         }
         return true;

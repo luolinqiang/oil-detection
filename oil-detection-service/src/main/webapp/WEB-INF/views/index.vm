@@ -140,19 +140,20 @@
                 dataType:'json',
                 success:function(data){
 //                    alert(JSON.stringify(data));
-                    return;
+                    var list = data.data;
                     $('#csbj div[data-recommend]').remove();
                     $('#update_time div[time-recommend]').remove();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var rec = data[i];
-                            var div_time = $('<div>更新时间&nbsp;&nbsp;&nbsp;'+rec.updateTime+'</div>');
+                    if(list.length > 0){
+                        for(var i = 0;i < list.length;i++){
+                            var rec = list[i];
+                            var updateTime = new Date(rec.updateTime).formatDate('yyyy-mm-dd hh:mm:ss');
+                            var div_time = $('<div>更新时间&nbsp;&nbsp;&nbsp;'+ updateTime +'</div>');
                             $('#update_time').html(div_time);
                             var div = $('<div class="am-g" data-recommend style="padding:0px 10px 0px 10px;"></div>');
-                            $('<div class="am-u-sm-4 toe-1 recommend" style="font-size:12px;"><a href="/weisite/shop-' + rec.items[i].shop_id + '.html">' + rec.items[i].name + '</a></div>').appendTo(div);
-                            $('<div class="am-u-sm-4 toe-1 recommend" style="font-size:12px;"><a href="/weisite/item-' + rec.items[i].item_id + '.html">' + rec.items[i].title + '</a></div>').appendTo(div);
-                            $('<div class="am-u-sm-2 toe-1 recommend" style="font-size:12px;">' + rec.items[i].address+ '</div>').appendTo(div);
-                            $('<div class="am-u-sm-2 toe-1 recommend" style="font-size:12px;color:red;">' + rec.items[i].price + '</div>').appendTo(div);
+                            $('<div class="am-u-sm-4 toe-1 recommend" style="font-size:12px;"><a href="/weisite/shop-' + rec.supplierId + '.html">' + rec.supplierName + '</a></div>').appendTo(div);
+                            $('<div class="am-u-sm-4 toe-1 recommend" style="font-size:12px;"><a href="/weisite/item-' + rec.id + '.html">' + rec.name + '</a></div>').appendTo(div);
+                            $('<div class="am-u-sm-2 toe-1 recommend" style="font-size:12px;">' + rec.areaDesc+ '</div>').appendTo(div);
+                            $('<div class="am-u-sm-2 toe-1 recommend" style="font-size:12px;color:red;">' + rec.price + '</div>').appendTo(div);
                             $('#csbj').append(div);
                         }
                     }else{
