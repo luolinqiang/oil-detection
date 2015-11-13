@@ -1,0 +1,84 @@
+#set($title="修改个人信息")
+#parse("/layout/header.vm")
+<body>
+    <div style="background-color:#fff;width:100%;height:100%;text-align:center;vertical-align:middle;display: none;">
+        <i style="display:inline-block;height:100%;vertical-align:middle;"></i>
+        <div style="display:inline-block;width:70%;margin:auto;vertical-align:middle;">
+            <span style="color:green;">修改成功。</span><br>
+            <button class="am-btn am-btn-block am-btn-warning" data-href="/u/more" style="margin-top:20px;">返回</button>
+        </div>
+    </div>
+
+    <div class="am-g">
+        <div class="am-u-sm-centered">
+            <h1>修改个人信息</h1>
+            <hr>
+            <form id="form" method="post" action="/u/edit" class="am-form">
+                <input type="hidden" name="id" value="$!{user.id}">
+                <label for="username">登陆帐号:</label>
+                <input type="text" name="account" id="account" value="$!{user.userId}" readOnly="true">
+                <label for="username">姓名（必填）:</label>
+                <input type="text" name="username" id="username" value="$!{user.realName}">
+                <label for="username">公司名（必填）:</label>
+                <input type="text" name="unit" id="unit" value="$!{user.companyName}" placeHolder="公司名/个人">
+                <div class="am-cf" style="margin-top:15px;">
+                    <div class="am-fl" style="width:45%;">
+                        <input type="button" value="返回" data-href="/u/more" class="am-btn am-btn-default am-btn-block">
+                    </div>
+                    <div class="am-fr" style="width:45%;">
+                        <input type="button" value="提交" onclick="submitEdit();" class="am-btn am-btn-warning am-btn-block">
+                    </div>
+                </div>
+            </form>
+            <hr>
+        </div>
+    </div>
+    <div style="width:100%;min-height:100px;">
+    </div>
+    #parse("/layout/tabbar.vm")
+    #parse("/layout/alert.vm")
+    #parse("/layout/loading.vm")
+    <script type="text/javascript">
+        function submitEdit(){
+            var uid = "$!{user.id}";
+            var account = $('#account').val();
+            var username = $('#username').val();
+            var unit = $('#unit').val();
+            if(username == null || username == ''){
+                messageAlert('请填写姓名！');
+                return;
+            }
+            if(unit == null || unit == ''){
+                messageAlert('请填写公司名，如果是个人，请填写“个人”！');
+                return;
+            }
+            showLoading();
+            $.ajax({
+                url : '/u/ajax/modify',
+                type : 'POST',
+                data : {
+                    id : uid,
+                    userId : account,
+                    realName : username,
+                    companyName : unit
+                },
+                dataType : 'json',
+                success : function(data){
+                    if(data.code == 0){
+                        $('body>div').css('display', '');
+                        $('.am-g').css('display', 'none');
+                    }else{
+                        messageAlert('登陆失败，请核对手机号和密码！^_^');
+                    }
+                },
+                error : function(){
+                    messageAlert('系统出错，请稍后再试！^_^');
+                },
+                complete : function(){
+                    hideLoading();
+                }
+            });
+        }
+    </script>
+</body>
+

@@ -56,6 +56,15 @@ public class UserController extends BaseControllor {
         return "more";
     }
 
+    @RequestMapping(value = "/edit")
+    public String edit(Model model, HttpServletRequest request) throws Exception {
+        User user = new User();
+        user.setId(super.getUserInfo(request).getId());
+        user = userService.getUser(user);
+        model.addAttribute("user", user);
+        return "/user/edit";
+    }
+
     @RequestMapping(value = "/ajax/reg", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO reg(HttpServletRequest request, HttpServletResponse response,

@@ -18,7 +18,7 @@
             <div class="am-u-sm-3" style="padding:0;">
                 <div class="icon-item" data-href="/weisite/search-diesel.html">
                     <div>
-                        <img src="res/v4/images/index-icon-01.png"/>
+                        <img src="/res/v4/images/index-icon-01.png"/>
                     </div>
                     <div>雷达寻油</div>
                 </div>
@@ -26,7 +26,7 @@
             <div class="am-u-sm-3" style="padding:0;">
                 <div class="icon-item" data-href="/zhaoche">
                     <div>
-                        <img src="res/v4/images/index-icon-02.png"/>
+                        <img src="/res/v4/images/index-icon-02.png"/>
                     </div>
                     <div>一键找车</div>
                 </div>
@@ -34,7 +34,7 @@
             <div class="am-u-sm-3" style="padding:0;">
                 <div class="icon-item" data-href="/">
                     <div>
-                        <img src="res/v4/images/index-icon-03.png"/>
+                        <img src="/res/v4/images/index-icon-03.png"/>
                     </div>
                     <div>我要报价</div>
                 </div>
@@ -42,7 +42,7 @@
             <div class="am-u-sm-3" style="padding:0;">
                 <div class="icon-item" data-href="/">
                     <div>
-                        <img src="res/v4/images/index-icon-04.png"/>
+                        <img src="/res/v4/images/index-icon-04.png"/>
                     </div>
                     <div>我要采购</div>
                 </div>

@@ -17,7 +17,7 @@
             <span style="line-height:40px;font-size:14px;">绑定微信号</span>
             <img src="/res/v4/images/arrow_right_64_24.png" style="width:40px;height:40px;float:right;"/>
         </div>
-        <div style="padding:5px 5px 5px 20px;border-top:1px solid #999;" data-href="/weisite/user-edit.html">
+        <div style="padding:5px 5px 5px 20px;border-top:1px solid #999;" data-href="/u/edit">
             <img src="/res/v4/images/xiugaiziliao.png" style="width:40px;height:40px;margin-right:10px;"/>
             <span style="line-height:40px;font-size:14px;">修改个人资料</span>
             <img src="/res/v4/images/arrow_right_64_24.png" style="width:40px;height:40px;float:right;"/>
