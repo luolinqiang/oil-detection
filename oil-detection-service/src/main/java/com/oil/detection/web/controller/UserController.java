@@ -12,6 +12,7 @@ import com.oil.detection.domain.param.UserModify;
 import com.oil.detection.domain.param.UserReg;
 import com.oil.detection.domain.param.UserReset;
 import com.oil.detection.service.UserService;
+import com.oil.detection.util.DESUtil;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -60,12 +61,17 @@ public class UserController extends BaseControllor {
     public ResponsesDTO reg(HttpServletRequest request, HttpServletResponse response,
                             @Valid UserReg userReg, BindingResult valid) {
         logger.debug("UserControllor--->reg--->start");
-
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        /*加密*/
+        try {
+            String encryptString = DESUtil.encrypt(userReg.getPassword(), "12345678");
+            userReg.setPassword(encryptString);
+            userReg.setConfirmPassword(encryptString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         userService.reg(userReg, valid);
-
         responsesDTO = regLogin(response, userReg, valid);
-
         return responsesDTO;
     }
 
@@ -84,16 +90,18 @@ public class UserController extends BaseControllor {
     public ResponsesDTO loginUser(HttpServletResponse response, @Valid UserLogin userLogin, BindingResult valid) {
         logger.debug("LoginController--->login--->start");
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
-
 //        if (StringUtils.isBlank(userLogin.getDevice())) {
 //            return new ResponsesDTO(ReturnCode.ERROR_DEVICE_NULL);
 //        }
-
+        try {
+            String encryptString = DESUtil.encrypt(userLogin.getPassword(), "12345678");
+            userLogin.setPassword(encryptString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         User login = userService.login(userLogin, valid);
         responsesDTO.setData(login);
-
         setCookieRedis(response, login, responsesDTO);
-
         return responsesDTO;
     }
 

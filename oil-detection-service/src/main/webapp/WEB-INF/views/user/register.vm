@@ -38,7 +38,8 @@
     #parse("/layout/alert.vm")
     #parse("/layout/loading.vm")
     <script type="text/javascript">
-        var contextPath = ''
+        var contextPath = '';
+        var redirectUrl = Request.QueryString('redirectUrl');
         $('#register-btn').on('click',function(){
             var mobile = $('#mobile').val();
             var password = $('#password').val();
@@ -71,50 +72,22 @@
             }
             showLoading();
             $.ajax({
-                url : contextPath + '/weisite/register/submit',
+                url : contextPath + '/u/ajax/reg',
                 type : 'POST',
                 data : {
-                    username : username,
+                    realName : username,
                     password : password,
-                    mobile : mobile,
-                    code : code,
-                    unit : unit
+                    confirmPassword : password,
+                    userId : mobile,
+                    verifyCode : code,
+                    companyName : unit
                 },
                 dataType : 'json',
                 success : function(data){
-                    if(data.success){
+                    alert(JSON.stringify(data));
+                    if(data.code == 0){
                         alert("注册成功!");
-                        window.location.href = Wei.up + "/login" + Wei.us + "?redirectUrl=2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22";
-                        /*
-                        $.ajax({
-                            url : contextPath + '/j_spring_security_check',
-                            type : 'POST',
-                            data : {
-                                username : mobile,
-                                password : password,
-                                _spring_security_remember_me : true
-                            },
-                            dataType : 'json',
-                            success : function(data){
-                                if(data.success){
-                                    var redirectUrl = '2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22';
-                                    if(redirectUrl == ''){
-                                        window.location.href = Wei.up + '/index' + Wei.us;
-                                    }else{
-                                        window.location.href = Wei.up + '/redirect' + Wei.us + '?url=' + redirectUrl;
-                                    }
-                                }else{
-                                    messageAlert('登陆失败，请核对手机号和密码！^_^');
-                                }
-                            },
-                            error : function(){
-                                messageAlert('系统出错，请稍后再试！^_^');
-                            },
-                            complete : function(){
-
-                            }
-                        });
-                        */
+                        window.location.href = redirectUrl;
                     }else{
                         messageAlert(data.msg);
                     }
@@ -128,7 +101,7 @@
             });
         });
         $('#login-btn').on('click',function(){
-            window.location.href = Wei.up + "/login" + Wei.us + "?redirectUrl=2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22";
+            window.location.href = "/u/login?redirectUrl=" + redirectUrl;
         });
         var smsErrorCode = {
             'wrongNumber' : function(){
@@ -147,7 +120,7 @@
 
             showLoading();
             $.ajax({
-                url : Wei.up + '/register/sms-code' + Wei.us,
+                url : '',
                 type : 'POST',
                 data : {
                     mobile : mobile

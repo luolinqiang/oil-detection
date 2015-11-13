@@ -9,6 +9,7 @@ import com.oil.detection.domain.param.UserReg;
 import com.oil.detection.domain.param.UserReset;
 import com.oil.detection.exception.CustomRuntimeException;
 import com.oil.detection.service.UserService;
+import com.oil.detection.util.DESUtil;
 import com.oil.detection.util.ValidateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,6 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userReg, user);
         user.setPhone(userReg.getUserId());
         user.setCreateTime(new Date());
-
         userMapper.saveUser(user);
     }
 
