@@ -84,7 +84,7 @@
                 },
                 dataType : 'json',
                 success : function(data){
-                    alert(JSON.stringify(data));
+//                    alert(JSON.stringify(data));
                     if(data.code == 0){
                         alert("注册成功!");
                         window.location.href = redirectUrl;

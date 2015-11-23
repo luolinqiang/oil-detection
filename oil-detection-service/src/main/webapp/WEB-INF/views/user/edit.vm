@@ -18,9 +18,9 @@
                 <label for="username">登陆帐号:</label>
                 <input type="text" name="account" id="account" value="$!{user.userId}" readOnly="true">
                 <label for="username">姓名（必填）:</label>
-                <input type="text" name="username" id="username" value="$!{user.realName}">
+                <input type="text" name="username" id="username" value="$!escape.html($!{user.realName})">
                 <label for="username">公司名（必填）:</label>
-                <input type="text" name="unit" id="unit" value="$!{user.companyName}" placeHolder="公司名/个人">
+                <input type="text" name="unit" id="unit" value="$!escape.html($!{user.companyName})" placeHolder="公司名/个人">
                 <div class="am-cf" style="margin-top:15px;">
                     <div class="am-fl" style="width:45%;">
                         <input type="button" value="返回" data-href="/u/more" class="am-btn am-btn-default am-btn-block">
@@ -68,7 +68,7 @@
                         $('body>div').css('display', '');
                         $('.am-g').css('display', 'none');
                     }else{
-                        messageAlert('登陆失败，请核对手机号和密码！^_^');
+                        messageAlert('修改失败，请核对手机号和密码！^_^');
                     }
                 },
                 error : function(){

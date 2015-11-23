@@ -53,6 +53,10 @@ public class UserController extends BaseControllor {
 
     @RequestMapping(value = "/more")
     public String more(Model model, HttpServletRequest request) throws Exception {
+        User user = new User();
+        user.setId(super.getUserInfo(request).getId());
+        user = userService.getUser(user);
+        model.addAttribute("user", user);
         return "more";
     }
 
@@ -72,6 +76,8 @@ public class UserController extends BaseControllor {
         logger.debug("UserControllor--->reg--->start");
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
         /*加密*/
+        UserReg uReg = new UserReg();
+        BeanUtils.copyProperties(userReg, uReg);
         try {
             String encryptString = DESUtil.encrypt(userReg.getPassword(), "12345678");
             userReg.setPassword(encryptString);
@@ -80,7 +86,7 @@ public class UserController extends BaseControllor {
             e.printStackTrace();
         }
         userService.reg(userReg, valid);
-        responsesDTO = regLogin(response, userReg, valid);
+        responsesDTO = regLogin(response, uReg, valid);
         return responsesDTO;
     }
 

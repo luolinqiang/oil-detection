@@ -4,11 +4,11 @@
     <div class="card" style="padding:10px;">
         <div>
             <span style="line-height:24px;color:#8c8c8c;font-size:14px;">公司名：</span>
-            <span style="line-height:24px;font-size:14px;"></span>
+            <span style="line-height:24px;font-size:14px;">$!escape.html($!{user.companyName})</span>
         </div>
         <div>
             <span style="line-height:24px;color:#8c8c8c;font-size:14px;">联系人：</span>
-            <span style="line-height:24px;font-size:14px;">陈久久</span>
+            <span style="line-height:24px;font-size:14px;">$!escape.html($!{user.realName})</span>
         </div>
     </div>
     <div class="card" style="">
