@@ -1,0 +1,63 @@
+#set($title="反馈意见")
+#parse("/layout/header.vm")
+<body>
+    <form method="post" id="form">
+        <div class="am-g">
+            <div class="am-u-sm-12" style="padding-top:5px;padding-bottom:5px;">
+                <label style="color:#000000;">请输入反馈内容</label>
+            </div>
+            <div class="am-u-sm-12">
+                <textarea class="" rows="5" id="content" name="content" style="width:100%;"></textarea>
+            </div>
+            <div class="am-u-sm-12" style="color:#8c8c8c;font-size:12px;">
+                输入您的反馈信息。
+            </div>
+            <div class="am-u-sm-12" style="text-align:center;padding:10px;">
+                <button type="button" class="am-btn am-btn-warning" style="width:300px;" id="btn-submit">提交</button>
+            </div>
+
+            <div class="am-u-sm-12" style="text-align:center;margin-top:20px;">
+                <div style="width:300px;border:1px solid #e87823;margin:auto;color:#e87823;">
+                    <span style="line-height:40px;">客服热线：<a href='tel:'></a></span>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    #parse("/layout/tabbar.vm")
+    #parse("/layout/loading.vm")
+    #parse("/layout/alert.vm")
+    <script type='text/javascript'>
+        $('#btn-submit').on('click',function(){
+            var content = $('#content').val();
+            if(content == ''){
+                messageAlert('请填写反馈内容！');
+                return;
+            }
+            showLoading();
+            $.ajax({
+                url : '/feedback/save',
+                type : 'POST',
+                dataType : 'json',
+                data : {
+                    content : content
+                },
+                success : function(data){
+                    if(data.code == 0){
+                        messageAlert('提交成功');
+                        $('#form')[0].reset();
+                    }else{
+                        messageAlert('提交失败:' + data.msg);
+                    }
+                },
+                error : function(){
+                    messageAlert('提交出错，请稍后再试。');
+                },
+                complete : function(){
+                    hideLoading();
+                }
+            });
+        })
+    </script>
+</body>
+
