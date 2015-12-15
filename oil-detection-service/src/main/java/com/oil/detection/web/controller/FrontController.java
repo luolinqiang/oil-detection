@@ -2,8 +2,16 @@ package com.oil.detection.web.controller;
 
 import com.oil.detection.common.CommonConstants;
 import com.oil.detection.domain.HomeSetting;
+import com.oil.detection.domain.Pic;
+import com.oil.detection.domain.Product;
+import com.oil.detection.domain.Supplier;
+import com.oil.detection.domain.result.RsProductDetail;
 import com.oil.detection.service.HomeSettingService;
+import com.oil.detection.service.PicService;
+import com.oil.detection.service.ProductService;
+import com.oil.detection.service.SupplierService;
 import com.oil.detection.web.base.BaseControllor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +32,11 @@ import java.util.List;
 public class FrontController extends BaseControllor {
 
     @Resource
-    private HomeSettingService homeSettingService;
-
+    private PicService picService;
+    @Resource
+    private ProductService productService;
+    @Resource
+    private SupplierService supplierService;
 
     @RequestMapping(value = "/search-diesel")
     public String searchdiesel(Model model, HttpServletRequest request) throws Exception {
@@ -43,15 +54,34 @@ public class FrontController extends BaseControllor {
 
     @RequestMapping(value = "/shop-{shopId}")
     public String shopDetail(@PathVariable("shopId") Long shopId, Model model, HttpServletRequest request) throws Exception {
-
-
+        Supplier supplier = new Supplier();
+        supplier.setState(CommonConstants.Common.STATE_2);
+        supplier.setId(shopId);
+        supplier = supplierService.getSupplier(supplier);
+        model.addAttribute("supplier", supplier);
         return "shop";
     }
 
     @RequestMapping(value = "/product-{pid}")
     public String productDetail(@PathVariable("pid") Long pid, Model model, HttpServletRequest request) throws Exception {
+        Product product = new Product();
+        product.setId(pid);
+        RsProductDetail rsProductDetail = new RsProductDetail();
+        Product productDb = productService.getProduct(product);
+        BeanUtils.copyProperties(productDb, rsProductDetail);
 
+        Supplier supplier = new Supplier();
+        supplier.setId(productDb.getSupplierId());
+        Supplier supplierDb = supplierService.getSupplier(supplier);
+        rsProductDetail.setSupplier(supplierDb);
 
+        Pic pic = new Pic();
+        pic.setType(CommonConstants.Common.TYPE_2);
+        pic.setOwnerId(pid);
+        List<Pic> pics = picService.listPicNoContent(pic);
+        rsProductDetail.setPics(pics);
+
+        model.addAttribute("product", rsProductDetail);
         return "product";
     }
 

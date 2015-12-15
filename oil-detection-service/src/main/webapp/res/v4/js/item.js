@@ -2,12 +2,14 @@ $(function(){
     init();
 });
 function init(){
+
     $.ajax({
-        url : Wei.up + '/watch/' + itemId + Wei.us,
+        url : '/attention/get?productId=' + itemId ,
         type : 'get',
         dataType : 'json',
         success : function(data){
-            if(data.success){
+//            alert(JSON.stringify(data));
+            if(0 == data.code){
                 var watchHtml = ''
                 if(data.isWatched){
                     $('#btn-watch-add').hide();

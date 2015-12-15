@@ -43,7 +43,7 @@
                     content : content
                 },
                 success : function(data){
-                    if(data.code == 0){
+                    if(0 == data.code){
                         messageAlert('提交成功');
                         $('#form')[0].reset();
                     }else{

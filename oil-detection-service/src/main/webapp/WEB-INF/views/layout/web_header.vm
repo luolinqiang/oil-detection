@@ -87,3 +87,13 @@
 </style>
 <script src="/res/v4/js/lib/template.js"></script>
 <script src="/res/v4/js/common.js"></script>
+<script type="text/javascript">
+    var Wei = {
+        ctx : '',
+        up : '',
+        us : '',
+        img : {
+            noPic : '/res/v4/images/no-pic.jpg'
+        }
+    }
+</script>

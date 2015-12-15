@@ -86,7 +86,7 @@ public class HomeController extends BaseControllor {
         for (Product product : products) {
             RsHomeProduct rsHomeProduct = (RsHomeProduct) TransferUtils.transfer(product, RsHomeProduct.class);
             Supplier supplier = new Supplier();
-            supplier.setId(product.getId());
+            supplier.setId(product.getSupplierId());
             Supplier supplierDb = supplierService.getSupplier(supplier);
             rsHomeProduct.setSupplierName(supplierDb.getCompanyName());
 

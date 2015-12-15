@@ -38,8 +38,6 @@ public class ProductController extends BaseControllor {
     @Resource
     private SupplierService supplierService;
     @Resource
-    private PicService picService;
-    @Resource
     private UserAttentionService userAttentionService;
 
     /**
@@ -60,11 +58,6 @@ public class ProductController extends BaseControllor {
 
         Product productDb = productService.getProduct(product);
 
-        Pic pic = new Pic();
-        pic.setType(CommonConstants.Common.TYPE_2);
-        pic.setOwnerId(product.getId());
-        List<Pic> pics = picService.listPicNoContent(pic);
-
         UserAttention attention = new UserAttention();
         attention.setUserId(super.getUserInfo(request).getId());
         attention.setSupplierId(product.getSupplierId());
@@ -78,7 +71,6 @@ public class ProductController extends BaseControllor {
 
         BeanUtils.copyProperties(productDb, rsProductDetail);
         rsProductDetail.setSupplier(supplierDb);
-        rsProductDetail.setPics(pics);
 
         responsesDTO.setData(rsProductDetail);
         return responsesDTO;

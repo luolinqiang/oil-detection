@@ -36,7 +36,8 @@
     #parse("/layout/alert.vm")
     #parse("/layout/loading.vm")
     <script type="text/javascript">
-        var contextPath = ''
+        var contextPath = '';
+        var redirectUrl = Request.QueryString('redirectUrl');
         $('#ok-btn').on('click',function(){
             var mobile = $('#mobile').val();
             var password = $('#password').val();
@@ -68,19 +69,18 @@
             }
             showLoading();
             $.ajax({
-                url : contextPath + '/weisite/forget/submit',
+                url : contextPath + '/u/ajax/resetPwd',
                 type : 'POST',
                 data : {
                     password : password,
                     mobile : mobile,
-                    code : code
+                    verifyCode : code
                 },
                 dataType : 'json',
                 success : function(data){
-                    if(data.success){
+                    if(0 == data.code){
                         alert("修改成功!");
-                        window.location.href = Wei.up + "/login" + Wei.us + "?redirectUrl=2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22";
-
+                        window.location.href = redirectUrl;
                     }else{
                         messageAlert(data.msg);
                     }
@@ -94,7 +94,7 @@
             });
         });
         $('#login-btn').on('click',function(){
-            window.location.href = Wei.up + "/login" + Wei.us + "?redirectUrl=2BD78FFAD3825D5C1FE97CEC53B8BAD3E4DD39D218BF3C22";
+            window.location.href = "/u/login?redirectUrl=" + redirectUrl;
         });
         var smsErrorCode = {
             'wrongNumber' : function(){
@@ -113,14 +113,14 @@
 
             showLoading();
             $.ajax({
-                url : Wei.up + '/forget/sms-code' + Wei.us,
+                url : '/forget/sms-code',
                 type : 'POST',
                 data : {
                     mobile : mobile
                 },
                 dataType : 'json',
                 success : function(data){
-                    if(data.success){
+                    if(0 == data.code){
                         countdown = 60;
                         countdownTask = window.setInterval(reSendCountDown,1000);
                     }else{

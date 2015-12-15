@@ -36,11 +36,12 @@ Wei.ListView = function(id,props){
             dataType : 'json',
             data : data,
             success : function(data){
-                rowCount += data.items == null ? 0 : data.items.length;
-                if(data.items != null && data.items.length > 0){
-                    for(var i = 0;i < data.items.length;i++){
-                        var item = data.items[i];
-                        var html = $(props.getHtml(item,i,data.items,data));
+                var products = data.data.products;
+                rowCount += products == null ? 0 : products.length;
+                if(products != null && products.length > 0){
+                    for(var i = 0;i < products.length;i++){
+                        var item = products[i];
+                        var html = $(props.getHtml(item));
                         list.append(html);
                         //console.log('==============');
                         html.attr("style", "-webkit-animation-delay:" + i * props.animDelay + "ms;" + "-moz-animation-delay:" + (i * props.animDelay) + "ms;"+ "-o-animation-delay:" + (i * props.animDelay) + "ms;"+ "animation-delay:" + (i * props.animDelay) + "ms;");
