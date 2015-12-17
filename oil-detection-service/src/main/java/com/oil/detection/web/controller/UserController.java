@@ -57,7 +57,7 @@ public class UserController extends BaseControllor {
         user.setId(super.getUserInfo(request).getId());
         user = userService.getUser(user);
         model.addAttribute("user", user);
-        return "more";
+        return "/user/more";
     }
 
     @RequestMapping(value = "/edit")

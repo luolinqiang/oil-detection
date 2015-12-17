@@ -104,7 +104,8 @@ public class UserAttentionController extends BaseControllor {
         Precondition.assertionNotBlank(userattention, "productId");
         userattention.setUserId(super.getUserInfo(request).getId());
         userattention.setCreateTime(new Date());
-        userattentionService.saveUserAttention(userattention);
+        Integer aid = userattentionService.saveUserAttention(userattention);
+        responsesDTO.setData(aid);
         return responsesDTO;
     }
 

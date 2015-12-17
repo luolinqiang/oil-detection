@@ -1,0 +1,794 @@
+
+<!doctype html>
+<html class="no-js">
+<head>
+    <title>确认订单</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+    <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="/zhaoyou/res/v4/css/app.css">
+    <style>
+        img {
+            box-sizing: border-box;
+            /* v2.3 开始移除以下代码，详见 #502 */
+            max-width: 100%;
+            height: auto;
+            vertical-align: middle;
+            border: 0;
+        }
+        .separator-block {
+            width:100%;
+            height:0.6rem;
+            background-color:#f0f0f0;
+        }
+        .separator-line {
+            width:100%;
+            height:1px;
+            background-color:#f0f0f0;
+        }
+        .text-overflow-ellipsis{
+            display:block;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+        .list-item {
+            font-size:1.5rem;
+        }
+        .list-item .title {
+        }
+        .list-item .price {
+            color:#e87823;
+        }
+        .list-item .time {
+            color : #8c8c8c;
+            font-size : 1.2rem;
+        }
+        .list-item .shop {
+            font-size : 1.3rem;
+        }
+        .list-item .attr {
+            font-size : 1.2rem;
+        }
+        .list-item a:link{
+            text-decoration:none;
+            color:#000
+        }
+        .list-item a:visited{
+            text-decoration:none;
+            color:#333;
+        }
+        .list-item a:hover{
+            text-decoration:none;
+            color:#333;
+        }
+        .list-item a:active{
+            text-decoration:none;
+            color:#333;
+        }
+        .list-item a.web:visited{
+            text-decoration:none;
+            color:#333;
+        }
+        .card {
+
+        }
+    </style>
+    <script type="text/javascript">
+        var Wei = {
+            ctx : '/zhaoyou',
+            up : '/zhaoyou/weisite',
+            us : '.html',
+            img : {
+                noPic : '/zhaoyou/res/v4/images/no-pic.jpg'
+            }
+        }
+    </script><style>
+    .form fieldset {
+        width:100%;
+        border:1px solid #ccc;
+        margin:0px;
+        padding:5px 10px 5px 10px;
+    }
+    .form legend {
+        font-size:16px;
+        padding:2px 10px 2px 10px;
+        margin:0px;
+        width:auto;
+        border:0px;
+        font-weight:bold;
+    }
+    .form legend font {
+        color:red;
+    }
+    .shdz-name,.shdz-tel {
+        font-size:14px;
+    }
+    .shdz-address {
+        font-size:12px;
+    }
+</style>
+</head>
+<body style="background-color:#fff;">
+<input type="hidden" id="canUsedQuanNum" value="0"/>
+<!-- 订单信息 start -->
+<div id="order-view-div" style="background-color:#fff;">
+    <form id="order-form" action="/zhaoyou/weisite/order-submit.html" method="post" class="am-form form">
+        <input type="hidden" id="dquanNum" name="dquanNum" value="0"/>
+        <input type="hidden" name="mallOrder" value="true"/>
+        <input type="hidden" name="itemId" id="itemId" value='648'/>
+        <!-- 商品信息 start -->
+        <div class="am-g">
+            <div class="am-u-sm-3" style="padding:0;">
+                <a href="/zhaoyou/weisite/item-648.html"><img src='/upload/image/2015-12-1449740837046915037.png'/></a>
+            </div>
+            <div class="am-u-sm-9">
+                <div style="font-size:14px;"><a href="/zhaoyou/weisite/item-648.html">中航油国四93#乙醇</a></div>
+                <div style="font-size:18px;"><font style="font-size:14px;">单价：</font><font color="red">￥5800</font></div>
+                <div style="font-size:14px;height:26px;">
+                    <div style="height:26px;line-height:26px;float:left;">数量：</div>
+                    <div style="width:50%;height:26px;float:left;">
+                        <div class="am-input-group" style="height:26px;">
+                            <span class="am-input-group-label" style="height:24px;line-height:24px;padding:0 10px 0 10px;">-</span>
+                            <input type="number" id="regNum" name="num" oninput="sumDQuanNum()" class="am-form-field"  style="height:26px;padding:2px;">
+                            <span class="am-input-group-label" style="height:24px;line-height:24px;padding:0 10px 0 10px;">+</span>
+                        </div>
+                    </div>
+                    <div style="height:26px;line-height:26px;float:left;">吨</div>
+                    <div style="height:26px;line-height:26px;float:left;">（库存299吨）</div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <!-- 商品信息 end -->
+        <div class="am-g" style="margin-bottom:50px;">
+            <div class="am-u-sm-12">
+                <div class="am-form-group" style="display:none;">
+                    <label>付款方式(<font>必填</font>)</label>
+                    <div class="am-form-group">
+                        <label class="am-radio-inline">
+                            <input type="radio"  value="先款后货" name="payType" checked>银行转账
+                        </label>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label>提货方式</label>
+                    <div class="am-form-group">
+                        <label class="am-radio-inline">
+                            <input type="radio"  value="false" name="needDelivery" onclick="zt(this)" checked>自提
+                        </label>
+                        <label class="am-radio-inline">
+                            <input type="radio"  value="true" name="needDelivery" id="needDeliveryTrue" onclick="ps(this)">送货
+                        </label>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label >提货/配送时间</label>
+                    <input type="date" name="pickDate" id="pickDate" pattern="yyyy-MM-dd">
+                </div>
+                <div class="am-form-group" id="shxx" style="display:none;">
+                    <div class="am-alert am-alert-secondary"   onclick="showSelectShdzDiv()">
+                        <div style="float:left;width:90%;">
+                            <div style="font-size:14px;">
+                                <span id="shdz-name-view">请填写</span>
+                                <span id="shdz-tel-view" style="padding-left:10px;">请填写</span>
+                            </div>
+                            <div id="shdz-address-view" class="toe-1" style="width:100%">请填写</div>
+                        </div>
+                        <div style="float:right;height:38px;line-height:38px;padding-left:5px;padding-right:5px;">
+                            >
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+                    <input type="hidden" id="consigneeName" name="consigneeName" value="" placeHolder="请填写收货人姓名"/>
+                    <input type="hidden" id="consigneeTel" name="consigneeTel" value="" placeHolder="请填写收货人电话"/>
+                    <input type="hidden" id="consigneeAddress" name="consigneeAddress" value="" placeHolder="请填写收货地址"/>
+                </div>
+                <div class="am-form-group" id="thcp">
+                    <label>提货车牌号</label>
+                    <input type="text" id="carNumber" name="carNumber" placeHolder="请填写您提货的车牌号,如：京A88888"/>
+                </div>
+                <div class="am-form-group">
+                    <label >代采</label>
+                    <input type="checkbox" id="agentPurchasing" name="agentPurchasing" value="true"/>
+                </div>
+                <div class="am-form-group" id="fpxx"  onclick="showSelectFpxxDiv()">
+                    <div class="am-alert am-alert-secondary"  onclick="">
+                        <div style="font-size:14px;"><strong>开票信息：</strong></div>
+                        <div id="fpxx-view-name" class="fpxx-name">点击此处填写发票信息</div>
+                        <div id="fpxx-view-number" class="fpxx-number"></div>
+                        <div>
+                            <span id="fpxx-view-address" class="fpxx-address"></span>
+                            <span id="fpxx-view-tel" class="fpxx-tel"></span>
+                        </div>
+                        <div>
+                            <span id="fpxx-view-bank" class="fpxx-bank"></span>
+                            <span id="fpxx-view-account" class="fpxx-account"></span>
+                        </div>
+                        <input type="hidden" id="invoiceCompany" name="invoiceCompany" />
+                        <input type="hidden" id="invoiceTaxNumber" name="invoiceTaxNumber" />
+                        <input type="hidden" id="invoiceBank" name="invoiceBank"/>
+                        <input type="hidden" id="invoiceAccount" name="invoiceAccount" />
+                        <input type="hidden" id="invoiceAddress" name="invoiceAddress" />
+                        <input type="hidden" id="invoiceTel" name="invoiceTel" />
+                    </div>
+                </div>
+                <div class="am-form-group" id="fpxx_xy" style="display:none;">
+                    <div class="am-alert am-alert-secondary"  onclick="">
+                        <div style="font-size:14px;"><strong>开票信息：</strong></div>
+                        <div>以线下协议为准</div>
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label>其他要求(选填)</label>
+                    <textarea class="" rows="3" id="remark" name="remark" style="width:100%;" placeHolder="请填写其他要求."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- 配送方式 start -->
+        <div class="am-g">
+            <div class="am-u-sm-12"  style="font-size:1.5rem;display:none;" id="wl">
+                物流专员会在您提交订单后联系您，并为您联系物流。
+            </div>
+        </div>
+        <!-- 配送方式 end -->
+    </form>
+    <div class="am-g bd-t" style="position:fixed;bottom:50px;background-color:#fff;">
+        <div class="am-u-sm-12"  style="font-size:16px;padding-bottom:10px 0 10px 0;" id="wl">
+            <div>总　　价：<span style="">￥</span><span id="o-total-price"></span></div>
+        </div>
+        <!--
+        <div class="am-u-sm-12"  style="font-size:1.5rem;" id="wl">
+            <div>总价：<span style="">￥</span><span id="o-total-price"></span></div>
+            <div>预计可以使用<span id="dquan-num" style="color:green;">0</span>张抵值券抵值<span id="dquan-value" style="color:green;">0</span>元(0张可用)</div>
+            <div>预计您还需要支付<span style="color:red;">￥</span><span style="color:red;" id="total-price"></span>元</div>
+            <div style="color:red">具体优惠以实际成交为准，请在过磅后填写实际成交重量重新计算付款金额。</div>
+        </div>
+        -->
+        <div class="am-u-sm-12" style="font-size:2.0rem;text-align:center;">
+            <button id="submit-btn" class="am-btn am-btn-warning am-btn-block" onclick="submitOrder()">提交订单</button>
+        </div>
+    </div>
+    <hr/>
+</div>
+<!-- 订单信息 end -->
+
+<div id="shdz-list-div" style="display:none;width:100%;height:100%;position:fixed;top:0;z-index:2000;background-color:#f0f0f0;">
+    <div class="am-g bd-b" style="font-size:14px;background-color:#fff;padding:10px 0 10px 0;">
+        <div class="am-u-sm-10">
+            <strong>收货地址管理</strong>
+        </div>
+        <div class="am-u-sm-2" style="text-align:right;padding-right:10px;" onclick="cancelSidebar('shdz-list-div')">
+            <strong>取消</strong>
+        </div>
+    </div>
+
+    <div class="am-g bd-t bd-b" style="font-size:12px;background-color:#fff;margin-top:10px;padding:10px 0 10px 0;" onclick="addShdz()">
+        <div class="am-u-sm-11">
+            添加收货地址
+        </div>
+        <div class="am-u-sm-1">
+            >
+        </div>
+    </div>
+
+    <div id="shdz-list" style="width:100%;">
+    </div>
+</div>
+<div id="shdz-add-div" style="width:100%;height:100%;position:fixed;top:0;z-index:2020;background-color:#fff;display:none;padding:10px;">
+    <form id="shdz-form" onSubmit="return false;" class="am-form form">
+        <label>收货人姓名</label>
+        <input type="text" id="shdz-name" name="consigneeName" placeHolder="请填写收货人姓名" class="shdz-input"/>
+        <label>收货人电话</label>
+        <input type="tel" id="shdz-tel" name="consigneeTel" placeHolder="请填写收货人电话" class="shdz-input"/>
+        <label>收货地址</label>
+        <input type="text" id="shdz-address" name="consigneeAddress" placeHolder="请填写收货地址" class="shdz-input"/>
+        <div class="am-g" style="padding:10px;">
+            <div class="am-u-sm-6">
+                <button class="am-btn am-btn-block" onclick="cancelSidebar('shdz-add-div')">取消</button>
+            </div>
+            <div class="am-u-sm-6">
+                <button class="am-btn am-btn-warning am-btn-block" onclick="saveShdz()">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 开票信息列表 -->
+<div id="fpxx-list-div" style="display:none;width:100%;height:100%;position:fixed;top:0;z-index:1000;background-color:#f0f0f0;">
+    <div class="am-g bd-b" style="font-size:14px;background-color:#fff;padding:10px 0 10px 0;">
+        <div class="am-u-sm-10">
+            <strong>发票信息管理</strong>
+        </div>
+        <div class="am-u-sm-2" style="text-align:right;padding-right:10px;" onclick="cancelSidebar('fpxx-list-div')">
+            <strong>取消</strong>
+        </div>
+    </div>
+
+    <div class="am-g bd-t bd-b" style="font-size:12px;background-color:#fff;margin-top:10px;padding:10px 0 10px 0;" onclick="addFpxx()">
+        <div class="am-u-sm-11">
+            添加发票信息
+        </div>
+        <div class="am-u-sm-1">
+            >
+        </div>
+    </div>
+    <div id="fpxx-list" style="width:100%;">
+    </div>
+</div>
+<div id="fpxx-add-div" style="width:100%;height:100%;position:fixed;top:0;z-index:1020;background-color:#fff;display:none;padding:10px;">
+    <div style="width:100%;height:100%;overflow-y:auto;">
+        <form id="shdz-form" onSubmit="return false;" class="am-form form">
+            <label>公司名称</label>
+            <input type="text" class="fpxx-input" id="fpxx-input-name" name="consigneeName"/>
+            <label>纳税人识别号</label>
+            <input type="number" class="fpxx-input" id="fpxx-input-code" name="consigneeTel"/>
+            <label>地址</label>
+            <input type="text" class="fpxx-input" id="fpxx-input-address" name="consigneeAddress" />
+            <label>电话</label>
+            <input type="tel" class="fpxx-input" id="fpxx-input-tel" name="consigneeAddress"/>
+            <label>开户行</label>
+            <input type="text" class="fpxx-input" id="fpxx-input-bank" name="consigneeAddress" />
+            <label>帐号</label>
+            <input type="number" class="fpxx-input" id="fpxx-input-account" name="consigneeAddress" />
+            <div class="am-g" style="padding:10px;">
+                <div class="am-u-sm-6">
+                    <button class="am-btn am-btn-block" onclick="cancelSidebar('fpxx-add-div')">取消</button>
+                </div>
+                <div class="am-u-sm-6">
+                    <button class="am-btn am-btn-warning am-btn-block" onclick="saveFpxx()">确定</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<form action="success" id="success-form" method="POST">
+    <input type="hidden" id="success-sn" name="sn"/>
+</form>
+<div style="width:100%;min-height:100px;">
+</div>
+<div data-am-widget="navbar" class="am-navbar am-cf " id="" style="border-top:1px solid #c9cbcd;background-color:#fff;">
+    <ul class="am-navbar-nav am-cf am-avg-sm-4" style="">
+        <li>
+            <a href="/zhaoyou/weisite/index.html" class="">
+                <span class="am-icon-home am-icon-lg"></span><span class="am-navbar-label">首页</span>
+            </a>
+        </li>
+        <li >
+            <a href="/zhaoyou/weisite/user-orders.html" class="">
+                <span class="am-icon-file-text am-icon-lg"></span><span class="am-navbar-label">订单</span>
+            </a>
+        </li>
+        <li>
+            <a href="/zhaoyou/weisite/more.html" class="">
+                <span class="am-icon-user am-icon-lg"></span><span class="am-navbar-label">我的</span>
+            </a>
+        </li>
+    </ul>
+</div>	<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<![endif]-->
+<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a7217bdee034576625305921d61a351e";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<script type='text/javascript'>
+    $(function(){
+        $("[data-href]").each(function (i) {
+            var href = $(this).data('href');
+            $(this).on('click',function(){
+                window.location.href = href;
+            })
+        });
+        $("[data-modal]").each(function (i) {
+            var node = $(this);
+            node.on('click',function(){
+                var id = node.data('modal');
+                $('#' + id).modal({
+                    relatedTarget: this
+                });
+            });
+        });
+        /*
+        wx.config({
+            debug: true,
+            appId: 'wx20b1331c86ab87a9', // 必填，公众号的唯一标识
+            timestamp: '', // 必填，生成签名的时间戳
+            nonceStr: '', // 必填，生成签名的随机串
+            signature: '',// 必填，签名，见附录1
+            jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+        */
+    });
+</script><!-- alert 提示框 start -->
+<div class="am-modal am-modal-alert" tabindex="-1" id="___alert-support-div">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">提示</div>
+        <div class="am-modal-bd" id="___alert-support-msg">
+            Hello world！
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+<!-- alert 提示框 end -->
+<script type="text/javascript">
+    function messageAlert(msg,callback){
+        $('#___alert-support-div').modal({
+            relatedTarget: this
+        });
+        $('#___alert-support-msg').html(msg);
+    }
+</script><div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="___modal-loading">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd" id="___modal-loading-msg">正在载入...</div>
+        <div class="am-modal-bd" >
+            <span class="am-icon-spinner am-icon-spin"></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function showLoading(msg){
+        if(!msg){
+            msg = '加载中...'
+        }
+        $('#___modal-loading').modal({
+            relatedTarget: this
+        });
+        $('#___modal-loading-msg').html(msg);
+    }
+    function hideLoading(){
+        $('#___modal-loading').modal('close');
+    }
+</script><script type="text/javascript">
+var itemPrice = 5800;
+var itemDeposit = 0;
+var instoreNum = 299;
+function sumDQuanNum(){
+    var reqNum = $('#regNum').val();
+    if(!/^\d+(\.\d{1,2})?$/.test(reqNum)){
+        return;
+    }
+    $('#o-total-price').html(reqNum * itemPrice);
+    /*
+    var dquanNum = $('#canUsedQuanNum').val();
+    var num = Math.floor(reqNum / 10);
+    if(num > dquanNum){
+        num = dquanNum;
+    }
+    $('#o-total-price').html(reqNum * itemPrice);
+    $('#dquan-num').html(num);
+    $('#dquanNum').val(num);
+    $('#dquan-value').html(num * 500);
+    $('#total-price').html(reqNum * itemPrice - num * 500);
+    */
+}
+function submitOrder(){
+    var num = $('#regNum').val();
+    if(!/^\d+(\.\d{1,2})?$/.test(num)){
+        messageAlert('请填写采购数量');
+        return;
+    }
+    var needDelivery = $('#order-form')[0].needDelivery.value;
+    if($('#needDeliveryTrue').is(':checked')){
+        var consigneeName = $('#consigneeName').val();
+        var consigneeTel = $('#consigneeTel').val();
+        var consigneeAddress = $('#consigneeAddress').val();
+        if(consigneeName == ''){
+            messageAlert('请输入收货人姓名。');
+            return;
+        }
+        if(consigneeTel == ''){
+            messageAlert('请输入收货人电话。');
+            return;
+        }
+        if(consigneeAddress == ''){
+            messageAlert('请输入收货地址。');
+            return;
+        }
+    }else{
+        var carNumber = $('#carNumber').val();
+        if(!/^[\u4e00-\u9fa5]{1}[a-z_A-Z]{1}[a-z_A-Z_0-9]{5}$/.test(carNumber)){
+            messageAlert('请正确输入提货车辆车牌号码。');
+            return;
+        }
+    }
+    if($('#pickDate').val() == ''){
+        messageAlert('请填写提油日期。');
+        return;
+    }
+    if(!$('#agentPurchasing').is(':checked')){
+        var name = $('#invoiceCompany').val();
+        var number = $('#invoiceTaxNumber').val();
+        var bank = $('#invoiceBank').val();
+        var account = $('#invoiceAccount').val();
+        var address = $('#invoiceAddress').val();
+        var tel = $('#invoiceTel').val();
+        if(name == '' || number == '' || bank == '' || account == '' || address == '' || tel == ''){
+            messageAlert('请填写发票信息。');
+            return;
+        }
+    }
+    if(num > instoreNum){
+        messageAlert('库存不足，仅剩' + instoreNum + '吨。');
+        return;
+    }
+    $('#submit-btn').attr('disabled',true)
+    $('#order-form').submit();
+}
+function zt(node){
+    if($(node).is(':checked')){
+        $('#thcp').show();
+        $('#shxx').hide();
+    }
+}
+function ps(node){
+    if($(node).is(':checked')){
+        $('#thcp').hide();
+        $('#shxx').show();
+    }
+}
+function showSelectShdzDiv(){
+    $('#shdz-list-div').show();
+    $('#shdz-list-div').css('left',$('#shdz-add-div').width());
+    var h = $('#shdz-list-div').css('height');
+    h = parseInt(h.replace('px',''));
+    $('#shdz-list').css('height',(h - 95) + 'px');
+    $('#shdz-list').css('overflow-y','auto');
+    $('#shdz-list-div').animate({'left':0},300,function(){
+    });
+}
+function showSelectFpxxDiv(){
+    $('#fpxx-list-div').show();
+    $('#fpxx-list-div').css('left',$('#shdz-add-div').width());
+    $('#fpxx-list-div').animate({'left':0},300,function(){
+    });
+}
+function addShdz(){
+    $('.shdz-input').val('');
+    $('#shdz-add-div').show();
+    $('#shdz-add-div').css('left',$('#shdz-add-div').width());
+    $('#shdz-add-div').animate({'left':0},300,function(){
+    });
+}
+function addFpxx(){
+    $('.fpxx-input').val('');
+    $('#fpxx-add-div').show();
+    $('#fpxx-add-div').css('left',$('#shdz-add-div').width());
+    $('#fpxx-add-div').animate({'left':0},300,function(){
+    });
+}
+function saveShdz(){
+    var name = $('#shdz-name').val();
+    var tel = $('#shdz-tel').val();
+    var address = $('#shdz-address').val();
+    if(name == ''){
+        alert('请填写收货人姓名.');
+        return;
+    }
+    if(tel == ''){
+        alert('请填写收货人电话.');
+        return;
+    }
+    if(address == ''){
+        alert('请填写收货人地址.');
+        return;
+    }
+    $.ajax({
+        url : '/zhaoyou/weisite/shdz-save.html',
+        type : 'post',
+        dataType : 'json',
+        data : {consigneeName : name,consigneeTel : tel,consigneeAddress : address},
+        success : function(data){
+            if(data.success){
+                var div = addShdzToList(data.id,name,tel,address);
+                cancelSidebar('shdz-add-div',function(){
+                    selectShdz(div);
+                });
+            }else{
+                messageAlert('添加失败:' + data.msg);
+            }
+        },
+        error : function(){
+            messageAlert('系统出错，请稍后再试。');
+        }
+    });
+}
+
+function saveFpxx(){
+    var name = $('#fpxx-input-name').val();
+    var code = $('#fpxx-input-code').val();
+    var address = $('#fpxx-input-address').val();
+    var tel = $('#fpxx-input-tel').val();
+    var bank = $('#fpxx-input-bank').val();
+    var account = $('#fpxx-input-account').val();
+    if(name == ''){
+        alert('请填写公司名称.');
+        return;
+    }
+    if(code == ''){
+        alert('纳税人识别号.');
+        return;
+    }
+    if(address == ''){
+        alert('请填写公司注册地址.');
+        return;
+    }
+    if(tel == ''){
+        alert('请填写公司注册电话.');
+        return;
+    }
+    if(bank == ''){
+        alert('请填写开户银行.');
+        return;
+    }
+    if(account == ''){
+        alert('请填写开户帐号.');
+        return;
+    }
+    $.ajax({
+        url : '/zhaoyou/weisite/fpxx-save.html',
+        type : 'post',
+        dataType : 'json',
+        data : {companyName : name,bankName : bank,bankAccount : account,taxNumber:code,address:address,tel:tel},
+        success : function(data){
+            if(data.success){
+                var div = addFpxxToList(data.id,name,code,address,tel,bank,account);
+                cancelSidebar('fpxx-add-div',function(){
+                    selectFpxx(div);
+                });
+            }else{
+                messageAlert('添加失败:' + data.msg);
+            }
+        },
+        error : function(){
+            messageAlert('系统出错，请稍后再试。');
+        }
+    });
+}
+
+
+function cancelSidebar(id,callback){
+    $('#' + id).animate({left : $('#' + id).width()},300,function(){
+        $('#' + id).hide();
+        if(callback){
+            callback();
+        }
+    });
+}
+function addShdzToList(id,name,tel,address){
+    var div = $('<div class="am-g bd-t bd-b" onclick="selectShdz(this)" data-id="' + id + '" style="background-color:#fff;margin-top:10px;padding:10px 0 10px 0;">' +
+            '<div class="am-u-sm-12">' +
+            '<span class="shdz-name">' + name + '</span>' +
+            '<span class="shdz-tel" style="padding-left:10px;">' + tel + '</span>' +
+            '</div>' +
+            '<div class="am-u-sm-12 shdz-address" >' + address + '</div>' +
+            '</div>');
+    $('#shdz-list').append(div);
+    return div;
+}
+function addFpxxToList(id,name,code,address,tel,bank,account){
+    var div = $('<div class="am-g bd-t bd-b" onclick="selectFpxx(this)" data-id="' + id + '" style="background-color:#fff;margin-top:10px;padding:10px 0 10px 0;">' +
+            '<div class="am-u-sm-12 fpxx-name">' + name + '</div>' +
+            '<div class="am-u-sm-12 fpxx-number" >' + code + '</div>' +
+            '<div class="am-u-sm-12" >' +
+            '<span class="fpxx-address">' + address + '</span>' +
+            '<span class="fpxx-tel" style="padding-left:20px;">' + tel + '</span>' +
+            '</div>' +
+            '<div class="am-u-sm-12" >' +
+            '<span class="fpxx-bank">' + bank + '</span>' +
+            '<span class="fpxx-account" style="padding-left:20px;">' + account + '</span>' +
+            '</div>' +
+            '</div>');
+    $('#fpxx-list').append(div);
+    return div;
+}
+function selectShdz(node){
+    node = $(node);
+    var shdzName = node.find('.shdz-name').html();
+    var shdzTel = node.find('.shdz-tel').html();
+    var shdzAddress = node.find('.shdz-address').html();
+    var id = node.data('id');
+    $('#shdz-name-view').html(shdzName);
+    $('#shdz-tel-view').html(shdzTel);
+    $('#shdz-address-view').html(shdzAddress);
+
+    $('#consigneeName').val(shdzName);
+    $('#consigneeTel').val(shdzTel);
+    $('#consigneeAddress').val(shdzAddress);
+    cancelSidebar('shdz-list-div');
+    $.ajax({
+        url : '/zhaoyou/weisite/shdz-def.html?id=' + id,
+        type: 'post'
+    });
+}
+function selectFpxx(node){
+    node = $(node);
+    var name = node.find('.fpxx-name').html();
+    var number = node.find('.fpxx-number').html();
+    var address = node.find('.fpxx-address').html();
+    var tel = node.find('.fpxx-tel').html();
+    var bank = node.find('.fpxx-bank').html();
+    var account = node.find('.fpxx-account').html();
+
+    var id = node.data('id');
+    $('#fpxx-view-name').html(name);
+    $('#fpxx-view-number').html(number);
+    $('#fpxx-view-address').html(address);
+    $('#fpxx-view-tel').html(tel);
+    $('#fpxx-view-bank').html(bank);
+    $('#fpxx-view-account').html(account);
+
+    $('#invoiceCompany').val(name);
+    $('#invoiceTaxNumber').val(number);
+    $('#invoiceBank').val(bank);
+    $('#invoiceAccount').val(account);
+    $('#invoiceAddress').val(address);
+    $('#invoiceTel').val(tel);
+    cancelSidebar('fpxx-list-div');
+    $.ajax({
+        url : '/zhaoyou/weisite/fpxx-def.html?id=' + id,
+        type: 'post'
+    });
+}
+$('#agentPurchasing').click(function(evt){
+    if($(evt.target).is(':checked')){
+        $('#fpxx_xy').show();
+        $('#fpxx').hide();
+    }else{
+        $('#fpxx').show();
+        $('#fpxx_xy').hide();
+
+        $('#fpxx-view-name').html('请选择开票信息');
+        $('#fpxx-view-number').html('');
+        $('#fpxx-view-address').html('');
+        $('#fpxx-view-tel').html('');
+        $('#fpxx-view-bank').html('');
+        $('#fpxx-view-account').html('');
+
+        $('#invoiceCompany').val('');
+        $('#invoiceTaxNumber').val('');
+        $('#invoiceBank').val('');
+        $('#invoiceAccount').val('');
+        $('#invoiceAddress').val('');
+        $('#invoiceTel').val('');
+
+    }
+});
+</script>
+</body>
+</html>

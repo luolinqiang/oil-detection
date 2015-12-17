@@ -27,7 +27,7 @@
         if(onCancel){
             props.onCancel = onCancel
         }
-        ___loadArea();
+        ___loadArea(-1);
         $('#___select-area-dialog').modal(props);
 
     }
@@ -42,26 +42,26 @@
         $('#___area_back_div').html('<h2>&nbsp;</h2>');
         $('#___area-list-div').html('<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">加载中...</li>');
         $.ajax({
-            url : Wei.up + '/area-list' + Wei.us + str,
+            url : '/area/list' + str,
             dataType : 'json',
             success : function(data){
                 $('#___area-list-div').html('');
-                if(data.success){
-                    if(data.pid != undefined){
-                        $('#___area_back_div').html('<h2 onclick="___loadArea(' + data.pid + ')">< &nbsp;返回</h2>');
-                    }else{
-                        $('#___area_back_div').html('<h2>&nbsp;</h2>');
-                    }
+                if(0 == data.code){
                     var html = '';
-                    for(var i = 0;i < data.result.length;i++){
-                        var area = data.result[i];
-                        if(area.hasChildren){
-                            html += '<li onclick="___loadArea(' + area.id + ',\'' + area.name + '\')" class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left"><div class="am-u-sm-10 am-list-main"><div class="am-list-item-text">' + area.name + '</div></div><div class="am-u-sm-2 am-list-main"><div class="am-list-item-text">></div></div></li>';
+                    for(var i = 0;i < data.data.length;i++){
+                        var area = data.data[i];
+                        if(area.areaLevel < 3 && area.areaName != '北京' && area.areaName != '天津' && area.areaName != '上海' && area.areaName != '重庆'){
+                            html += '<li onclick="___loadArea(' + area.id + ',\'' + area.areaName + '\')" class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left"><div class="am-u-sm-10 am-list-main"><div class="am-list-item-text">' + area.areaName + '</div></div><div class="am-u-sm-2 am-list-main"><div class="am-list-item-text">></div></div></li>';
                         }else{
-                            html += '<li onclick="___selectArea(' + area.id + ',\'' + area.name + '\')" class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left"><div class="am-u-sm-10 am-list-main"><div class="am-list-item-text">' + area.name + '</div></div><div class="am-u-sm-2 am-list-main"><div class="am-list-item-text"></div></div></li>';
+                            html += '<li onclick="___selectArea(' + area.id + ',\'' + area.areaName + '\')" class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left"><div class="am-u-sm-10 am-list-main"><div class="am-list-item-text">' + area.areaName + '</div></div><div class="am-u-sm-2 am-list-main"><div class="am-list-item-text"></div></div></li>';
                         }
                     }
                     $('#___area-list-div').html(html);
+                    if(pid != -1){
+                        $('#___area_back_div').html('<h2 onclick="___loadArea(-1)">< &nbsp;返回</h2>');
+                    }else{
+                        $('#___area_back_div').html('<h2>&nbsp;</h2>');
+                    }
                 }
             },
             error : function(){
@@ -73,17 +73,21 @@
         if(name){
             ____area.push({id : id,name : name});
         }
-        $.ajax({
-            url : Wei.up + '/area-name' + Wei.us + '?id=' + id,
-            dataType : 'json',
-            success : function(data){
-                if(data.success){
-                    $('#___select-area-dialog').modal('close');
-                    if(____onSelectAreaCallback){
-                        ____onSelectAreaCallback(data.result,____area);
-                    }
-                }
-            }
-        });
+        $('#___select-area-dialog').modal('close');
+        if(____onSelectAreaCallback){
+            ____onSelectAreaCallback(____area);
+        }
+//        $.ajax({
+//            url : Wei.up + '/area-name' + Wei.us + '?id=' + id,
+//            dataType : 'json',
+//            success : function(data){
+//                if(data.success){
+//                    $('#___select-area-dialog').modal('close');
+//                    if(____onSelectAreaCallback){
+//                        ____onSelectAreaCallback(data.result,____area);
+//                    }
+//                }
+//            }
+//        });
     }
 </script>

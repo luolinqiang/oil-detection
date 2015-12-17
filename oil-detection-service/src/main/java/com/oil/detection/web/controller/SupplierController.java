@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/supplier")
+@RequestMapping(value = "/s")
 public class SupplierController extends BaseControllor {
 
     private static final Logger logger = Logger.getLogger(SupplierController.class);
@@ -36,7 +36,19 @@ public class SupplierController extends BaseControllor {
     @Resource
     private ProductService productService;
 
-    @RequestMapping(value = "/detail", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+
+    @RequestMapping(value = "/shop-{shopId}")
+    public String shopDetail(@PathVariable("shopId") Long shopId, Model model, HttpServletRequest request) throws Exception {
+        Supplier supplier = new Supplier();
+        supplier.setState(CommonConstants.Common.STATE_2);
+        supplier.setId(shopId);
+        supplier = supplierService.getSupplier(supplier);
+        model.addAttribute("supplier", supplier);
+        return "shop/shop";
+    }
+
+
+    @RequestMapping(value = "/ajax/detail", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO detail(HttpServletRequest request, HttpServletResponse response,
                                Supplier supplier) {
@@ -78,7 +90,7 @@ public class SupplierController extends BaseControllor {
         return count;
     }
 
-    @RequestMapping(value = "/get", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/ajax/get", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO getSupplier(Supplier supplierQuery) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
@@ -87,7 +99,7 @@ public class SupplierController extends BaseControllor {
         return responsesDTO;
     }
 
-    @RequestMapping(value = "/save", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/ajax/save", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO saveSupplier(Supplier supplier) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
@@ -96,7 +108,7 @@ public class SupplierController extends BaseControllor {
     }
 
 
-    @RequestMapping(value = "/modify", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/ajax/modify", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO modifySupplier(Supplier supplier) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);

@@ -1,0 +1,199 @@
+
+<!doctype html>
+<html class="no-js">
+<head>
+    <title>提示</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+    <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="/zhaoyou/res/v4/css/app.css">
+    <style>
+        img {
+            box-sizing: border-box;
+            /* v2.3 开始移除以下代码，详见 #502 */
+            max-width: 100%;
+            height: auto;
+            vertical-align: middle;
+            border: 0;
+        }
+        .separator-block {
+            width:100%;
+            height:0.6rem;
+            background-color:#f0f0f0;
+        }
+        .separator-line {
+            width:100%;
+            height:1px;
+            background-color:#f0f0f0;
+        }
+        .text-overflow-ellipsis{
+            display:block;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+        .list-item {
+            font-size:1.5rem;
+        }
+        .list-item .title {
+        }
+        .list-item .price {
+            color:#e87823;
+        }
+        .list-item .time {
+            color : #8c8c8c;
+            font-size : 1.2rem;
+        }
+        .list-item .shop {
+            font-size : 1.3rem;
+        }
+        .list-item .attr {
+            font-size : 1.2rem;
+        }
+        .list-item a:link{
+            text-decoration:none;
+            color:#000
+        }
+        .list-item a:visited{
+            text-decoration:none;
+            color:#333;
+        }
+        .list-item a:hover{
+            text-decoration:none;
+            color:#333;
+        }
+        .list-item a:active{
+            text-decoration:none;
+            color:#333;
+        }
+        .list-item a.web:visited{
+            text-decoration:none;
+            color:#333;
+        }
+        .card {
+
+        }
+    </style>
+    <script type="text/javascript">
+        var Wei = {
+            ctx : '/zhaoyou',
+            up : '/zhaoyou/weisite',
+            us : '.html',
+            img : {
+                noPic : '/zhaoyou/res/v4/images/no-pic.jpg'
+            }
+        }
+    </script><style>
+</style>
+</head>
+<body>
+<div class="am-u-sm-centered" style="padding-top:5px;padding-bottom:5px;text-align:center;">
+    <label style="color:#000000;">您好，您还不是供应商</label><br>
+    <label style="color:#000000;">您可以申请成为供应商</label><br>
+</div>
+<div class="am-u-sm-centered" style="text-align:center;padding:10px;" data-href="/zhaoyou/weisite/supplier.html">
+    <button type="button" class="am-btn am-btn-warning" style="width:300px;" id="btn-submit">申请入口</button>
+</div>
+<div class="am-u-sm-centered" style="text-align:center;margin-top:5px;">
+    <div style="width:300px;border:1px solid #e87823;margin:auto;color:#e87823;">
+        <span style="line-height:40px;">客服热线：<a href='tel:4008-345-565'>4008-345-565</a></span>
+    </div>
+</div>
+<div style="width:100%;min-height:100px;">
+</div>
+<div data-am-widget="navbar" class="am-navbar am-cf " id="" style="border-top:1px solid #c9cbcd;background-color:#fff;">
+    <ul class="am-navbar-nav am-cf am-avg-sm-4" style="">
+        <li>
+            <a href="/zhaoyou/weisite/index.html" class="">
+                <span class="am-icon-home am-icon-lg"></span><span class="am-navbar-label">首页</span>
+            </a>
+        </li>
+        <li >
+            <a href="/zhaoyou/weisite/user-orders.html" class="">
+                <span class="am-icon-file-text am-icon-lg"></span><span class="am-navbar-label">订单</span>
+            </a>
+        </li>
+        <li>
+            <a href="/zhaoyou/weisite/more.html" class="">
+                <span class="am-icon-user am-icon-lg"></span><span class="am-navbar-label">我的</span>
+            </a>
+        </li>
+    </ul>
+</div>	<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<![endif]-->
+<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a7217bdee034576625305921d61a351e";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<script type='text/javascript'>
+    $(function(){
+        $("[data-href]").each(function (i) {
+            var href = $(this).data('href');
+            $(this).on('click',function(){
+                window.location.href = href;
+            })
+        });
+        $("[data-modal]").each(function (i) {
+            var node = $(this);
+            node.on('click',function(){
+                var id = node.data('modal');
+                $('#' + id).modal({
+                    relatedTarget: this
+                });
+            });
+        });
+        /*
+        wx.config({
+            debug: true,
+            appId: 'wx20b1331c86ab87a9', // 必填，公众号的唯一标识
+            timestamp: '', // 必填，生成签名的时间戳
+            nonceStr: '', // 必填，生成签名的随机串
+            signature: '',// 必填，签名，见附录1
+            jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+        */
+    });
+</script><script type='text/javascript'>
+    $(function(){
+        $("[data-href]").each(function (i) {
+            var href = $(this).data('href');
+            $(this).on('click',function(){
+                window.location.href = href;
+            })
+        });
+    });
+</script>
+</body>
+</html>

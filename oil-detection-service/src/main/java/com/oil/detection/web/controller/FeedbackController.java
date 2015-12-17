@@ -7,6 +7,7 @@ import com.oil.detection.service.FeedbackService;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,13 @@ public class FeedbackController extends BaseControllor {
     private static final Logger logger = Logger.getLogger(FeedbackController.class);
     @Resource
     private FeedbackService feedbackService;
+
+    @RequestMapping(value = "/")
+    public String feedback(Model model, HttpServletRequest request) throws Exception {
+
+
+        return "user/feedback";
+    }
 
     @RequestMapping(value = "/save", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody

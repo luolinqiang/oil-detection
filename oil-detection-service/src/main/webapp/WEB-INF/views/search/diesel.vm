@@ -124,5 +124,5 @@
         }
 
     </script>
-    <script src="res/v4/js/search-diesel.js"></script>
+    <script src="/res/v4/js/search-diesel.js"></script>
 </body>

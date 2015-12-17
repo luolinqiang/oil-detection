@@ -1,0 +1,250 @@
+#set($title="报价信息")
+#parse("/layout/header.vm")
+<body>
+    <div class="am-cf" style="width:100%;padding: 5px 10px 5px 0px;text-align:right;color:#fff;background-color:#e87823;">
+        <div class="am-fl sort-item" data-sort="price"><span class="sort-title" style="font-size:14px;">价格</span><span class="sort-icon-none"></span></div>
+        <div class="am-fl sort-item" data-sort="adjustPriceTime"><span class="sort-title" style="font-size:14px;">时间</span><span class="sort-icon-none"></span></div>
+        <div class="am-fr" id="query-btn">
+            <span><img src="/res/v4/images/shaixuan.png" style="width:18px;height:18px;"/></span>
+            <span style="line-height:18px;font-size:14px;">筛选</span>
+        </div>
+    </div>
+    <div class="am-g">
+        <div class="am-u-sm-12"><span style="color:red;">*</span>以下产品价格不含运费，请<a href="tel:">点击此处</a>查询运费</div>
+    </div>
+    <!-- 商品列表  start -->
+    <div style="position:relative;z-index:1;width:100%;height:100%;">
+        <div class="am-list-news-bd" id="data-list">
+        </div>
+    </div>
+    <!-- 商品列表  end -->
+    <div class="am-modal am-modal-confirm"  tabindex="-1" id="query-param-div" >
+        <div class="am-modal-dialog" >
+            <form id="query-form">
+                <!--
+                <div class="am-g">
+                    <div class="am-u-sm-4">
+                        <button class="am-btn am-btn-default am-btn-block am-btn-xs" onclick="cancelQuery()">取消</button>
+                    </div>
+                    <div class="am-u-sm-4"></div>
+                    <div class="am-u-sm-4">
+                        <button class="am-btn am-btn-warning am-btn-block am-btn-xs" onclick="doQuery()">确定</button>
+                    </div>
+                </div>
+                -->
+                <div class="am-g am-form" style="text-align:left;padding-left:1rem;padding-right:1rem;padding-top:1.5rem;" id="select-logistics-dialog-form">
+                    <label>标准</label>
+                    <select id="q_standard" name="standard">
+                        <option value="">请选择质量标准</option>
+                    </select>
+                    <label>型号</label>
+                    <select id="q_model" name="model" >
+                        <option value="">请选择产品型号</option>
+                    </select>
+                    <label>供应商</label>
+                    <input value="" type="text" name="shopName" id="q_shopName">
+                    <label>区域</label>
+                    <div class="am-input-group">
+                        <input type="text" id="q_position_text" readonly="true" name="q_position_text" >
+                        <input type="hidden" id="q_position" readonly="true" name="q_position" >
+                        <span class="am-input-group-btn">
+                            <button class="am-btn am-btn-default" id="select-area-btn" type="button"><span class="am-icon-angle-down">选择</span> </button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <div class="am-modal-bd">
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+    <div style="width:100%;min-height:100px;">
+    </div>
+    #parse("/layout/tabbar.vm")
+    #parse("/layout/select_area.vm")
+    <link rel="stylesheet" href="/res/v4/css/wei-pagination.css"></link>
+    <script type="text/javascript" src="/res/v4/js/lib/iscroll.js"></script>
+    <script type="text/javascript" src="/res/v4/js/lib/wei-list-view.js"></script>
+    <script type="text/javascript">
+        var htmlTemplate =
+                '<li class="list-item card" >' +
+                        '<div class="am-g" onclick="viewItem({{id}})">' +
+                        '<div class="am-u-sm-4 am-list-thumb" style="padding-left:0px;" >' +
+                        '<img src="{{imageUrl}}" alt="{{name}}" style="width:100%;max-height:64px;"/>' +
+                        '</div>' +
+                        '<div class=" am-u-sm-8 am-list-main"  >' +
+                        '<div class="text-overflow-ellipsis" style="width:100%;">{{name}}</div>' +
+                        '<div style="width:100%;">' +
+                        '<div class="text-overflow-ellipsis price" style="float:left;width:50%;">￥{{price}}</div>' +
+                        '<div class="text-overflow-ellipsis time" style="float:left;width:50%;padding-top:0.3rem;text-align:right;">{{updateTime}}</div>' +
+                        '<div class="text-overflow-ellipsis" style="clear:both;"></div>' +
+                        '</div>' +
+                        '<div class="text-overflow-ellipsis shop" style="width:100%;">{{shopName}}</div>' +
+                        '</div>' +
+                        '</div>' +
+                        #if($!{type} == 'diesel')
+                        '<div class="am-g attr" >' +
+                        '<div class="am-u-sm-4" style="padding-left:0.5rem;padding-right:0;">闪点：{{flashPoint}}</div>' +
+                        '<div class="am-u-sm-4" style="padding-left:0.5rem;padding-right:0;">密度：{{density}}</div>' +
+                        '<div class="am-u-sm-4" style="padding-left:0.5rem;padding-right:0;">十六烷值：{{cetaneNumber}}</div>' +
+                        '</div>' +
+                        #end
+                        '</li>';
+        var sortField,sortType;
+        var page = Wei.ListView('data-list',{
+            url : '',
+            count:10,
+            anim : false,
+            getData : function(){
+                var data = {range:100};
+                data['type'] = '$!{type}';
+                var standard = $('#q_standard').val();
+                var model = $('#q_model').val();
+                var shopName = $('#q_shopName').val();
+                var position = $('#q_position').val();
+                if(standard != ''){
+                    data.standard = standard;
+                }
+                if(model != ''){
+                    data.model = model;
+                }
+                if(shopName != ''){
+                    data.shopName = shopName;
+                }
+                if(position != ''){
+                    data.position = position;
+                }
+                if(sortField){
+                    data.sort= sortField;
+                    data.sortType = sortType;
+                }
+                return data;
+            },
+            getHtml : function(item){
+                var logoUrl = item.itemImgUrl ? item.itemImgUrl : '';
+                if(logoUrl == null || logoUrl == ''){
+                    logoUrl = Wei.img.noPic;
+                }
+                var html = htmlTemplate;
+                html = html.replace(/{{id}}/g,item.id);
+                html = html.replace(/{{imageUrl}}/g,logoUrl);
+
+//                var shopLogoUrl = item.shopLogoUrl ? item.shopLogoUrl : '';
+//                if(shopLogoUrl == null || shopLogoUrl == ''){
+//                    shopLogoUrl = Wei.img.noPic;
+//                }
+//
+//                html = html.replace(/{{shopLogoUrl}}/g,shopLogoUrl);
+
+//                var titleAlt = item.itemName;
+//                if(titleAlt.length > 20){
+//                    titleAlt = titleAlt.substring(0,18) + '...';
+//                }
+                html = html.replace(/{{updateTime}}/g,item.timeDesc);
+                html = html.replace(/{{name}}/g,item.name);
+                html = html.replace(/{{price}}/g,item.price);
+//                html = html.replace(/{{shopName}}/g,item.shopName);
+                html = html.replace(/{{inventory}}/g,item.inventory);
+                html = html.replace(/{{flashPoint}}/g,((item.flashPoint == null) ? '' : item.flashPoint));
+                html = html.replace(/{{density}}/g,((item.density == null) ? '' : item.density));
+                html = html.replace(/{{cetaneNumber}}/g,((item.cetaneNumber == null) ? '' : item.cetaneNumber));
+                return html;
+            }
+        });
+
+        $(function(){
+            $('#query-btn').on('click',function(){
+                $('#query-param-div').modal({
+                    relatedTarget: this,
+                    onConfirm: function(options) {
+                        page.reload();
+                    },
+                    onCancel: function() {
+                    }
+                });
+            });
+            $('#select-area-btn').on('click',function(){
+                selectArea(function(area){
+                    var text = '';
+                    var len = area.length;
+                    for(var i = 0;i < len;i++){
+                        text += '-' + area[i].name;
+                    }
+                    $('#q_position_text').val(text.substr(1));
+                    $('#q_position').val(area[len-1].id);
+                });
+            });
+            $('div[data-sort]').each(function(i){
+                var node = $(this);
+                node.on('click',function(){
+                    var icon = node.find('span[class*=sort-icon]');
+                    sortField = node.attr('data-sort');
+                    var className;
+                    if(icon.hasClass('sort-icon-asc')){
+                        className = 'sort-icon-desc';
+                        sortType = 'asc'
+                    }else{
+                        className = 'sort-icon-asc';
+                        sortType = 'desc';
+                    }
+                    $('span[class*=sort-icon]').each(function(i){
+                        $(this).removeClass('sort-icon-asc');
+                        $(this).removeClass('sort-icon-desc');
+                        $(this).addClass('sort-icon-none');
+                    });
+                    icon.removeClass('sort-icon-none');
+                    icon.addClass(className);
+                    page.reload();
+                });
+            });
+            /*
+            var width = $('body').width();
+            var height = $('body').height();
+            var sidebarWidth = width * 0.8;
+            console.log($('body').css('z-index'));
+            $('#sidebar').css('width',sidebarWidth + 'px').css('top',0).css('height','100%').css('position','absolute').css('background-color','#fff').css('z-index','1000').css('left',width + 'px');
+            setTimeout(function(){
+                $('#sidebar').animate({left:(width - sidebarWidth) + 'px'},500);
+            },5000);
+            */
+        })
+        function viewItem(id){
+            window.location.href = '/p/item-' + id;
+        }
+
+        $.ajax({
+            url : '/dic/list',
+            type : 'POST',
+            dataType : 'json',
+            data : {groupCode : 'item_standard_$!{type}'},
+            success : function(data){
+                if (0 == data.code) {
+                    fillDic($('#q_standard'), data.data);
+                }
+            }
+        });
+
+        $.ajax({
+            url : '/dic/list',
+            type : 'POST',
+            dataType : 'json',
+            data : {groupCode : 'item_model_$!{type}'},
+            success : function(data){
+                if (0 == data.code) {
+                    fillDic($('#q_model'), data.data);
+                }
+            }
+        });
+
+        function fillDic(container, data) {
+            var html = '';
+            for(var i = 0;i < data.length;i++){
+                html += '<option value="'+data[i].id+'">'+data[i].name+'</option>';
+            }
+            container.append(html);
+        }
+    </script>
+</body>

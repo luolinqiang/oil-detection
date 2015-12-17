@@ -1,39 +1,39 @@
 <div class="am-modal"  tabindex="-1" id="modal-xhzy" >
     <div class="am-modal-dialog" style="padding:20px 0px 20px 0px;">
         <div class="am-g">
-            <div class="am-u-sm-6 " data-href="/weisite/items-diesel.html">
+            <div class="am-u-sm-6 " data-href="/items-diesel">
                 <img src="/res/v4/images/index-i-xhzy-cy.png"/>
             </div>
-            <div class="am-u-sm-6 " data-href="/weisite/items-petrol.html">
+            <div class="am-u-sm-6 " data-href="/items-petrol">
                 <img src="/res/v4/images/index-i-xhzy-qy.png"/>
             </div>
-            <div class="am-u-sm-6 " data-href="/weisite/items-diesel.html">
+            <div class="am-u-sm-6 " data-href="/items-diesel">
                 <img src="/res/v4/images/index-t-cgxx-cy.png"/>
             </div>
-            <div class="am-u-sm-6 " data-href="/weisite/items-petrol.html">
+            <div class="am-u-sm-6 " data-href="/items-petrol">
                 <img src="/res/v4/images/index-t-cgxx-qy.png"/>
             </div>
         </div>
     </div>
 </div>
-<div class="am-modal"  tabindex="-1" id="modal-cgxx" >
-    <div class="am-modal-dialog" style="padding:20px 0px 20px 0px;">
-        <div class="am-g">
-            <div class="am-u-sm-6 " data-href="/weisite/req-list-diesel.html">
-                <img src="/res/v4/images/index-i-cgxx-cy.png"/>
-            </div>
-            <div class="am-u-sm-6 " data-href="/weisite/req-list-petrol.html">
-                <img src="/res/v4/images/index-i-cgxx-qy.png"/>
-            </div>
-            <div class="am-u-sm-6 " data-href="/weisite/req-list-diesel.html">
-                <img src="/res/v4/images/index-t-cgxx-cy.png"/>
-            </div>
-            <div class="am-u-sm-6 " data-href="/weisite/req-list-petrol.html">
-                <img src="/res/v4/images/index-t-cgxx-qy.png"/>
-            </div>
-        </div>
-    </div>
-</div>
+##<div class="am-modal"  tabindex="-1" id="modal-cgxx" >
+##    <div class="am-modal-dialog" style="padding:20px 0px 20px 0px;">
+##        <div class="am-g">
+##            <div class="am-u-sm-6 " data-href="/weisite/req-list-diesel.html">
+##                <img src="/res/v4/images/index-i-cgxx-cy.png"/>
+##            </div>
+##            <div class="am-u-sm-6 " data-href="/weisite/req-list-petrol.html">
+##                <img src="/res/v4/images/index-i-cgxx-qy.png"/>
+##            </div>
+##            <div class="am-u-sm-6 " data-href="/weisite/req-list-diesel.html">
+##                <img src="/res/v4/images/index-t-cgxx-cy.png"/>
+##            </div>
+##            <div class="am-u-sm-6 " data-href="/weisite/req-list-petrol.html">
+##                <img src="/res/v4/images/index-t-cgxx-qy.png"/>
+##            </div>
+##        </div>
+##    </div>
+##</div>
 
 <div style="width:100%;min-height:50px;">
 </div>
@@ -50,12 +50,12 @@
                 <span class="am-navbar-label">报价信息</span>
             </a>
         </li>
-        <li>
-            <a href="javascript:void(0);" class="" data-modal="modal-cgxx">
-                <img src="/res/v4/images/d.png" alt="采购信息" />
-                <span class="am-navbar-label">采购信息</span>
-            </a>
-        </li>
+##        <li>
+##            <a href="javascript:void(0);" class="" data-modal="modal-cgxx">
+##                <img src="/res/v4/images/d.png" alt="采购信息" />
+##                <span class="am-navbar-label">采购信息</span>
+##            </a>
+##        </li>
         <li>
             <a href="/u/more" class="">
                 <span class="am-icon-ellipsis-h am-icon-lg"></span><span class="am-navbar-label">更多</span>

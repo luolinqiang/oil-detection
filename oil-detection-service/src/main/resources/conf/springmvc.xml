@@ -21,7 +21,7 @@
         <!-- 强制登录用户检查 -->
         <mvc:interceptor>
             <mvc:mapping path="/u/more"/>
-
+            <mvc:mapping path="/attention/**"/>
             <bean class="com.oil.detection.web.interceptor.TicketRequiredInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

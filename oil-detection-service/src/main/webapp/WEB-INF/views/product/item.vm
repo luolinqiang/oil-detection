@@ -53,7 +53,7 @@
         <div class="am-u-sm-5" style="text-align:right;">
             <div class="am-u-sm-12" style="text-align:center;">
                 <img src="/res/v4/images/btn-watch-add.png" style="display:none" id="btn-watch-add" onclick="javascript:watch();"/>
-                <img src="/res/v4/images/btn-watch-del.png" style="display:none" id="btn-watch-del" onclick="javascript:removeWatch();"/>
+                <img src="/res/v4/images/btn-watch-del.png" style="display:none" id="btn-watch-del" watch-id="" onclick="javascript:removeWatch();"/>
             </div>
             <div class="am-u-sm-12" style="text-align:center;">
                 <img src="/res/v4/images/btn-order.png" onclick="window.location.href='/weisite/requirement-154.html'"/>
@@ -71,13 +71,13 @@
             <table width="100%" border="0">
                 <tr>
                     <td nowrap="nowrap">
-                        <a href="/shop-$!{product.supplierId}">
+                        <a href="/s/shop-$!{product.supplierId}">
                             <img src="/pic/show/$!{product.supplier.companyLogo}" style="width:4rem;height:4rem;"/>
                         </a>
                     </td>
                     <td nowrap="nowrap" valign="middle" align="left">
                         <div>$!{product.supplier.companyName}</div>
-                        <div style="width:100%;text-align:right;color:#8c8c8c;"><a href="/shop-$!{product.supplierId}">浏览其他产品 >></a></div>
+                        <div style="width:100%;text-align:right;color:#8c8c8c;"><a href="/s/shop-$!{product.supplierId}">浏览其他产品 >></a></div>
                     </td>
                 </tr>
             </table>
@@ -204,6 +204,7 @@
     #parse("/layout/loading.vm")
     <script type="text/javascript">
         var itemId = '$!{product.id}';
+        var supplierId = '$!{product.supplierId}';
     </script>
     <script src="/res/v4/js/item.js"></script>
 </body>

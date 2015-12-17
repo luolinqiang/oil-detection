@@ -150,8 +150,8 @@
                             var div_time = $('<div>更新时间&nbsp;&nbsp;&nbsp;'+ updateTime +'</div>');
                             $('#update_time').html(div_time);
                             var div = $('<div class="am-g" data-recommend style="padding:0px 10px 0px 10px;"></div>');
-                            $('<div class="am-u-sm-4 toe-1 recommend" style="font-size:12px;"><a href="/shop-' + rec.supplierId + '">' + rec.supplierName + '</a></div>').appendTo(div);
-                            $('<div class="am-u-sm-4 toe-1 recommend" style="font-size:12px;"><a href="/product-' + rec.id + '">' + rec.name + '</a></div>').appendTo(div);
+                            $('<div class="am-u-sm-4 toe-1 recommend" style="font-size:12px;"><a href="/s/shop-' + rec.supplierId + '">' + rec.supplierName + '</a></div>').appendTo(div);
+                            $('<div class="am-u-sm-4 toe-1 recommend" style="font-size:12px;"><a href="/p/item-' + rec.id + '">' + rec.name + '</a></div>').appendTo(div);
                             $('<div class="am-u-sm-2 toe-1 recommend" style="font-size:12px;">' + rec.areaDesc+ '</div>').appendTo(div);
                             $('<div class="am-u-sm-2 toe-1 recommend" style="font-size:12px;color:red;">' + rec.price + '</div>').appendTo(div);
                             $('#csbj').append(div);

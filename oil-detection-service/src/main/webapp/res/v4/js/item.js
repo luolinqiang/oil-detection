@@ -8,12 +8,12 @@ function init(){
         type : 'get',
         dataType : 'json',
         success : function(data){
-//            alert(JSON.stringify(data));
             if(0 == data.code){
                 var watchHtml = ''
-                if(data.isWatched){
+                if(data.data){
                     $('#btn-watch-add').hide();
                     $('#btn-watch-del').show();
+                    $('#btn-watch-del').attr('watch-id',data.data.id);
                 }else{
                     $('#btn-watch-add').show();
                     $('#btn-watch-del').hide();
@@ -109,16 +109,21 @@ function init(){
 function watch(){
     showLoading();
     $.ajax({
-        url : Wei.up + '/watch/add/' + itemId + Wei.us,
+        url : '/attention/follow',
         type : 'get',
         dataType : 'json',
+        data : {
+            productId : itemId,
+            supplierId : supplierId
+        },
         success : function(data){
-            if(data.success){
+            if(0 == data.code){
                 $('#btn-watch-add').hide();
                 $('#btn-watch-del').show();
+                $('#btn-watch-del').attr('watch-id',data.data);
             }else{
-                if(data.msg == 'noLogin'){
-                    window.location.href= Wei.up + '/login' + Wei.us + '?returnUrl=/weisite/item-' + itemId + Wei.us;
+                if(1010 == data.code){
+                    window.location.href= '/u/login?redirectUrl=/p/item-' + itemId;
                 }else{
                     messageAlert('出错了，请联系系统管理员。');
                     console.log(data.msg);
@@ -136,16 +141,20 @@ function watch(){
 function removeWatch(){
     showLoading();
     $.ajax({
-        url : Wei.up + '/watch/remove/' + itemId + Wei.us,
+        url :  '/attention/unFollow',
         type : 'get',
         dataType : 'json',
+        data : {
+            id : $('#btn-watch-del').attr('watch-id')
+        },
         success : function(data){
-            if(data.success){
+            if(0 == data.code){
                 $('#btn-watch-add').show();
                 $('#btn-watch-del').hide();
+                $('#btn-watch-del').attr('watch-id', '');
             }else{
-                if(data.msg == 'noLogin'){
-                    window.location.href= Wei.up + '/login' + Wei.us + '?returnUrl=/weisite/item-' + itemId + Wei.us;
+                if(1010 == data.code){
+                    window.location.href= '/u/login?redirectUrl=/p/item-' + itemId;
                 }else{
                     messageAlert('出错了，请联系系统管理员。');
                 }
