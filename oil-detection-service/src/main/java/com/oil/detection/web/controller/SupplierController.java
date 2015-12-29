@@ -63,13 +63,13 @@ public class SupplierController extends BaseControllor {
             product.setTimeDesc(DateUtils.getTimeDesc(product.getUpdateTime()));
         }
 
-        RsSupplierProduct rsSupplierProduct = new RsSupplierProduct();
-        BeanUtils.copyProperties(supplierDb, rsSupplierProduct);
-        rsSupplierProduct.setProducts(products);
-        rsSupplierProduct.setAllCount(products.size());
-        rsSupplierProduct.setNewCount(getNewCount(products));
+//        RsSupplierProduct rsSupplierProduct = new RsSupplierProduct();
+//        BeanUtils.copyProperties(supplierDb, rsSupplierProduct);
+//        rsSupplierProduct.setProducts(products);
+//        rsSupplierProduct.setAllCount(products.size());
+//        rsSupplierProduct.setNewCount(getNewCount(products));
 
-        responsesDTO.setData(rsSupplierProduct);
+        responsesDTO.setData(products);
         return responsesDTO;
     }
 
