@@ -1,0 +1,429 @@
+#set($title="我要采购 - #if($!{type} == 'diesel')柴油#else汽油#end")
+<head>
+    #parse("/layout/web_header.vm")
+    <style>
+        .form fieldset {
+            width:100%;
+            border:1px solid #ccc;
+            margin:0px;
+            padding:5px 10px 5px 10px;
+        }
+        .form legend {
+            font-size:16px;
+            padding:2px 10px 2px 10px;
+            margin:0px;
+            width:auto;
+            border:0px;
+            font-weight:bold;
+        }
+        .form legend font {
+            color:red;
+        }
+        .dfi {
+            position:relative;
+        }
+        .dfi span {
+            display: inline-block;
+            height:42px;
+            line-height:42px;
+            position:absolute;
+            top:0;
+            font-size:16px;
+            padding-left:10px;
+        }
+        .dfi input {
+            text-indent:15px;
+        }
+        .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+        .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+        #dituContent img{
+            max-width:none;
+        }
+    </style>
+</head>
+<body style="margin:0px;">
+    <div class="am-cf" style="color:#fff;">
+        <div class="am-fl" style="width:50%;text-align:center;" #if($!{dic.code} != 'diesel')data-href="/req-diesel"#end>
+            <div style="background-color:#e87823;width:100%;padding-top:0.5rem;padding-bottom:0.5rem;border-bottom:4px solid #if($!{dic.code} == 'diesel')#000;#else #e87823;#end">
+                采购柴油
+            </div>
+        </div>
+        <div class="am-fr" style="width:50%;text-align:center;" #if($!{dic.code} == 'diesel')data-href="/req-petrol"#end>
+            <div style="background-color:#f09a6b;width:100%;padding-top:0.5rem;padding-bottom:0.5rem;border-bottom:4px solid #if($!{dic.code} == 'petrol')#000;#else #f09a6b;#end">
+                采购汽油
+            </div>
+        </div>
+    </div>
+    <form id="form" class="am-form form" action="" method="post">
+        <input type="hidden" name="oilType" value="$!{dic.id}"/>
+        <input type="hidden" name="purchaseType" value="1"/>
+        <div class="am-g" style="background-color:#fff;">
+            <div class="am-u-sm-12">
+                <fieldset id="q_standard">
+                    <legend>质量标准(<font>必填</font>)</legend>
+                </fieldset>
+                <fieldset id="q_model">
+                    <legend>产品型号(<font>必填</font>)</legend>
+                </fieldset>
+                <fieldset>
+                    <legend>需求数量(<font>必填</font>)</legend>
+                    <input type="number" id="number" name="number" placeHolder="请填写您要采购的数量"/>
+                </fieldset>
+                <fieldset id="q_paytype">
+                    <legend>付款方式(<font>必填</font>)</legend>
+                </fieldset>
+                <fieldset>
+                    <legend>提货方式(<font>必填</font>)</legend>
+                    <label style="padding:0px 5px 0px 5px;"><input onclick="$('#q_position').attr('placeHolder','提货范围(不填即为全国)');" type="radio" name="deliveryType" value="21" checked="true"/>自提</label>
+                    <label style="padding:0px 5px 0px 5px;"><input onclick="$('#q_position').attr('placeHolder','送货地址');" type="radio" name="deliveryType" value="22"/>送货</label>
+                    <input type="text" id="q_position" placeHolder="提货范围(不填即为全国)" name="deliveryAddr" >
+                </fieldset>
+                <!-- 选填项 -->
+                #if($!{dic.code} == 'diesel')
+                <fieldset>
+                    <legend>密度(20℃,g/cm³)(选填)</legend>
+                    <div class="am-input-group">
+                        <span class="am-input-group-label">大于　</span>
+                        <div><input type="number" id="attr1" name="attr1" placeHolder="如0.845"></div>
+                    </div>
+                    <div class="am-input-group">
+                        <span class="am-input-group-label">小于　</span>
+                        <div><input type="number" id="attr2" name="attr2" placeHolder="如0.845"></div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>闪点(闭口,℃)(选填)</legend>
+                    <div class="am-input-group">
+                        <span class="am-input-group-label">大于　</span>
+                        <input type="number" id="attr3" name="attr3" placeHolder="如58">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>十六烷指数(选填)</legend>
+                    <div class="am-input-group">
+                        <span class="am-input-group-label">大于　</span>
+                        <input type="number" id="attr4" name="attr4" placeHolder="如47">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>硫含量(ppm)(选填)</legend>
+                    <div class="am-input-group">
+                        <span class="am-input-group-label">小于　</span>
+                        <input type="number" id="attr5" name="attr5" placeHolder="如350">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>色度(选填)</legend>
+                    <div class="am-input-group">
+                        <span class="am-input-group-label">小于　</span>
+                        <input type="number" id="attr6" name="attr6" placeHolder="如0.5">
+                    </div>
+                </fieldset>
+                #end
+                <fieldset>
+                    <legend>其他要求(选填)</legend>
+                    <div class="am-input-group" style="width:100%;">
+                        <textarea class="" rows="3" id="otherRequire" name="otherRequire" style="width:100%;" placeHolder="请填写其他要求."></textarea>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="am-u-sm-12" style="text-align:center;padding:10px;">
+                <button type="button" class="am-btn am-btn-warning" style="width:300px;" id="btn-submit" onclick="submitForm()">提交订单</button>
+            </div>
+            <div class="am-u-sm-12" style="text-align:center;">
+                <div style="width:300px;border:1px solid #e87823;margin:auto;color:#e87823;">
+                    <span style="line-height:40px;">客服热线：<a href='tel:4008-345-565'>4008-345-565</a></span>
+                </div>
+            </div>
+            <div class="am-u-sm-12" style="color:#8c8c8c;font-size:12px;padding-top:10px;padding-bottom:10px;">
+                滴滴找油交易时间为工作日9:00~17:00。非工作时间的委托代采可能会延迟处理，给您带来的不便，敬请谅解！
+            </div>
+            <div class="am-u-sm-12">
+                1. 委托找货 → 2. 选择报价 → 3. 完成交易
+            </div>
+        </div>
+        <div id="sidebar">
+            <div style="width:100%;height:100%;" id="dituContent">
+            </div>
+        </div>
+    </form>
+    <div style="width:100%;min-height:100px;">
+    </div>
+    #parse("/layout/tabbar.vm")
+    #parse("/layout/alert.vm")
+    #parse("/layout/loading.vm")
+    <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+    <script type="text/javascript">
+        $.ajax({
+            url : '/dic/list',
+            type : 'POST',
+            dataType : 'json',
+            data : {groupCode : 'pay_type'},
+            success : function(data){
+                if (0 == data.code) {
+                    var html = '';
+                    for(var i = 0;i < data.data.length;i++){
+                        html += '<label style="padding:0px 5px 0px 5px;"><input type="radio" name="payType" value="'+data.data[i].id+'"/>'+data.data[i].name+'</label>';
+                    }
+                    $('#q_paytype').append(html);
+                }
+            }
+        });
+
+        $.ajax({
+            url : '/dic/list',
+            type : 'POST',
+            dataType : 'json',
+            data : {groupCode : 'item_standard_$!{dic.code}'},
+            success : function(data){
+                if (0 == data.code) {
+                    var html = '';
+                    for(var i = 0;i < data.data.length;i++){
+                        html += '<label style="padding:0px 5px 0px 5px;"><input type="radio" id="qualityStandard" name="qualityStandard" value="'+data.data[i].id+'"/>'+data.data[i].name+'</label>';
+                    }
+                    $('#q_standard').append(html);
+                }
+            }
+        });
+        $.ajax({
+            url : '/dic/list',
+            type : 'POST',
+            dataType : 'json',
+            data : {groupCode : 'item_model_$!{dic.code}'},
+            success : function(data){
+                if (0 == data.code) {
+                    var html = '';
+                    for(var i = 0;i < data.data.length;i++){
+                        html += '<label style="padding:0px 5px 0px 5px;"><input type="radio" id="productModel" name="productModel" value="'+data.data[i].id+'"/>'+data.data[i].name+'</label>';
+                    }
+                    $('#q_model').append(html);
+                }
+            }
+        });
+
+        function submitForm(){
+            var flag = 0;
+            var standard = document.getElementsByName("qualityStandard");
+            for(var i=0;i<standard.length;i++){
+                if(standard[i].checked) {
+                    flag = 1;
+                }
+            }
+            if(flag < 1){
+                messageAlert('请选择质量标准');
+                return;
+            }
+
+            flag = 0;
+            var model = document.getElementsByName("productModel");
+            for(var i=0;i<model.length;i++){
+                if(model[i].checked) {
+                    flag = 1;
+                }
+            }
+            if(flag < 1){
+                messageAlert('请选择产品型号');
+                return;
+            }
+
+            var num = $('#number').val();
+            var regNum = new RegExp("^[0-9]*[1-9][0-9]*$");
+            if(!regNum.test(num)){
+                messageAlert('请填写需求数量,数值为大于0的整数');
+                return;
+            }
+
+            flag = 0;
+            var payType = document.getElementsByName("payType");
+            for(var i=0;i<payType.length;i++){
+                if(payType[i].checked) {
+                    flag = 1;
+                }
+            }
+            if(flag < 1){
+                messageAlert('请选择付款方式');
+                return;
+            }
+
+            flag = 0;
+            var takeWay = document.getElementsByName("deliveryType");
+            for(var i=0;i<takeWay.length;i++){
+                if(takeWay[i].checked) {
+                    if(takeWay[i].value == '送货'){
+                        var destAddress = $('#q_position').val();
+                        if(destAddress == null || destAddress == ''){
+                            messageAlert('请填写送货地址');
+                            return;
+                        }
+                    }
+                }
+            }
+            var conditions = null;
+            #if($!{dic.code} == 'diesel')
+            var attr1 = $('#attr1').val();
+            var attr2 = $('#attr2').val();
+            var attr3 = $('#attr3').val();
+            var attr4 = $('#attr4').val();
+            var attr5 = $('#attr5').val();
+            var attr6 = $('#attr6').val();
+            var patt_attr1 = new RegExp("^[0-9]+\.{0,1}[0-9]{0,2}$");
+            if(attr1 != '' && !patt_attr1.test(attr1)){
+                messageAlert('请输入正确的密度值');
+                return;
+            }
+
+            var patt_attr2 = new RegExp("^[0-9]+\.{0,1}[0-9]{0,2}$");
+            if(attr2 != '' && !patt_attr2.test(attr2)){
+                messageAlert('请输入正确的密度值');
+                return;
+            }
+            var density = {min:attr1, max:attr2};
+            var patt_attr3 = new RegExp("^[0-9]*[1-9][0-9]*$");
+            if(attr3 != '' && !patt_attr3.test(attr3)){
+                messageAlert('请输入正确的闪点值');
+                return;
+            }
+
+            var patt_attr4 = new RegExp("^[0-9]*[1-9][0-9]*$");
+            if(attr4 != '' && !patt_attr4.test(attr4)){
+                messageAlert('请输入正确的十六烷指数');
+                return;
+            }
+
+            var patt_attr5 = new RegExp("^[0-9]*[1-9][0-9]*$");
+            if(attr5 != '' && !patt_attr5.test(attr5)){
+                messageAlert('请输入正确的硫含量值');
+                return;
+            }
+
+            var patt_attr6 = new RegExp("^[0-9]+\.{0,1}[0-9]{0,2}$");
+            if(attr6 != '' && !patt_attr6.test(attr6)){
+                messageAlert('请输入正确的色度值');
+                return;
+            }
+            conditions = {
+                density : density,
+                flashPoint :attr3,
+                cetaneNumber :attr4,
+                sulphur_content :attr5,
+                color : attr6
+            };
+            #end
+            showLoading();
+            $.ajax({
+                type:'POST',
+                url:'/req/ajax/submit',
+                data:$("#form").serialize()+((conditions==null)?'':'&conditions='+JSON.stringify(conditions)),
+                dataType:'json',
+                success:function(data){
+                    if(data.code == 0){
+                        messageAlert('提交成功');
+                    }else{
+                        messageAlert('提交失败，请稍后再试！^_^');
+                    }
+                },
+                error:function(data){
+                    messageAlert('系统出错，请稍后再试！^_^');
+                },
+                complete:function(){
+                    hideLoading();
+                }
+            });
+        }
+        function position(){
+            getCurrentPosition(function(pos){
+                $('#pos_lat').val(pos.lat);
+                $('#pos_lng').val(pos.lng);
+                getLocation({lat:pos.lat,lng:pos.lng},function(addComp){
+                    $('#q_position').val(addComp.province + addComp.city + addComp.district + addComp.street);
+                })
+            },function(status){
+                $('#q_position').val('定位失败');
+            });
+        }
+        var isMapInited = false;
+        function showMap(){
+            if(!isMapInited){
+                initMap();
+            }
+            $('#sidebar').animate({left: '0px'},100);
+        }
+        function getLocation(pos,callback){
+            if(!geoc){
+                var geoc = new BMap.Geocoder();
+                window.geoc = geoc;
+            }
+            var point = new BMap.Point(pos.lng,pos.lat);
+            $('#q_position').val(pos.lng + ","+ pos.lat);
+            geoc.getLocation(point, function(rs){
+                var addComp = rs.addressComponents;
+                callback(addComp);
+            });
+        }
+        function getCurrentPosition(callback,errorCallback){
+            if(!geo){
+                var geo = new BMap.Geolocation();
+                window.geo = geo;
+            }
+            geo.getCurrentPosition(function(r){
+                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                    callback(r.point);
+                }
+                else {
+                    if(errorCallback){
+                        errorCallback(this.getStatus());
+                    }
+                }
+            },{enableHighAccuracy: true});
+            //关于状态码
+            //BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
+            //BMAP_STATUS_CITY_LIST	城市列表。对应数值“1”。
+            //BMAP_STATUS_UNKNOWN_LOCATION	位置结果未知。对应数值“2”。
+            //BMAP_STATUS_UNKNOWN_ROUTE	导航结果未知。对应数值“3”。
+            //BMAP_STATUS_INVALID_KEY	非法密钥。对应数值“4”。
+            //BMAP_STATUS_INVALID_REQUEST	非法请求。对应数值“5”。
+            //BMAP_STATUS_PERMISSION_DENIED	没有权限。对应数值“6”。(自 1.1 新增)
+            //BMAP_STATUS_SERVICE_UNAVAILABLE	服务不可用。对应数值“7”。(自 1.1 新增)
+            //BMAP_STATUS_TIMEOUT	超时。对应数值“8”。(自 1.1 新增)
+        }
+
+        function initMap(){
+            var width = document.documentElement.clientWidth;
+            console.log(width);
+            var height = $('body').height();
+            $('#sidebar').css('width','100%').css('height','100%').css('background-color','#fff').css('position','fixed').css('z-index','2000').css('top',0).css('left',width + 'px');
+
+            var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+            var lat = $('#pos_lat').val();
+            var lng = $('#pos_lng').val();
+            if(lat != '' && lng != ''){
+                var point = new BMap.Point(lng,lat);//定义一个中心点坐标
+                map.centerAndZoom(point,9);//设定地图的中心点和坐标并将地图显示在地图容器中
+            }else{
+                var point = new BMap.Point(lng,lat);//定义一个中心点坐标
+                map.centerAndZoom(new BMap.Point(116.404, 39.915), 9);
+            }
+            window.map = map;//将map变量存储在全局
+
+            map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+            map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+            map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+            map.enableKeyboard();//启用键盘上下左右键移动地图
+
+            var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+            map.addControl(ctrl_nav);
+            var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_TOP_LEFT});
+            map.addControl(ctrl_sca);
+            map.addEventListener("click", function(e){
+                var pt = e.point;
+                $('#pos_lat').val(pt.lat);
+                $('#pos_lng').val(pt.lng);
+                getLocation({lat:pt.lat,lng:pt.lng},function(addComp){
+                    $('#q_position').val(addComp.province + addComp.city + addComp.district + addComp.street);
+                })
+                $('#sidebar').animate({left: width + 'px'},100);
+            });
+            isMapInited = true;
+        }
+    </script>
+</body>

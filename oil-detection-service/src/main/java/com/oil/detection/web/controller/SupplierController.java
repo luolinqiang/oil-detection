@@ -44,7 +44,7 @@ public class SupplierController extends BaseControllor {
         supplier.setId(shopId);
         supplier = supplierService.getSupplier(supplier);
         model.addAttribute("supplier", supplier);
-        return "shop/shop";
+        return "supplier/shop";
     }
 
 

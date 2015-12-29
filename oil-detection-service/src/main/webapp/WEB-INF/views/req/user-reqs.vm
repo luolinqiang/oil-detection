@@ -1,0 +1,77 @@
+#set($title="我的采购")
+<head>
+    #parse("/layout/web_header.vm")
+    <style>
+        body {
+            font-size: 12px;
+            font-family: ubuntu, helvetica, arial;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body style="margin:0px;">
+    <div id="data-list">
+    </div>
+    <div style="width:100%;min-height:100px;">
+    </div>
+    #parse("/layout/tabbar.vm")
+    <link rel="stylesheet" href="/res/v4/css/wei-pagination.css"></link>
+    <script type="text/javascript" src="/res/v4/js/lib/iscroll.js"></script>
+    <script type="text/javascript" src="/res/v4/js/lib/wei-list-view.js"></script>
+    <script type="text/javascript">
+        var htmlTemplate =
+                '<li class="list-item card" >' +
+                        '<div class="am-g" style="padding-top:5px;padding-bottom:5px;">' +
+                        '<div class="am-u-sm-9" style="color:#8c8c8c;font-size:12px;" >{{time}}　[{{type}}]</div>' +
+                        '<div class="am-u-sm-3" style="color:#8c8c8c;text-align:right;font-size:12px;" >{{status}}</div>' +
+                        '<div class="am-u-sm-4 toe-1" >{{standard}}  {{model}}　</div>' +
+                        '<div class="am-u-sm-3 toe-1" >{{takeWay}}　</div>' +
+                        '<div class="am-u-sm-5 toe-1" >{{destAddress}}　</div>' +
+                        '<div class="am-u-sm-6"><span style="height:25px;line-height:25px;" >{{num}}吨</span>　</div>' +
+                        '<div class="am-u-sm-6" style="text-align:right;" >' +
+                        '</div>' +
+                        '</div>' +
+                        '</li>';
+        var standardMap = mixin($!{standardMap});
+        var modelMap = mixin($!{modelMap});
+//        var statusMap = {'S':'审核中','P':'处理中','C':'已完成'};
+        Wei.ListView('data-list',{
+            url : '/req/ajax/own',
+            getData : function(){
+                return {};
+            },
+            getHtml : function(item){
+//                var status = item.status == null ? "S" : item.status.substring(0,1);
+                var html = htmlTemplate;
+//                var type = item.type == 0 ? "代采申请" : "采购需求";
+                html = html.replace(/{{type}}/g,item.purchaseTypeDesc);
+//                html = html.replace(/{{status}}/g,statusMap[status]);
+                html = html.replace(/{{status}}/g,item.stateDesc);
+                html = html.replace(/{{time}}/g,new Date(item.createTime).formatDate('yyyy-mm-dd hh:mm:ss'));
+                html = html.replace(/{{remark}}/g,item.otherRequire);
+                html = html.replace(/{{num}}/g,item.number);
+                html = html.replace(/{{standard}}/g,standardMap[item.qualityStandard]);
+                html = html.replace(/{{model}}/g,modelMap[item.productModel]);
+                html = html.replace(/{{id}}/g,item.id);
+                html = html.replace(/{{destAddress}}/g,item.deliveryAddr);
+                html = html.replace(/{{takeWay}}/g,item.deliveryType);
+
+                return html;
+            }
+        });
+
+        function mixin(old,my,bOverwrite) {
+            var my = my || {},
+                    key,bOverwrite = bOverwrite || false;
+            for (key in old) {
+                if (old.hasOwnProperty(key)) {
+                    if(typeof(my[key]) != 'undefined' && bOverwrite){
+                        continue;
+                    }
+                    my[key] = old[key];
+                }
+            }
+            return my;
+        }
+    </script>
+</body>

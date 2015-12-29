@@ -1,12 +1,15 @@
 package com.oil.detection.web.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.oil.detection.common.CommonConstants;
 import com.oil.detection.common.ResponsesDTO;
 import com.oil.detection.common.ReturnCode;
+import com.oil.detection.domain.Dictionary;
 import com.oil.detection.domain.Purchase;
 import com.oil.detection.domain.PurchaseSupplierRel;
 import com.oil.detection.domain.page.QueryPurchase;
 import com.oil.detection.domain.result.RsOwnPurchase;
+import com.oil.detection.service.DictionaryService;
 import com.oil.detection.service.PurchaseService;
 import com.oil.detection.service.PurchaseSupplierRelService;
 import com.oil.detection.util.ConstantTransferUtil;
@@ -14,6 +17,8 @@ import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,15 +26,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 采购信息相关接口
  */
 @Controller
-@RequestMapping(value = "/purchase")
 public class PurchaseController extends BaseControllor {
 
     private static final Logger logger = Logger.getLogger(PurchaseController.class);
@@ -38,20 +40,55 @@ public class PurchaseController extends BaseControllor {
     @Resource
     private PurchaseSupplierRelService relService;
 
+    @Resource
+    private DictionaryService dictionaryService;
+
+    @RequestMapping(value = "/req-{type}")
+    public String req(@PathVariable("type") String type, Model model, HttpServletRequest request) throws Exception {
+        Dictionary dictionary = new Dictionary();
+        dictionary.setGroupCode("item_class");
+        dictionary.setCode(type);
+        dictionary = dictionaryService.getDictionary(dictionary);
+        model.addAttribute("dic", dictionary);
+        return "req/req";
+    }
+
     /**
-     * 采购信息分页列表
+     * 采购及免费代采提交
      *
      * @param purchase
      * @return
      */
-    @RequestMapping(value = "/all", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/req/ajax/submit", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResponsesDTO pageListPurchase(QueryPurchase purchase) {
+    public ResponsesDTO savePurchase(Purchase purchase, HttpServletRequest request, HttpServletResponse response) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
-        List<Purchase> purchases = purchaseService.pageListPurchase(purchase);
-        responsesDTO.setData(purchases);
+        purchase.setCreateTime(new Date());
+        purchase.setUserId(super.getUserInfo(request).getId());
+        purchaseService.savePurchase(purchase);
         return responsesDTO;
     }
+
+    @RequestMapping(value = "/user-reqs")
+    public String userReqs(Model model, HttpServletRequest request) throws Exception {
+        Dictionary dictionary = new Dictionary();
+        dictionary.setGroupName("质量标准");
+        List<Dictionary> dictionarys = dictionaryService.listDictionary(dictionary);
+        Map<Long, String> standardMap = new HashMap<Long, String>();
+        for(Dictionary dic : dictionarys){
+            standardMap.put(dic.getId(), dic.getName());
+        }
+        model.addAttribute("standardMap", JSONObject.toJSONString(standardMap));
+        dictionary.setGroupName("产品型号");
+        dictionarys = dictionaryService.listDictionary(dictionary);
+        Map<Long, String> modelMap = new HashMap<Long, String>();
+        for(Dictionary dic : dictionarys){
+            modelMap.put(dic.getId(), dic.getName());
+        }
+        model.addAttribute("modelMap", JSONObject.toJSONString(modelMap));
+        return  "req/user-reqs";
+    }
+
 
     /**
      * 我的采购
@@ -59,9 +96,9 @@ public class PurchaseController extends BaseControllor {
      * @param purchase
      * @return
      */
-    @RequestMapping(value = "/own", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/req/ajax/own", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResponsesDTO own(HttpServletRequest request, HttpServletResponse response, QueryPurchase purchase) {
+    public ResponsesDTO own(QueryPurchase purchase, HttpServletRequest request, HttpServletResponse response) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
         purchase.setUserId(super.getUserInfo(request).getId());
         List<Purchase> purchases = purchaseService.pageListPurchase(purchase);
@@ -79,12 +116,27 @@ public class PurchaseController extends BaseControllor {
     }
 
     /**
+     * 采购信息分页列表
+     *
+     * @param purchase
+     * @return
+     */
+    @RequestMapping(value = "/purchase/all", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ResponsesDTO pageListPurchase(QueryPurchase purchase) {
+        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        List<Purchase> purchases = purchaseService.pageListPurchase(purchase);
+        responsesDTO.setData(purchases);
+        return responsesDTO;
+    }
+
+    /**
      * 我要供货
      *
      * @param purchasesupplierrel
      * @return
      */
-    @RequestMapping(value = "/supply", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/purchase/supply", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO supply(PurchaseSupplierRel purchasesupplierrel) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
@@ -97,21 +149,6 @@ public class PurchaseController extends BaseControllor {
             purchasesupplierrel.setCreateTime(new Date());
             relService.savePurchaseSupplierRel(purchasesupplierrel);
         }
-        return responsesDTO;
-    }
-
-    /**
-     * 采购及免费代采提交
-     *
-     * @param purchase
-     * @return
-     */
-    @RequestMapping(value = "/save", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public ResponsesDTO savePurchase(Purchase purchase) {
-        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
-        purchase.setCreateTime(new Date());
-        purchaseService.savePurchase(purchase);
         return responsesDTO;
     }
 }

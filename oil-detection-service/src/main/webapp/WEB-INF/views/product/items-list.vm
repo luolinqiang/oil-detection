@@ -73,10 +73,10 @@
                 '<li class="list-item card" >' +
                         '<div class="am-g" onclick="viewItem({{id}})">' +
                         '<div class="am-u-sm-4 am-list-thumb" style="padding-left:0px;" >' +
-                        '<img src="{{imageUrl}}" alt="{{name}}" style="width:100%;max-height:64px;"/>' +
+                        '<img src="{{imageUrl}}" alt="{{titleAlt}}" style="width:100%;max-height:64px;"/>' +
                         '</div>' +
                         '<div class=" am-u-sm-8 am-list-main"  >' +
-                        '<div class="text-overflow-ellipsis" style="width:100%;">{{name}}</div>' +
+                        '<div class="text-overflow-ellipsis" style="width:100%;">{{title}}</div>' +
                         '<div style="width:100%;">' +
                         '<div class="text-overflow-ellipsis price" style="float:left;width:50%;">￥{{price}}</div>' +
                         '<div class="text-overflow-ellipsis time" style="float:left;width:50%;padding-top:0.3rem;text-align:right;">{{updateTime}}</div>' +
@@ -85,11 +85,11 @@
                         '<div class="text-overflow-ellipsis shop" style="width:100%;">{{shopName}}</div>' +
                         '</div>' +
                         '</div>' +
-                        #if($!{type} == 'diesel')
+                        #if($!{dic.code} == 'diesel')
                         '<div class="am-g attr" >' +
-                        '<div class="am-u-sm-4" style="padding-left:0.5rem;padding-right:0;">闪点：{{flashPoint}}</div>' +
-                        '<div class="am-u-sm-4" style="padding-left:0.5rem;padding-right:0;">密度：{{density}}</div>' +
-                        '<div class="am-u-sm-4" style="padding-left:0.5rem;padding-right:0;">十六烷值：{{cetaneNumber}}</div>' +
+                        '<div class="am-u-sm-4" style="padding-left:0.5rem;padding-right:0;">闪点：{{sd}}</div>' +
+                        '<div class="am-u-sm-4" style="padding-left:0.5rem;padding-right:0;">密度：{{md}}</div>' +
+                        '<div class="am-u-sm-4" style="padding-left:0.5rem;padding-right:0;">十六烷值：{{wan}}</div>' +
                         '</div>' +
                         #end
                         '</li>';
@@ -100,7 +100,7 @@
             anim : false,
             getData : function(){
                 var data = {range:100};
-                data['type'] = '$!{type}';
+                data['type'] = '$!{dic.code}';
                 var standard = $('#q_standard').val();
                 var model = $('#q_model').val();
                 var shopName = $('#q_shopName').val();
@@ -139,18 +139,18 @@
 //
 //                html = html.replace(/{{shopLogoUrl}}/g,shopLogoUrl);
 
-//                var titleAlt = item.itemName;
-//                if(titleAlt.length > 20){
-//                    titleAlt = titleAlt.substring(0,18) + '...';
-//                }
+                var titleAlt = item.name;
+                if(titleAlt.length > 20){
+                    titleAlt = titleAlt.substring(0,18) + '...';
+                }
                 html = html.replace(/{{updateTime}}/g,item.timeDesc);
-                html = html.replace(/{{name}}/g,item.name);
+                html = html.replace(/{{titleAlt}}/g,titleAlt);
+                html = html.replace(/{{title}}/g,item.name);
                 html = html.replace(/{{price}}/g,item.price);
 //                html = html.replace(/{{shopName}}/g,item.shopName);
-                html = html.replace(/{{inventory}}/g,item.inventory);
-                html = html.replace(/{{flashPoint}}/g,((item.flashPoint == null) ? '' : item.flashPoint));
-                html = html.replace(/{{density}}/g,((item.density == null) ? '' : item.density));
-                html = html.replace(/{{cetaneNumber}}/g,((item.cetaneNumber == null) ? '' : item.cetaneNumber));
+                html = html.replace(/{{sd}}/g,((item.flashPoint == null) ? '' : item.flashPoint));
+                html = html.replace(/{{md}}/g,((item.density == null) ? '' : item.density));
+                html = html.replace(/{{wan}}/g,((item.cetaneNumber == null) ? '' : item.cetaneNumber));
                 return html;
             }
         });
@@ -219,7 +219,7 @@
             url : '/dic/list',
             type : 'POST',
             dataType : 'json',
-            data : {groupCode : 'item_standard_$!{type}'},
+            data : {groupCode : 'item_standard_$!{dic.code}'},
             success : function(data){
                 if (0 == data.code) {
                     fillDic($('#q_standard'), data.data);
@@ -231,7 +231,7 @@
             url : '/dic/list',
             type : 'POST',
             dataType : 'json',
-            data : {groupCode : 'item_model_$!{type}'},
+            data : {groupCode : 'item_model_$!{dic.code}'},
             success : function(data){
                 if (0 == data.code) {
                     fillDic($('#q_model'), data.data);

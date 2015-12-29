@@ -4,7 +4,7 @@ $(function(){
 function init(){
 
     $.ajax({
-        url : '/attention/get?productId=' + itemId ,
+        url : '/watch/ajax/get?productId=' + itemId ,
         type : 'get',
         dataType : 'json',
         success : function(data){
@@ -109,7 +109,7 @@ function init(){
 function watch(){
     showLoading();
     $.ajax({
-        url : '/attention/follow',
+        url : '/watch/ajax/follow',
         type : 'get',
         dataType : 'json',
         data : {
@@ -141,7 +141,7 @@ function watch(){
 function removeWatch(){
     showLoading();
     $.ajax({
-        url :  '/attention/unFollow',
+        url :  '/watch/ajax/unFollow',
         type : 'get',
         dataType : 'json',
         data : {

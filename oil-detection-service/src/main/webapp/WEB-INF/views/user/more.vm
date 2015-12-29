@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="card" style="">
-        <div style="padding:5px 5px 5px 20px;" data-href="/weisite/user-reqs.html">
+        <div style="padding:5px 5px 5px 20px;" data-href="/user-reqs">
             <img src="/res/v4/images/caigou.png" style="width:40px;height:40px;margin-right:10px;"/>
             <span style="line-height:40px;font-size:14px;">我的采购</span>
             <img src="/res/v4/images/arrow_right_64_24.png" style="width:40px;height:40px;float:right;"/>
@@ -34,7 +34,7 @@
             <span style="line-height:40px;font-size:14px;">我的订单</span>
             <img src="/res/v4/images/arrow_right_64_24.png" style="width:40px;height:40px;float:right;"/>
         </div>
-        <div style="padding:5px 5px 5px 20px;border-top:1px solid #999;" data-href="/weisite/user-watch.html">
+        <div style="padding:5px 5px 5px 20px;border-top:1px solid #999;" data-href="/user-watch">
             <img src="/res/v4/images/xinxing.png" style="width:40px;height:40px;margin-right:10px;"/>
             <span style="line-height:40px;font-size:14px;">我的关注</span>
             <img src="/res/v4/images/arrow_right_64_24.png" style="width:40px;height:40px;float:right;"/>

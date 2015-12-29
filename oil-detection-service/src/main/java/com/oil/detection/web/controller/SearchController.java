@@ -3,16 +3,10 @@ package com.oil.detection.web.controller;
 import com.oil.detection.common.CommonConstants;
 import com.oil.detection.common.ResponsesDTO;
 import com.oil.detection.common.ReturnCode;
-import com.oil.detection.domain.HomeSetting;
-import com.oil.detection.domain.Pic;
-import com.oil.detection.domain.Product;
-import com.oil.detection.domain.Supplier;
+import com.oil.detection.domain.*;
 import com.oil.detection.domain.param.ItemSearch;
 import com.oil.detection.domain.result.RsProductDetail;
-import com.oil.detection.service.HomeSettingService;
-import com.oil.detection.service.PicService;
-import com.oil.detection.service.ProductService;
-import com.oil.detection.service.SupplierService;
+import com.oil.detection.service.*;
 import com.oil.detection.util.DESUtil;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
@@ -42,10 +36,16 @@ public class SearchController extends BaseControllor {
 
     private static final Logger logger = Logger.getLogger(UserController.class);
 
+    @Resource
+    private DictionaryService dictionaryService;
+
     @RequestMapping(value = "/items-{type}")
     public String searchdItems(@PathVariable("type") String type, Model model, HttpServletRequest request) throws Exception {
-        model.addAttribute("type", type);
-
+        Dictionary dictionary = new Dictionary();
+        dictionary.setGroupCode("item_class");
+        dictionary.setCode(type);
+        dictionary = dictionaryService.getDictionary(dictionary);
+        model.addAttribute("dic", dictionary);
         return "product/items-list";
     }
 
