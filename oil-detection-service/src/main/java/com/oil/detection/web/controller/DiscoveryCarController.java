@@ -15,23 +15,13 @@ import javax.annotation.Resource;
 import java.util.Date;
 
 @Controller
-@RequestMapping(value = "/dcar")
 public class DiscoveryCarController extends BaseControllor {
 
     private static final Logger logger = Logger.getLogger(DiscoveryCarController.class);
     @Resource
     private DiscoveryCarService discoverycarService;
 
-    @RequestMapping(value = "/get", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public ResponsesDTO getDiscoveryCar(DiscoveryCar discoverycarQuery) {
-        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
-        DiscoveryCar discoverycar = discoverycarService.getDiscoveryCar(discoverycarQuery);
-        responsesDTO.setData(discoverycar);
-        return responsesDTO;
-    }
-
-    @RequestMapping(value = "/save", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/dcar/save", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO saveDiscoveryCar(DiscoveryCar discoverycar) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
@@ -40,8 +30,16 @@ public class DiscoveryCarController extends BaseControllor {
         return responsesDTO;
     }
 
+    @RequestMapping(value = "/dcar/get", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ResponsesDTO getDiscoveryCar(DiscoveryCar discoverycarQuery) {
+        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        DiscoveryCar discoverycar = discoverycarService.getDiscoveryCar(discoverycarQuery);
+        responsesDTO.setData(discoverycar);
+        return responsesDTO;
+    }
 
-    @RequestMapping(value = "/modify", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/dcar/modify", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
     public ResponsesDTO modifyDiscoveryCar(DiscoveryCar discoverycar) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);

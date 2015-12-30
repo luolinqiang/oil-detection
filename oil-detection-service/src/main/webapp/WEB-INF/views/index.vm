@@ -16,7 +16,7 @@
     <div class="card" style="position:relative;z-index:1;">
         <div class="am-g">
             <div class="am-u-sm-3" style="padding:0;">
-                <div class="icon-item" data-href="/weisite/search-diesel.html">
+                <div class="icon-item" data-href="/search-diesel">
                     <div>
                         <img src="/res/v4/images/index-icon-01.png"/>
                     </div>
@@ -31,14 +31,14 @@
                     <div>一键找车</div>
                 </div>
             </div>
-            <div class="am-u-sm-3" style="padding:0;">
-                <div class="icon-item" data-href="/">
-                    <div>
-                        <img src="/res/v4/images/index-icon-03.png"/>
-                    </div>
-                    <div>我要报价</div>
-                </div>
-            </div>
+##            <div class="am-u-sm-3" style="padding:0;">
+##                <div class="icon-item" data-href="/">
+##                    <div>
+##                        <img src="/res/v4/images/index-icon-03.png"/>
+##                    </div>
+##                    <div>我要报价</div>
+##                </div>
+##            </div>
             <div class="am-u-sm-3" style="padding:0;">
                 <div class="icon-item" data-href="/req-diesel">
                     <div>

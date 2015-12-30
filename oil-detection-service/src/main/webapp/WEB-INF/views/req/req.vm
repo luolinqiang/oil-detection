@@ -1,4 +1,4 @@
-#set($title="我要采购 - #if($!{type} == 'diesel')柴油#else汽油#end")
+#set($title="我要采购 - #if($!{dic.code} == 'diesel')柴油#else汽油#end")
 <head>
     #parse("/layout/web_header.vm")
     <style>
@@ -43,13 +43,13 @@
 </head>
 <body style="margin:0px;">
     <div class="am-cf" style="color:#fff;">
-        <div class="am-fl" style="width:50%;text-align:center;" #if($!{dic.code} != 'diesel')data-href="/req-diesel"#end>
-            <div style="background-color:#e87823;width:100%;padding-top:0.5rem;padding-bottom:0.5rem;border-bottom:4px solid #if($!{dic.code} == 'diesel')#000;#else #e87823;#end">
+        <div class="am-fl" style="width:50%;text-align:center;" #if($!{dic.code} == 'petrol')data-href="/req-diesel"#end>
+            <div style="background-color:#e87823;width:100%;padding-top:0.5rem;padding-bottom:0.5rem;border-bottom:4px solid #if($!{dic.code} == 'diesel')#000#else #e87823#end;">
                 采购柴油
             </div>
         </div>
         <div class="am-fr" style="width:50%;text-align:center;" #if($!{dic.code} == 'diesel')data-href="/req-petrol"#end>
-            <div style="background-color:#f09a6b;width:100%;padding-top:0.5rem;padding-bottom:0.5rem;border-bottom:4px solid #if($!{dic.code} == 'petrol')#000;#else #f09a6b;#end">
+            <div style="background-color:#f09a6b;width:100%;padding-top:0.5rem;padding-bottom:0.5rem;border-bottom:4px solid #if($!{dic.code} == 'petrol')#000#else #f09a6b#end;">
                 采购汽油
             </div>
         </div>

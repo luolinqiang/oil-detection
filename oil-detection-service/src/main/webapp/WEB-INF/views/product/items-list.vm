@@ -45,8 +45,8 @@
                     <input value="" type="text" name="shopName" id="q_shopName">
                     <label>区域</label>
                     <div class="am-input-group">
-                        <input type="text" id="q_position_text" readonly="true" name="q_position_text" >
-                        <input type="hidden" id="q_position" readonly="true" name="q_position" >
+                        <input type="text" id="q_position_text" readonly="true" name="position_text" >
+                        <input type="hidden" id="q_position" readonly="true" name="position" >
                         <span class="am-input-group-btn">
                             <button class="am-btn am-btn-default" id="select-area-btn" type="button"><span class="am-icon-angle-down">选择</span> </button>
                         </span>

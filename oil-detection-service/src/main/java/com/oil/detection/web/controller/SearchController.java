@@ -41,29 +41,15 @@ public class SearchController extends BaseControllor {
 
     @RequestMapping(value = "/items-{type}")
     public String searchdItems(@PathVariable("type") String type, Model model, HttpServletRequest request) throws Exception {
-        Dictionary dictionary = new Dictionary();
-        dictionary.setGroupCode("item_class");
-        dictionary.setCode(type);
-        dictionary = dictionaryService.getDictionary(dictionary);
-        model.addAttribute("dic", dictionary);
+        model.addAttribute("dic", getDictionary(type));
         return "product/items-list";
     }
 
-
-    @RequestMapping(value = "/search-diesel")
-    public String searchdiesel(Model model, HttpServletRequest request) throws Exception {
-
-
-        return "search/diesel";
+    @RequestMapping(value = "/search-{type}")
+    public String searchdiesel(@PathVariable("type") String type, Model model, HttpServletRequest request) throws Exception {
+        model.addAttribute("dic", getDictionary(type));
+        return "search/search";
     }
-
-    @RequestMapping(value = "/search-petrol")
-    public String searchpetrol(Model model, HttpServletRequest request) throws Exception {
-
-
-        return "search/petrol";
-    }
-
 
 
     @RequestMapping(value = "/zhaoche")
@@ -71,5 +57,12 @@ public class SearchController extends BaseControllor {
 
 
         return "product/zhaoche";
+    }
+
+    private Dictionary getDictionary(String type) {
+        Dictionary dictionary = new Dictionary();
+        dictionary.setGroupCode("item_class");
+        dictionary.setCode(type);
+        return dictionaryService.getDictionary(dictionary);
     }
 }
