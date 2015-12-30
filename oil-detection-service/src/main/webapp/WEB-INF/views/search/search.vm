@@ -1,0 +1,127 @@
+#set($title="雷达寻油")
+<head>
+    #parse("/layout/web_header.vm")
+    #parse("/layout/searchstyle.vm")
+</head>
+<body style="margin:0px;">
+    <div class="am-cf" style="color:#fff;">
+        <div class="am-fl" style="width:50%;text-align:center;" #if($!{dic.code} == 'petrol')data-href="/search-diesel"#end>
+            <div style="background-color:#e87823;width:100%;padding-top:0.5rem;padding-bottom:0.5rem;border-bottom:4px solid #if($!{dic.code} == 'diesel')#000#else #e87823#end;">
+                我要找柴油
+            </div>
+        </div>
+        <div class="am-fr" style="width:50%;text-align:center;" #if($!{dic.code} == 'diesel')data-href="/search-petrol"#end>
+            <div style="background-color:#f09a6b;width:100%;padding-top:0.5rem;padding-bottom:0.5rem;border-bottom:4px solid #if($!{dic.code} == 'petrol')#000#else #f09a6b#end;">
+                我要找汽油
+            </div>
+        </div>
+    </div>
+    <!-- 查询表单 -->
+    <div id="search-form-div" style="margin-left:2rem;margin-right:2rem;">
+        <div style="width:100%;padding-top:0.5rem;padding-bottom:0.5rem;">
+            您可以通过以下选项进行筛选
+        </div>
+        <div class="separator-line"></div>
+        <div class=" col-md-8 col-sm-centered" style="margin-top:1rem;">
+            <form id="f1" class="am-form" method="post">
+                <label>标准</label>
+                <select id="q_standard" name="standard">
+                    <option value="">选择质量标准</option>
+
+                </select>
+                <label>型号</label>
+                <select id="q_model" name="model">
+                    <option value="">选择产品型号</option>
+                </select>
+                <label>位置</label>
+                <div class="am-input-group">
+                    <input type="text" id="q_position_text" readonly="true" name="position_text" >
+                    <input type="hidden" id="q_position" readonly="true" name="position">
+##                    <span class="am-input-group-btn">
+##                        <button class="am-btn am-btn-default" id="getLocationBtn" type="button"><span class="am-icon-location-arrow">定位</span> </button>
+##                    </span>
+                    <span class="am-input-group-btn">
+                        <button class="am-btn am-btn-default" id="select-area-btn" type="button"><span class="am-icon-angle-down">选择</span> </button>
+                    </span>
+                </div>
+                <div style="text-align:center;width:100%;padding-top:1rem;">
+                    <button type="button" id="search-btn" class="am-btn am-btn-warning" style="width:80%;">开始寻油</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 查询表单 end -->
+
+    <!-- 查询结果显示 start -->
+    <div id="search-leida-div" style="display:none;height:100%;">
+        <div  id="query-param-view-div" class="am-g" style="background-color:#e87823;padding-top:0.5rem;padding-bottom:0.5rem;padding-left:1rem;">
+            我想找:<span id="queryParamView"></span>
+        </div>
+        <div class="roll-sign" id="car">
+            <img alt="" src="/res/v4/images/leida.png" class="tire roll-sign">
+        </div>
+    </div>
+    <!-- 查询结果显示 end -->
+    <!-- 商品列表 start -->
+    <div id="search-list-div" style="display:none;padding-bottom:50px;">
+        <div class="am-list-news-hd am-cf" style="background-color:#e87823;text-align:right;padding-right:2rem;">
+            <a href="javascript:void(0);" class="refresh" onclick="showSearch()">
+                <img src="/res/v4/images/icon-refresh.png" style="width:1.5rem;height:1.5rem;"/>
+                <span style="color:#fff">重新寻油</span>
+            </a>
+        </div>
+        <!-- 商品列表  start -->
+        <div class="am-list-news-bd">
+            <ul class="am-list" id="item-list-ul" data-liffect="pageTop">
+            </ul>
+        </div>
+        <!-- 商品列表  end -->
+        <!-- 商品列表 分页 start -->
+        <div class="pagination-bar prev" style="display:none;background-color:#efefef;padding-left:1rem;padding-right:1rem;padding-top:0.5rem;padding-bottom:0.5rem;" id="pagination-prev">
+            <a href="javascript:void(0);" onclick="prev()" class="">上一页</a>
+        </div>
+        <div class="pagination-bar next" style="display:none;background-color:#efefef;padding-left:1rem;padding-right:1rem;padding-top:0.5rem;padding-bottom:0.5rem;" id="pagination-next">
+            <a href="javascript:void(0);" onclick="next()" class="">下一页</a>
+        </div>
+        <!-- 商品列表 分页 end -->
+    </div>
+    <!-- 商品列表 end -->
+    #parse("/layout/tabbar.vm")
+    #parse("/layout/alert.vm")
+    #parse("/layout/select_area.vm")
+    <script type="text/javascript">
+        $.ajax({
+            url : '/dic/list',
+            type : 'POST',
+            dataType : 'json',
+            data : {groupCode : 'item_standard_$!{dic.code}'},
+            success : function(data){
+                if (0 == data.code) {
+                    fillDic($('#q_standard'), data.data);
+                }
+            }
+        });
+
+        $.ajax({
+            url : '/dic/list',
+            type : 'POST',
+            dataType : 'json',
+            data : {groupCode : 'item_model_$!{dic.code}'},
+            success : function(data){
+                if (0 == data.code) {
+                    fillDic($('#q_model'), data.data);
+                }
+            }
+        });
+
+        function fillDic(container, data) {
+            var html = '';
+            for(var i = 0;i < data.length;i++){
+                html += '<option value="'+data[i].id+'">'+data[i].name+'</option>';
+            }
+            container.append(html);
+        }
+
+    </script>
+    <script src="/res/v4/js/search.js"></script>
+</body>
