@@ -1,28 +1,16 @@
 package com.oil.detection.web.controller;
 
-import com.oil.detection.common.CommonConstants;
-import com.oil.detection.common.ResponsesDTO;
-import com.oil.detection.common.ReturnCode;
-import com.oil.detection.domain.*;
-import com.oil.detection.domain.param.ItemSearch;
-import com.oil.detection.domain.result.RsProductDetail;
-import com.oil.detection.service.*;
-import com.oil.detection.util.DESUtil;
+import com.oil.detection.domain.Dictionary;
+import com.oil.detection.service.DictionaryService;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

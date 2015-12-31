@@ -25,6 +25,7 @@
         <id column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <id column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <id column="state" property="state" jdbcType="TINYINT"/>
+        <id column="down_email" property="downEmail" jdbcType="VARCHAR"/>
     </resultMap>
     <!-- 所有列信息  -->
     <sql id="All_Column">
@@ -43,6 +44,7 @@
             download_contract,
             create_time,
             update_time,
+            down_email,
                 state
         </sql>
     <!-- 动态列信息  -->
@@ -62,6 +64,7 @@
         <if test="createTime!= null">create_time,</if>
         <if test="updateTime!= null">update_time,</if>
         <if test="state!= null">state,</if>
+        <if test="downEmail!= null">down_email,</if>
     </sql>
     <!-- 动态值信息  -->
     <sql id="Dynamic_Value">
@@ -80,6 +83,7 @@
         <if test="createTime!= null">#{createTime,jdbcType=TIMESTAMP},</if>
         <if test="updateTime!= null">#{updateTime,jdbcType=TIMESTAMP},</if>
         <if test="state!= null">#{state,jdbcType=TINYINT},</if>
+        <if test="downEmail!= null">#{downEmail,jdbcType=TINYINT},</if>
     </sql>
 
     <!-- 动态设置值信息  -->
@@ -99,6 +103,7 @@
         <if test="createTime!= null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
         <if test="updateTime!= null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
         <if test="state!= null">state = #{state,jdbcType=TINYINT},</if>
+        <if test="downEmail!= null">down_email = #{downEmail,jdbcType=TINYINT},</if>
     </sql>
 
     <!-- 动态where值信息  -->
@@ -119,6 +124,7 @@
         <if test="createTime != null">AND create_time = #{createTime, jdbcType=TIMESTAMP}</if>
         <if test="updateTime != null">AND update_time = #{updateTime, jdbcType=TIMESTAMP}</if>
         <if test="state != null">AND state = #{state, jdbcType=TINYINT}</if>
+        <if test="downEmail != null">AND down_email = #{downEmail, jdbcType=TINYINT}</if>
     </sql>
 
     <!-- 查询列表  -->
