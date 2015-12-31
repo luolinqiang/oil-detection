@@ -1,0 +1,179 @@
+#set($title="免费代采")
+<head>
+    #parse("/layout/web_header.vm")
+    <style>
+        .form fieldset {
+            width:100%;
+            border:1px solid #ccc;
+            margin:0px;
+            padding:5px 10px 5px 10px;
+        }
+        .form legend {
+            font-size:16px;
+            padding:2px 10px 2px 10px;
+            margin:0px;
+            width:auto;
+            border:0px;
+            font-weight:bold;
+        }
+        .form legend font {
+            color:red;
+        }
+    </style>
+</head>
+<body style="background-color:#fff;">
+    <!-- 订单信息 start -->
+    <div id="order-view-div" style="">
+        <form id="order-form" action="" class="am-form form">
+            <input type="hidden" name="productId" id="productId" value='$!{product.id}'/>
+            <input type="hidden" name="oilType" value="$!{product.type}"/>
+            <input type="hidden" name="purchaseType" value="2"/>
+            <input type="hidden" name="qualityStandard" value="$!{product.qualityStandard}"/>
+            <input type="hidden" name="productModel" value="$!{product.productModel}"/>
+            <!-- 商品信息 start -->
+            <div class="am-g">
+                <div class="am-u-sm-4">
+                    <a href="/p/item-$!{product.id}">
+                        #if($pics && $pics.size() > 0)
+                            <img src='/pic/show/$pics[0].id'/>
+                        #end
+                    </a>
+                </div>
+                <div class="am-u-sm-8">
+                    <div style="font-size:1.8rem;"><a href="/p/item-$!{product.id}">$!{product.name}</a></div>
+                    <div style="font-size:1.8rem;"><font color="red">￥$!{product.price}</font></div>
+                    <div style="font-size:1.8rem;">库存:$!{product.inventory}</div>
+                </div>
+            </div>
+            <hr/>
+            <!-- 商品信息 end -->
+            <div class="am-g">
+                <div class="am-u-sm-12">
+                    <fieldset>
+                        <legend>需求数量(单位:吨)(<font>必填</font>)</legend>
+                        <input type="number" id="number" name="number" placeHolder="请填写您要采购的数量"/>
+                    </fieldset>
+                    <fieldset id="q_paytype">
+                        <legend>付款方式(<font>必填</font>)</legend>
+
+                    </fieldset>
+                    <fieldset>
+                        <legend>提货方式(<font>必填</font>)</legend>
+                        <label style="padding:0px 5px 0px 5px;"><input onclick="$('#q_position').attr('placeHolder','提货范围(不填即为全国)');" type="radio" name="deliveryType" value="21" checked="true"/>自提</label>
+                        <label style="padding:0px 5px 0px 5px;"><input onclick="$('#q_position').attr('placeHolder','送货地址');" type="radio" name="deliveryType" value="22"/>送货</label>
+                        <input type="text" id="q_position" placeHolder="提货范围(不填即为全国)" name="deliveryAddr" >
+                    </fieldset>
+                    <fieldset>
+                        <legend>其他要求(选填)</legend>
+                        <div class="am-input-group" style="width:100%;">
+                            <textarea class="" rows="3" id="otherRequire" name="otherRequire" style="width:100%;" placeHolder="请填写其他要求."></textarea>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <hr/>
+            <!-- 配送方式 start -->
+            <div class="am-g">
+                <div class="am-u-sm-12"  style="font-size:1.5rem;display:none;" id="wl">
+                    物流专员会在您提交订单后联系您，并为您联系物流。
+                </div>
+            </div>
+            <!-- 配送方式 end -->
+        </form>
+        <div class="am-g">
+            <div class="am-u-sm-12" style="font-size:2.0rem;text-align:center;">
+                <button id="submit-btn" class="am-btn am-btn-warning am-btn-block">提交代采</button>
+            </div>
+        </div>
+
+    </div>
+    <!-- 订单信息 end -->
+
+    <form action="success" id="success-form" method="POST">
+        <input type="hidden" id="success-sn" name="sn"/>
+    </form>
+    <div style="width:100%;min-height:100px;">
+    </div>
+    #parse("/layout/tabbar.vm")
+    #parse("/layout/alert.vm")
+    #parse("/layout/loading.vm")
+
+    <script type="text/javascript">
+        $.ajax({
+            url : '/dic/list',
+            type : 'POST',
+            dataType : 'json',
+            data : {groupCode : 'pay_type'},
+            success : function(data){
+                if (0 == data.code) {
+                    var html = '';
+                    for(var i = 0;i < data.data.length;i++){
+                        html += '<label style="padding:0px 5px 0px 5px;"><input type="radio" name="payType" value="'+data.data[i].id+'"/>'+data.data[i].name+'</label>';
+                    }
+                    $('#q_paytype').append(html);
+                    $("input[name='payType']")[0].checked = true;
+                }
+            }
+        });
+
+        $('#submit-btn').on('click',function(){
+            var num = $('#number').val();
+            var regNum = new RegExp("^[0-9]*[1-9][0-9]*$");
+            if(!regNum.test(num)){
+                messageAlert('请填写需求数量,数值为大于0的整数');
+                return;
+            }
+
+            flag = 0;
+            var payType = document.getElementsByName("payType");
+            for(var i=0;i<payType.length;i++){
+                if(payType[i].checked) {
+                    flag = 1;
+                }
+            }
+            if(flag < 1){
+                messageAlert('请选择付款方式');
+                return;
+            }
+
+            flag = 0;
+            var takeWay = document.getElementsByName("deliveryType");
+            for(var i=0;i<takeWay.length;i++){
+                if(takeWay[i].checked) {
+                    if(takeWay[i].value == '送货'){
+                        var destAddress = $('#q_position').val();
+                        if(destAddress == null || destAddress == ''){
+                            messageAlert('请填写送货地址');
+                            return;
+                        }
+                    }
+                }
+            }
+            showLoading();
+            $.ajax({
+                type:'POST',
+                url:'/req/ajax/submit',
+                data:$("#order-form").serialize(),
+                dataType:'json',
+                success:function(data){
+                    if(data.code == 0){
+                        messageAlert('提交成功');
+                        window.location.href= '/p/item-$!{product.id}';
+                    }else{
+                        if(1010 == data.code){
+                            window.location.href= '/u/login?redirectUrl=/requirement-$!{product.id}';
+                        }else{
+                            messageAlert('提交失败，请稍后再试！^_^');
+                        }
+                    }
+                },
+                error:function(data){
+                    messageAlert('系统出错，请稍后再试！^_^');
+                },
+                complete:function(){
+                    hideLoading();
+                }
+            });
+        });
+    </script>
+</body>

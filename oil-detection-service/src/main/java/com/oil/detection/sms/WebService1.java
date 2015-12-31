@@ -50,17 +50,17 @@ public class WebService1 extends Service {
         super(WSDL_LOCATION, SERVICE);
     }
 
-    public WebService1(WebServiceFeature... features) {
-        super(WSDL_LOCATION, SERVICE, features);
-    }
-
-    public WebService1(URL wsdlLocation, WebServiceFeature... features) {
-        super(wsdlLocation, SERVICE, features);
-    }
-
-    public WebService1(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
-        super(wsdlLocation, serviceName, features);
-    }
+//    public WebService1(WebServiceFeature... features) {
+//        super(WSDL_LOCATION, SERVICE, features);
+//    }
+//
+//    public WebService1(URL wsdlLocation, WebServiceFeature... features) {
+//        super(wsdlLocation, SERVICE, features);
+//    }
+//
+//    public WebService1(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
+//        super(wsdlLocation, serviceName, features);
+//    }
 
 
     /**

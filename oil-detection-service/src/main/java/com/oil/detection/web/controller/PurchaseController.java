@@ -4,14 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.oil.detection.common.CommonConstants;
 import com.oil.detection.common.ResponsesDTO;
 import com.oil.detection.common.ReturnCode;
+import com.oil.detection.domain.*;
 import com.oil.detection.domain.Dictionary;
-import com.oil.detection.domain.Purchase;
-import com.oil.detection.domain.PurchaseSupplierRel;
 import com.oil.detection.domain.page.QueryPurchase;
 import com.oil.detection.domain.result.RsOwnPurchase;
-import com.oil.detection.service.DictionaryService;
-import com.oil.detection.service.PurchaseService;
-import com.oil.detection.service.PurchaseSupplierRelService;
+import com.oil.detection.service.*;
 import com.oil.detection.util.ConstantTransferUtil;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
@@ -39,10 +36,20 @@ public class PurchaseController extends BaseControllor {
     private PurchaseService purchaseService;
     @Resource
     private PurchaseSupplierRelService relService;
-
     @Resource
     private DictionaryService dictionaryService;
-
+    @Resource
+    private ProductService productService;
+    @Resource
+    private PicService picService;
+    /**
+     * 采购
+     * @param type
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/req-{type}")
     public String req(@PathVariable("type") String type, Model model, HttpServletRequest request) throws Exception {
         Dictionary dictionary = new Dictionary();
@@ -51,6 +58,28 @@ public class PurchaseController extends BaseControllor {
         dictionary = dictionaryService.getDictionary(dictionary);
         model.addAttribute("dic", dictionary);
         return "req/req";
+    }
+
+    /**
+     * 免费代采
+     * @param pid
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/requirement-{pid}")
+    public String requirement(@PathVariable("pid") Long pid, Model model, HttpServletRequest request) throws Exception {
+        Product product = new Product();
+        product.setId(pid);
+        product = productService.getProduct(product);
+        model.addAttribute("product", product);
+        Pic pic = new Pic();
+        pic.setType(CommonConstants.Common.TYPE_2);
+        pic.setOwnerId(pid);
+        List<Pic> pics = picService.listPicNoContent(pic);
+        model.addAttribute("pics", pics);
+        return "req/requirement";
     }
 
     /**
