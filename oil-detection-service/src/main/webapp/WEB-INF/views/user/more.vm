@@ -29,7 +29,7 @@
             <span style="line-height:40px;font-size:14px;">我的采购</span>
             <img src="/res/v4/images/arrow_right_64_24.png" style="width:40px;height:40px;float:right;"/>
         </div>
-        <div style="padding:5px 5px 5px 20px;border-top:1px solid #999;" data-href="/weisite/user-orders.html">
+        <div style="padding:5px 5px 5px 20px;border-top:1px solid #999;" data-href="/user-orders">
             <img src="/res/v4/images/dingdan.png" style="width:40px;height:40px;margin-right:10px;"/>
             <span style="line-height:40px;font-size:14px;">我的订单</span>
             <img src="/res/v4/images/arrow_right_64_24.png" style="width:40px;height:40px;float:right;"/>

@@ -31,14 +31,14 @@
                     <div>一键找车</div>
                 </div>
             </div>
-##            <div class="am-u-sm-3" style="padding:0;">
-##                <div class="icon-item" data-href="/">
-##                    <div>
-##                        <img src="/res/v4/images/index-icon-03.png"/>
-##                    </div>
-##                    <div>我要报价</div>
-##                </div>
-##            </div>
+            <div class="am-u-sm-3" style="padding:0;">
+                <div class="icon-item" data-href="/user-reqs">
+                    <div>
+                        <img src="/res/v4/images/index-icon-03.png"/>
+                    </div>
+                    <div>我的采购</div>
+                </div>
+            </div>
             <div class="am-u-sm-3" style="padding:0;">
                 <div class="icon-item" data-href="/req-diesel">
                     <div>
