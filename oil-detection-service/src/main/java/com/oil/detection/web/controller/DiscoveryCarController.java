@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 @Controller
@@ -23,9 +25,13 @@ public class DiscoveryCarController extends BaseControllor {
 
     @RequestMapping(value = "/dcar/save", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResponsesDTO saveDiscoveryCar(DiscoveryCar discoverycar) {
+    public ResponsesDTO saveDiscoveryCar(DiscoveryCar discoverycar, Long time, HttpServletRequest request) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
         discoverycar.setCreateTime(new Date());
+        discoverycar.setUserId(super.getUserInfo(request).getId());
+        Date deliveryTime = new Date();
+        deliveryTime.setTime(time);
+        discoverycar.setDeliveryTime(deliveryTime);
         discoverycarService.saveDiscoveryCar(discoverycar);
         return responsesDTO;
     }
