@@ -8,11 +8,11 @@
             <form method="post" action="" class="am-form" id="form">
                 <label>货物:</label>
                 <input type="text" name="goods" value="">
-                <select name="glevel" style="display:none">
+##                <select name="glevel" style="display:none">
                     <!--<option value="0">请选择..</option><option value="1">一类</option><option value="2">二类</option>-->
-                    <option value="3">三类</option>
+##                    <option value="3">三类</option>
                     <!--<option value="4">四类</option><option value="5">五类</option><option value="6">六类</option><option value="7">七类</option><option value="8">八类</option><option value="9">九类</option>-->
-                </select>
+##                </select>
                 <label>重量（吨）:</label>
                 <input type="number" name="weight" value="">
                 <label>价格:</label>
@@ -25,7 +25,7 @@
                     <option value="5">衬塑</option><option value="6">玻璃钢</option><option value="7">铝合金</option><option value="8">镀铝</option><option value="9">压力罐</option><option value="10">铝镁合金</option><option value="11">铝罐</option><option value="12">铝罐保温</option><option value="13">钛镁合金</option><option value="20">集装箱</option><option value="21">高栏</option><option value="22">平板</option><option value="23">厢式</option><option value="99">其他</option>-->
                 </select>
                 <label>发货时间:</label>
-                <select id="deliveryTime" name="deliveryTime">
+                <select id="deliveryTime">
 
                 </select>
                 <label>备注:</label>
@@ -33,11 +33,11 @@
                 <label>发货人姓名:</label>
                 <input type="text" name="senderName" value="">
                 <label>发货人手机:</label>
-                <input type="text" name="senderPhone" value="">
-                <input type="hidden" name="apicompany" value="个人">
+                <input type="tel" name="senderPhone" value="">
+##                <input type="hidden" name="apicompany" value="个人">
                 <label>始发地:</label>
                 <div class="am-input-group">
-                    <input type="text" id="area_p_1_text" readonly="true" name="area_p_1_text" >
+                    <input type="text" id="area_p_1_text" readonly="true">
                     <input type="hidden" id="area_p_1" readonly="true" name="origin" >
                         <span class="am-input-group-btn">
                             <button class="am-btn am-btn-default" id="select-area-btn-begin" type="button"><span class="am-icon-angle-down">选择</span> </button>
@@ -45,7 +45,7 @@
                 </div>
                 <label>目的地:</label>
                 <div class="am-input-group">
-                    <input type="text" id="area_p_2_text" readonly="true" name="area_p_2_text" >
+                    <input type="text" id="area_p_2_text" readonly="true">
                     <input type="hidden" id="area_p_2" readonly="true" name="destination" >
                         <span class="am-input-group-btn">
                             <button class="am-btn am-btn-default" id="select-area-btn-end" type="button"><span class="am-icon-angle-down">选择</span> </button>
@@ -53,8 +53,8 @@
                 </div>
                 <br />
                 是否需要下载合同范本
-                <input type="checkbox" name="downloadContract" id="search_check"/>
-                <input type="text" id="down_email" name="down_email" value="" placeHolder="请输入您的邮箱地址" style="display: none">
+                <input type="checkbox" id="search_check"/>
+                <input type="text" id="down_email" value="" placeHolder="请输入您的邮箱地址" style="display: none">
                 <div class="am-g" style="margin-bottom:50px;margin-top:1rem;">
                     <div class="am-u-sm-12">
                         <a class="am-btn am-btn-warning am-btn-block" href="javascript:void(0)" onclick="submitForm()">提交</a>
@@ -64,13 +64,15 @@
         </div>
     </div>
     #parse("/layout/tabbar.vm")
+    #parse("/layout/alert.vm")
+    #parse("/layout/loading.vm")
     #parse("/layout/select_area.vm")
     <script type='text/javascript'>
         var today = new Date();
         var html = '';
         for(var i = 0;i < 7;i++){
             var newDate = new Date(today.getTime() + (24*60*60*1000)*i);
-            html += '<option value="'+newDate.getTime()+'">'+newDate.formatDate('yyyy-mm-dd')+'</option>';
+            html += '<option value="' + newDate.getTime() + '">'+newDate.formatDate('yyyy-mm-dd')+'</option>';
         }
         $('#deliveryTime').append(html);
         $('#search_check').on('click',function(){
@@ -119,20 +121,30 @@
         });
 
         function submitForm(){
-            /*
-            var str = new Date().getTime();
+            showLoading();
             $.ajax({
-                url : Wei.up + '/zhaoche/search' + Wei.us + '?t=' + str + '&' + $("#form").serialize(),
-                type : 'get',
-                dataType : 'json',
-                success : function(){
-
+                type:'POST',
+                url:'/dcar/save',
+                data:$("#form").serialize()+"&time="+$('#deliveryTime').val()+"&downloadContract="+(search_check?1:0),
+                dataType:'json',
+                success:function(data){
+                    if(data.code == 0){
+                        messageAlert('提交成功');
+                    }else{
+                        if(1010 == data.code){
+                            window.location.href= '/u/login?redirectUrl=/zhaoche';
+                        }else{
+                            messageAlert('提交失败，请稍后再试！^_^');
+                        }
+                    }
                 },
-                error : function(){
-
+                error:function(data){
+                    messageAlert('系统出错，请稍后再试！^_^');
+                },
+                complete:function(){
+                    hideLoading();
                 }
             });
-            */
         }
     </script>
 </body>

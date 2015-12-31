@@ -21,7 +21,14 @@
         <!-- 强制登录用户检查 -->
         <mvc:interceptor>
             <mvc:mapping path="/u/more"/>
-            <mvc:mapping path="/attention/**"/>
+            <mvc:mapping path="/watch/**"/>
+            <mvc:mapping path="/user-watch"/>
+            <mvc:mapping path="/user-watch"/>
+            <mvc:mapping path="/dcar/**"/>
+            <mvc:mapping path="/req-**"/>
+            <mvc:mapping path="/req/**"/>
+            <mvc:mapping path="/user-reqs"/>
+            <mvc:mapping path="/zhaoche"/>
             <bean class="com.oil.detection.web.interceptor.TicketRequiredInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
