@@ -21,6 +21,15 @@ public class DiscoveryCar implements Serializable {
     private Date createTime;
     private Date updateTime;
     private Integer state;
+    private String downEmail;
+
+    public String getDownEmail() {
+        return downEmail;
+    }
+
+    public void setDownEmail(String downEmail) {
+        this.downEmail = downEmail;
+    }
 
     public Long getId() {
         return id;

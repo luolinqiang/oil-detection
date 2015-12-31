@@ -53,8 +53,10 @@
                 </div>
                 <br />
                 是否需要下载合同范本
+
                 <input type="checkbox" id="search_check"/>
-                <input type="text" id="down_email" value="" placeHolder="请输入您的邮箱地址" style="display: none">
+                <input type="text" id="down_email" name="downEmail" value="" placeHolder="请输入您的邮箱地址" style="display: none">
+
                 <div class="am-g" style="margin-bottom:50px;margin-top:1rem;">
                     <div class="am-u-sm-12">
                         <a class="am-btn am-btn-warning am-btn-block" href="javascript:void(0)" onclick="submitForm()">提交</a>

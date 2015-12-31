@@ -9,7 +9,6 @@ import com.oil.detection.domain.param.UserReg;
 import com.oil.detection.domain.param.UserReset;
 import com.oil.detection.exception.CustomRuntimeException;
 import com.oil.detection.service.UserService;
-import com.oil.detection.util.DESUtil;
 import com.oil.detection.util.ValidateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -57,12 +56,10 @@ public class UserServiceImpl implements UserService {
         }
 
         // 验证码校验
-//        String key = String.format(CommonCacheImpl.KEY, SysConstants.REDIS_PREFIX, "user_"
-//                + userRegVo.getUserType(), userRegVo.getPhone());
-//        String redisVerifyCode = commonCache.get(key);
-//        if (!userRegVo.getVerifyCode().equals(redisVerifyCode)) {
-//            return new ResponsesDTO(ReturnCode.ERROR_VERIFYCODE);
-//        }
+        String verifyCode = SmsServiceImpl.codeMap.get(userReg.getUserId());
+        if (userReg.getVerifyCode() == null || !userReg.getVerifyCode().equals(verifyCode)) {
+            throw new CustomRuntimeException(ReturnCode.ERROR_VERIFYCODE);
+        }
     }
 
     @Override
@@ -92,7 +89,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User resetPwd(UserReset userReset, BindingResult valid) {
         UserReg userReg = new UserReg();
-        BeanUtils.copyProperties(userReset,userReg);
+        BeanUtils.copyProperties(userReset, userReg);
         checkUser(userReg, valid);
 
         User user = new User();
