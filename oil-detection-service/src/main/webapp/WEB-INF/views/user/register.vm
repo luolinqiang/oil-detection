@@ -120,10 +120,10 @@
 
             showLoading();
             $.ajax({
-                url : '',
+                url : '/sms/code',
                 type : 'POST',
                 data : {
-                    mobile : mobile
+                    phone : mobile
                 },
                 dataType : 'json',
                 success : function(data){
@@ -131,16 +131,16 @@
                         countdown = 60;
                         countdownTask = window.setInterval(reSendCountDown,1000);
                     }else{
-                        var errorHandler = smsErrorCode[data.msg];
+                        var errorHandler = smsErrorCode[data.data];
                         if(errorHandler == null){
-                            messageAlert('发送失败!');
+                            messageAlert('发送失败!^_^');
                         }else{
                             errorHandler();
                         }
                     }
                 },
                 error : function(){
-                    messageAlert('系统出错，请稍后再试！^_^');
+                    messageAlert('发送失败，请稍后再试！^_^');
                 },
                 complete : function(){
                     hideLoading();

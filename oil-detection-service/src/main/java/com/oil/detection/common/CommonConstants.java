@@ -5,7 +5,7 @@ public class CommonConstants {
     public static String OIL_DETECTION_PIN_COOKIE = "_pin_";
     public static final String SEPARATOR = "|";
     public static final String COOKIE_FORMAT = "%s|%s|%s|%s";
-    public static final String PHONE_MSG_TEMPLATE = "您的验证码：%s，请勿想任何人泄露。";
+    public static final String PHONE_MSG_TEMPLATE = "您的验证码：%s，请勿向任何人泄露。";
 
     public static class Common {
         public final static Integer STATE_0 = 0;
