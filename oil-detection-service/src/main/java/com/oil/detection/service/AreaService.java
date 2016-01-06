@@ -19,4 +19,6 @@ Integer saveArea(Area area);
 void modifyArea(Area area);
 
 void removeArea(Area area);
+
+    void indexArea();
 }

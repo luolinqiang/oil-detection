@@ -64,7 +64,8 @@ public enum ReturnCode {
     ERROR_PIC_UPLOAD_FILENAME_EMPTY(2007, "文件名为空或不规范"),
     ERROR_SHOP_COMMENT_COUNT_ERROR(5001, "很抱歉，每个订单只能评论一次"),
     ERROR_PHONE_NUMBER_ERROR(6001, "手机号格式不正确"),
-    ERROR_SERVICE_PHONE_NUMBER_ERROR(7001, "客服电话不能超过4个"),;
+    ERROR_SERVICE_PHONE_NUMBER_ERROR(7001, "客服电话不能超过4个"),
+    ERROR_SOLR_SERVER(8001, "solr服务端发生异常"),;
 
     private static final Logger logger = Logger.getLogger(ReturnCode.class);
 

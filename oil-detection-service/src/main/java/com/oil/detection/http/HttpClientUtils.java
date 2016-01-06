@@ -6,9 +6,11 @@ package com.oil.detection.http;
 
 import com.oil.detection.util.StringUtils;
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.RequestEntity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -46,7 +48,7 @@ public class HttpClientUtils {
         return strResult;
     }
 
-    public static String post(String url, Map<String, String> sParaTemp) throws Exception {
+    public static String post(String url, Map<String, String> sParaTemp, RequestEntity... entity) throws Exception {
         HttpProtocolHandler httpProtocolHandler = HttpProtocolHandler.getInstance();
 
         HttpRequest request = new HttpRequest(HttpResultType.BYTES);
@@ -56,7 +58,7 @@ public class HttpClientUtils {
         request.setMethod(HttpRequest.METHOD_POST);
         request.setParameters(generatNameValuePair(sParaTemp));
 
-        HttpResponse response = httpProtocolHandler.execute(request, "", "");
+        HttpResponse response = httpProtocolHandler.execute(request, "", "", entity);
         if (response == null) {
             return null;
         }
@@ -125,6 +127,24 @@ public class HttpClientUtils {
             count++;
         }
         return builder.toString();
+    }
+
+    public static void main(String[] arge) throws UnsupportedEncodingException {
+        String token = "r8HAPrIzoWfzoTVrLjet4roCcXLqE_QcOvNiysboaHaD2h8VCgz9N1A-rBEhUoFWRz0gWzLv0qVivGnU7QOguuFJ3786QRM7eEnvYdNCT-ASFRjAFAANZ";
+//        RequestEntity stringEntity = new StringRequestEntity("{\"menu\":{\"button\":[{\"type\":\"view\",\"name\":\"找油\",\"url\":\"http://123.57.236.102:8082/index\"},{\"type\":\"view\",\"name\":\"联系我们\",\"url\":\"\"}]}}", "", "utf-8");
+//        try {
+//            String post = HttpClientUtils.post("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + token, new HashMap<String, String>(), stringEntity);
+//            System.out.println(post);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        try {
+            String s = HttpClientUtils.get("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=" + token, new HashMap<String, String>());
+            System.out.println(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

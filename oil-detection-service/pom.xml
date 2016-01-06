@@ -151,6 +151,13 @@
             <version>3.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>5.4.0</version>
+        </dependency>
+
+
         <!--<dependency>-->
         <!--<groupId>jackson-all</groupId>-->
         <!--<artifactId>jackson-all</artifactId>-->

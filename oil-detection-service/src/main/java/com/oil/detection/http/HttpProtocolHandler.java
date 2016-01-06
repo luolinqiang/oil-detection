@@ -3,6 +3,7 @@ package com.oil.detection.http;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.methods.multipart.*;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.util.IdleConnectionTimeoutThread;
@@ -97,7 +98,7 @@ public class HttpProtocolHandler {
      * @return
      * @throws HttpException, IOException
      */
-    public HttpResponse execute(HttpRequest request, String strParaFileName, String strFilePath) throws HttpException, IOException {
+    public HttpResponse execute(HttpRequest request, String strParaFileName, String strFilePath, RequestEntity... entity) throws HttpException, IOException {
         HttpClient httpclient = new HttpClient(connectionManager);
 
         // 设置连接超时
@@ -136,6 +137,9 @@ public class HttpProtocolHandler {
             ((PostMethod) method).getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
             ((PostMethod) method).addParameters(request.getParameters());
             method.addRequestHeader("Content-Type", "application/x-www-form-urlencoded; text/html; charset=" + charset);
+            if (entity != null && entity.length == 1) {
+                ((PostMethod) method).setRequestEntity(entity[0]);
+            }
             logger.debug("http {} request:{}", HttpRequest.METHOD_POST, method.getURI().toString());
         } else {
             //post模式且带上传文件

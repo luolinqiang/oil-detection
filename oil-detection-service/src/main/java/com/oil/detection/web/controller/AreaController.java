@@ -3,7 +3,9 @@ package com.oil.detection.web.controller;
 import com.oil.detection.common.ResponsesDTO;
 import com.oil.detection.common.ReturnCode;
 import com.oil.detection.domain.Area;
+import com.oil.detection.domain.page.QueryArea;
 import com.oil.detection.service.AreaService;
+import com.oil.detection.solr.SolrAreaUtils;
 import com.oil.detection.web.base.BaseControllor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -59,6 +61,23 @@ public class AreaController extends BaseControllor {
     public ResponsesDTO modifyArea(Area area) {
         ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
         areaService.modifyArea(area);
+        return responsesDTO;
+    }
+
+    @RequestMapping(value = "/search", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ResponsesDTO searchArea(QueryArea queryArea) {
+        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        List<Area> areas = SolrAreaUtils.searchIndexs(queryArea);
+        responsesDTO.setData(areas);
+        return responsesDTO;
+    }
+
+    @RequestMapping(value = "/index", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ResponsesDTO indexArea() {
+        ResponsesDTO responsesDTO = new ResponsesDTO(ReturnCode.ACTIVE_SUCCESS);
+        areaService.indexArea();
         return responsesDTO;
     }
 }

@@ -4,6 +4,7 @@ import com.oil.detection.dao.AreaMapper;
 import com.oil.detection.domain.Area;
 import com.oil.detection.domain.page.QueryArea;
 import com.oil.detection.service.AreaService;
+import com.oil.detection.solr.SolrAreaUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -48,5 +49,12 @@ public class AreaServiceImpl implements AreaService {
     @Override
     public void removeArea(Area area) {
         areaMapper.removeArea(area);
+    }
+
+    @Override
+    public void indexArea(){
+        List<Area> areas = areaMapper.listArea(new Area());
+
+        SolrAreaUtils.addIndexs(areas);
     }
 }
