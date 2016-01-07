@@ -38,12 +38,15 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public Integer saveArea(Area area) {
-        return areaMapper.saveArea(area);
+        Integer integer = areaMapper.saveArea(area);
+        indexArea();
+        return integer;
     }
 
     @Override
     public void modifyArea(Area area) {
         areaMapper.modifyArea(area);
+        indexArea();
     }
 
     @Override
@@ -52,7 +55,7 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public void indexArea(){
+    public void indexArea() {
         List<Area> areas = areaMapper.listArea(new Area());
 
         SolrAreaUtils.addIndexs(areas);

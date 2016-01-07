@@ -44,7 +44,7 @@ public class BasePagingInfo implements Serializable {
     }
 
     public int getStartIdx() {
-        this.startIdx = (this.pageRows * (this.pageNum - 1) + 1);
+        this.startIdx = (this.pageRows * (this.pageNum - 1));
         return this.startIdx;
     }
 

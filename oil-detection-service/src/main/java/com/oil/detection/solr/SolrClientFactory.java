@@ -1,15 +1,16 @@
 package com.oil.detection.solr;
 
+import com.oil.detection.util.PropertyUtil;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 
 public class SolrClientFactory {
     private static HttpSolrClient solrClient = null;
     private static SolrClientFactory solrClientFactory = null;
-    private static String solrHost = "http://123.57.236.102:8983/solr/area2";
-    private static int solrClientTimeout = 20000;
-    private static int solrConnectTimeout = 5000;
-    private static int maxConnectionsPerHost = 100;
-    private static int maxTotalConnection = 100;
+    private static String solrHost = PropertyUtil.getString("solr.host");
+    private static int solrClientTimeout = PropertyUtil.getIntValue("solr.client.timeout");
+    private static int solrConnectTimeout = PropertyUtil.getIntValue("solr.connect.timeout");
+    private static int maxConnectionsPerHost = PropertyUtil.getIntValue("solr.max.connect.perhost");
+    private static int maxTotalConnection = PropertyUtil.getIntValue("solr.max.total.connect");
 
     private SolrClientFactory() {
     }
